@@ -92,6 +92,10 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
 .form-status { grid-column: 1 / -1; padding: 16px 18px; border-radius: 10px; border: 1px solid var(--gel); background: color-mix(in srgb, var(--gel) 10%, transparent); }
 .form-status b { display: block; }
 
+.form-legal { grid-column: 1 / -1; margin: 0; font-size: 13px; color: var(--muted); }
+.form-legal a { color: inherit; text-decoration: underline; }
+.form-legal a:hover { color: var(--ink); }
+
 .footer { border-top: 1px solid var(--line); padding-block: 48px 28px; color: var(--muted); }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
 .footer .logo { color: var(--ink); font-size: 22px; }
@@ -212,6 +216,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
           <button class="btn" type="submit">Send message <span aria-hidden="true">→</span></button>
           <small>We usually reply within one business day.</small>
         </div>
+        <p class="form-legal">By sending this form you agree to our <a href="terms.html">Terms and conditions</a> and <a href="privacy.html">Privacy policy</a>.</p>
         <div class="form-status" id="form-status" role="status" tabindex="-1" hidden></div>
       </form>
     </div>
