@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact Rosco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: dark hero, then contact details beside a general enquiry form. */
+:root {
+  --bg: #EDEFF2; --surface: #FFFFFF; --ink: #15161C; --muted: #565B67; --line: #D5D9E0;
+  --gel-360: #C8285F; --gel-booth: #B86E00; --gel-visuals: #0F7C93;
+  --hero-bg: #0C0D11; --hero-ink: #F4F4F1; --hero-muted: #A2A6B0; --hero-line: #2A2D36;
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111217; --surface: #191B21; --ink: #ECEDF1; --muted: #9DA2AD; --line: #2B2E37;
+    --gel-360: #F0588E; --gel-booth: #F2A532; --gel-visuals: #3EC1DB;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111217; --surface: #191B21; --ink: #ECEDF1; --muted: #9DA2AD; --line: #2B2E37;
+  --gel-360: #F0588E; --gel-booth: #F2A532; --gel-visuals: #3EC1DB;
+  color-scheme: dark;
+}
+body { --gel: var(--gel-visuals); --gel-hi: #3EC1DB; }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+[hidden] { display: none !important; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gel); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.mono { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* Nav */
+.top { background: var(--hero-bg); color: var(--hero-ink); }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--f-display); font-weight: 900; font-size: 26px; letter-spacing: 0.06em; }
+.logo-mark { width: 34px; height: 34px; border-radius: 50%; border: 2px solid currentColor; display: grid; place-items: center; font-size: 18px; line-height: 1; position: relative; }
+.logo-mark::after { content: ""; position: absolute; top: -3px; right: 2px; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.nav-links { display: flex; align-items: center; gap: 26px; list-style: none; margin: 0; padding: 0; }
+.nav-links a { text-decoration: none; color: var(--hero-muted); font-size: 14px; font-weight: 500; }
+.nav-links a:hover, .nav-links a[aria-current] { color: var(--hero-ink); }
+
+/* Hero */
+.page-hero { background: radial-gradient(80% 120% at 85% 110%, color-mix(in srgb, var(--gel-hi) 26%, transparent), transparent 60%), var(--hero-bg); color: var(--hero-ink); }
+.page-hero .wrap { padding-block: clamp(40px, 7vw, 90px) clamp(56px, 8vw, 110px); }
+.crumb { color: var(--hero-muted); margin: 0 0 18px; }
+.crumb a { text-decoration: none; }
+.crumb a:hover { color: var(--hero-ink); }
+.page-hero h1 { margin: 0; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(54px, 9vw, 120px); line-height: 0.85; letter-spacing: 0.01em; }
+.lede { margin: 24px 0 0; max-width: 48ch; font-size: clamp(17px, 2vw, 20px); color: var(--hero-muted); }
+
+/* Contact */
+.contact { padding-block: clamp(56px, 8vw, 96px); }
+.contact .wrap { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: 48px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--gel); margin-bottom: 10px; }
+.eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gel); }
+.contact h2 { margin: 0; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(38px, 5vw, 56px); line-height: 0.95; }
+.details { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 0; }
+.details li { display: grid; gap: 2px; padding: 16px 0; border-top: 1px solid var(--line); }
+.details li:last-child { border-bottom: 1px solid var(--line); }
+.details .mono { color: var(--muted); }
+.details a, .details span.val { font-size: 18px; font-weight: 600; text-decoration: none; overflow-wrap: anywhere; }
+.details a:hover { color: var(--gel); }
+.todo { color: var(--muted); font-weight: 400 !important; font-style: italic; }
+
+.form-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: clamp(20px, 3vw, 32px); min-width: 0; }
+.form-card h3 { margin: 0 0 20px; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: 32px; line-height: 1; }
+form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+label { font-size: 14px; font-weight: 600; }
+label .opt { font-weight: 400; color: var(--muted); }
+input, select, textarea { width: 100%; font: 400 16px/1.4 var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+textarea { min-height: 140px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gel); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gel) 25%, transparent); }
+.form-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font: 600 15px/1 var(--f-body); cursor: pointer; border: 0; background: var(--ink); color: var(--surface); transition: transform .2s, background .2s; }
+.btn:hover { transform: translateY(-2px); background: var(--gel); }
+.form-actions small { color: var(--muted); }
+.form-status { grid-column: 1 / -1; padding: 16px 18px; border-radius: 10px; border: 1px solid var(--gel); background: color-mix(in srgb, var(--gel) 10%, transparent); }
+.form-status b { display: block; }
+
+.footer { border-top: 1px solid var(--line); padding-block: 28px; }
+.footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; color: var(--muted); }
+.footer .logo { color: var(--ink); font-size: 22px; }
+.footer .logo-mark { width: 28px; height: 28px; font-size: 15px; }
+.footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer nav a { text-decoration: none; }
+.footer nav a:hover { color: var(--ink); }
+
+@media (max-width: 880px) {
+  .contact .wrap { grid-template-columns: minmax(0, 1fr); }
+  .nav-links li.other { display: none; }
+}
+@media (max-width: 560px) {
+  form { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn:hover { transform: none; }
+}
+
+/* Mobile menu */
+.menu-btn { display: none; width: 44px; height: 44px; padding: 0; place-items: center; border: 1px solid var(--hero-line); border-radius: 10px; background: transparent; color: var(--hero-ink); cursor: pointer; }
+.menu-btn span, .menu-btn span::before, .menu-btn span::after { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s, background .2s; }
+.menu-btn span { position: relative; }
+.menu-btn span::before, .menu-btn span::after { content: ""; position: absolute; left: 0; }
+.menu-btn span::before { top: -6px; }
+.menu-btn span::after { top: 6px; }
+.nav.open .menu-btn span { background: transparent; }
+.nav.open .menu-btn span::before { transform: translateY(6px) rotate(45deg); }
+.nav.open .menu-btn span::after { transform: translateY(-6px) rotate(-45deg); }
+@media (max-width: 880px) {
+  .nav { flex-wrap: wrap; }
+  .menu-btn { display: grid; }
+  .nav .nav-links { display: none; }
+  .nav.open .nav-links { display: flex; flex-direction: column; align-items: stretch; gap: 0; width: 100%; padding-top: 8px; }
+  .nav.open .nav-links li, .nav.open .nav-links li.other { display: block; }
+  .nav.open .nav-links a { display: block; padding: 14px 4px; border-top: 1px solid var(--hero-line); font-size: 17px; color: var(--hero-ink); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-btn span, .menu-btn span::before, .menu-btn span::after { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="logo" href="index.html">ROSCO</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><span></span></button>
+      <ul class="nav-links" id="site-menu">
+        <li class="other"><a href="360-booth.html">360 Booth</a></li>
+        <li class="other"><a href="photo-booth.html">Photo Booth</a></li>
+        <li class="other"><a href="visuals.html">Visuals</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<header class="page-hero">
+  <div class="wrap">
+    <p class="crumb mono"><a href="index.html">Rosco</a> / Contact us</p>
+    <h1>Get in touch</h1>
+    <p class="lede">Questions, quotes or checking a date? Send us a message and we'll get back to you, usually within one business day.</p>
+  </div>
+</header>
+
+<main class="contact">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow mono">Contact details</span>
+      <h2>Talk to the Rosco team</h2>
+      <ul class="details">
+        <li><span class="mono">Email</span><a href="mailto:roscohq@gmail.com">roscohq@gmail.com</a></li>
+        <li><span class="mono">Phone</span><a href="tel:+61461277549">0461 277 549</a></li>
+        <li><span class="mono">Instagram</span><a href="https://www.instagram.com/rosco_360_photobooth/" target="_blank" rel="noopener">@rosco_360_photobooth</a></li>
+        <li><span class="mono">Service area</span><span class="val">All of Victoria</span></li>
+      </ul>
+    </div>
+
+    <div class="form-card">
+      <h3>Send us a message</h3>
+      <form id="contact-form">
+        <div class="field"><label for="c-name">Full name</label><input id="c-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="c-phone">Phone <span class="opt">(optional)</span></label><input id="c-phone" name="phone" type="tel" autocomplete="tel"></div>
+        <div class="field"><label for="c-service">Service</label>
+          <select id="c-service" name="service">
+            <option value="">Not sure yet</option>
+            <option>Rosco 360 Photo Booth</option>
+            <option>Rosco Photo Booth</option>
+            <option>Rosco Visuals</option>
+            <option>More than one</option>
+          </select>
+        </div>
+        <div class="field full"><label for="c-date">Event date <span class="opt">(if you have one)</span></label><input id="c-date" name="date" type="date"></div>
+        <div class="field full"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required placeholder="Tell us about your event or ask us anything…"></textarea></div>
+        <div class="form-actions">
+          <button class="btn" type="submit">Send message <span aria-hidden="true">→</span></button>
+          <small>We usually reply within one business day.</small>
+        </div>
+        <div class="form-status" id="form-status" role="status" tabindex="-1" hidden></div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <a class="logo" href="index.html">ROSCO</a>
+    <nav aria-label="Footer">
+      <a href="360-booth.html">360 Photo Booth</a>
+      <a href="photo-booth.html">Photo Booth</a>
+      <a href="visuals.html">Visuals</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <span class="mono">© 2026 Rosco · Melbourne, VIC</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var nav = document.querySelector('.nav');
+  var btn = nav && nav.querySelector('.menu-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    btn.setAttribute('aria-expanded', nav.classList.toggle('open'));
+  });
+  nav.querySelectorAll('.nav-links a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+(function () {
+  var form = document.getElementById('contact-form');
+  var status = document.getElementById('form-status');
+  document.getElementById('c-date').min = new Date().toISOString().slice(0, 10);
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('c-name').value.trim().split(' ')[0];
+    status.textContent = '';
+    var b = document.createElement('b');
+    var data = {};
+    form.querySelectorAll('input, select, textarea').forEach(function (el) {
+      var label = form.querySelector('label[for="' + el.id + '"]');
+      data[label ? label.firstChild.textContent.trim() : el.name] = el.value.trim() || '-';
+    });
+    data._subject = 'Website message from ' + document.getElementById('c-name').value.trim();
+    data._cc = 'pasiduraviharas@gmail.com';
+    data._replyto = document.getElementById('c-email').value.trim();
+    data._template = 'table';
+    var submit = form.querySelector('button[type="submit"]');
+    submit.disabled = true;
+    b.textContent = 'Sending your message…';
+    status.appendChild(b);
+    status.hidden = false;
+    fetch('https://formsubmit.co/ajax/roscohq@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function (r) { return r.json(); }).then(function (res) {
+      if (String(res.success) !== 'true') throw new Error(res.message);
+      b.textContent = 'Thanks, ' + name + '. Your message has been sent.';
+      status.appendChild(document.createTextNode('We usually reply within one business day.'));
+      form.reset();
+    }).catch(function () {
+      b.textContent = 'Sorry, ' + name + ', your message didn\'t go through.';
+      status.appendChild(document.createTextNode('Please try again, email us at roscohq@gmail.com or call 0461 277 549.'));
+    }).then(function () {
+      submit.disabled = false;
+      status.focus();
+    });
+  });
+})();
+</script>
+</body>
+</html>

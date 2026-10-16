@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rosco</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: dark studio-backdrop hero with a one-time flash burst, then three equal "choose your service" cards, each tinted by its own lighting gel. */
+:root {
+  --bg: #EDEFF2;
+  --surface: #FFFFFF;
+  --ink: #15161C;
+  --muted: #565B67;
+  --line: #D5D9E0;
+  --gel-360: #C8285F;
+  --gel-booth: #B86E00;
+  --gel-visuals: #0F7C93;
+  --hero-bg: #0C0D11;
+  --hero-ink: #F4F4F1;
+  --hero-muted: #A2A6B0;
+  --hero-line: #2A2D36;
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111217; --surface: #191B21; --ink: #ECEDF1; --muted: #9DA2AD; --line: #2B2E37;
+    --gel-360: #F0588E; --gel-booth: #F2A532; --gel-visuals: #3EC1DB;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111217; --surface: #191B21; --ink: #ECEDF1; --muted: #9DA2AD; --line: #2B2E37;
+  --gel-360: #F0588E; --gel-booth: #F2A532; --gel-visuals: #3EC1DB;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gel-visuals); outline-offset: 3px; border-radius: 4px; }
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.mono { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 115%, #23262F 0%, var(--hero-bg) 60%);
+  color: var(--hero-ink);
+  isolation: isolate;
+}
+.hero::after { /* the flash */
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(60% 70% at 50% 45%, rgba(255,255,255,0.85), rgba(255,255,255,0) 70%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  animation: flash 1.4s ease-out 0.35s 1 both;
+}
+@keyframes flash {
+  0% { opacity: 0; }
+  8% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+.orbit {
+  position: absolute;
+  left: 50%; top: 54%;
+  width: min(1100px, 160vw);
+  aspect-ratio: 3 / 1;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--hero-line);
+  border-radius: 50%;
+  z-index: -1;
+}
+.orbit::before {
+  content: "";
+  position: absolute; inset: 14%;
+  border: 1px dashed var(--hero-line);
+  border-radius: 50%;
+}
+
+.nav {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding-block: 22px;
+  position: relative; z-index: 2;
+}
+.logo {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none;
+  font-family: var(--f-display); font-weight: 900; font-size: 26px; letter-spacing: 0.06em;
+}
+.logo-mark {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid var(--hero-ink);
+  display: grid; place-items: center;
+  font-size: 18px; line-height: 1;
+  position: relative;
+}
+.logo-mark::after {
+  content: ""; position: absolute; top: -3px; right: 2px;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--hero-ink);
+}
+.nav-links { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; }
+.nav-links a { text-decoration: none; color: var(--hero-muted); font-size: 14px; font-weight: 500; transition: color .2s; }
+.nav-links a:hover { color: var(--hero-ink); }
+
+.hero-body {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding-block: clamp(56px, 10vw, 130px) clamp(64px, 10vw, 120px);
+}
+.hero-eyebrow { color: var(--hero-muted); margin: 0 0 18px; }
+.wordmark {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: clamp(96px, 24vw, 300px);
+  line-height: 0.82;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.wordmark span { display: inline-block; }
+.wordmark .o-ring {
+  -webkit-text-stroke: 2px var(--hero-ink);
+  color: transparent;
+}
+.hero-sub {
+  max-width: 34ch;
+  margin: 28px auto 0;
+  font-size: clamp(17px, 2.1vw, 21px);
+  color: var(--hero-muted);
+  text-wrap: balance;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 34px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  background: var(--hero-ink); color: var(--hero-bg);
+  text-decoration: none; font-weight: 600; font-size: 15px;
+  transition: transform .2s;
+}
+.hero-cta:hover { transform: translateY(-2px); }
+.hero-meta {
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  border-top: 1px solid var(--hero-line);
+  padding-block: 16px;
+  color: var(--hero-muted);
+  position: relative; z-index: 2;
+}
+
+/* ---------- Chooser ---------- */
+.choose { padding-block: clamp(56px, 8vw, 96px); }
+.choose-head {
+  display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+.choose-head h2 {
+  margin: 0;
+  font-family: var(--f-display); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(40px, 6vw, 64px); line-height: 0.95; letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+.choose-head p { margin: 0; color: var(--muted); max-width: 40ch; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.card {
+  --gel: var(--gel-360);
+  position: relative;
+  display: flex; flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  min-width: 0;
+}
+.card.booth { --gel: var(--gel-booth); }
+.card.visuals { --gel: var(--gel-visuals); }
+.card:hover { transform: translateY(-4px); border-color: var(--gel); box-shadow: 0 18px 40px -24px var(--gel); }
+.card-art {
+  aspect-ratio: 5 / 3;
+  max-width: 100%;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(70% 90% at 50% 100%, color-mix(in srgb, var(--gel) 22%, transparent), transparent 70%),
+    var(--hero-bg);
+  color: var(--gel);
+  border-bottom: 1px solid var(--line);
+}
+.card-art img { width: 78%; height: auto; display: block; }
+.card-body { display: flex; flex-direction: column; gap: 14px; padding: 26px 24px 24px; flex: 1; }
+.tag { display: inline-flex; align-items: center; gap: 8px; color: var(--gel); }
+.tag::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gel); }
+.card h3 {
+  margin: 0;
+  font-family: var(--f-display); font-weight: 900; text-transform: uppercase;
+  font-size: 34px; line-height: 0.95; letter-spacing: 0.01em;
+}
+.card p { margin: 0; color: var(--muted); }
+.specs {
+  list-style: none; margin: 4px 0 0; padding: 14px 0 0;
+  border-top: 1px dashed var(--line);
+  display: grid; gap: 6px;
+  font-family: var(--f-mono); font-size: 13px;
+}
+.specs li { display: flex; gap: 10px; }
+.specs li::before { content: "+"; color: var(--gel); }
+.card-cta {
+  margin-top: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 13px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--ink);
+  text-decoration: none; font-weight: 600; font-size: 15px;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.card-cta::after { content: ""; position: absolute; inset: 0; } /* whole card clickable */
+.card:hover .card-cta { background: var(--gel); border-color: var(--gel); color: var(--surface); }
+.card-cta .arrow { transition: transform .2s; }
+.card:hover .card-cta .arrow { transform: translateX(4px); }
+
+/* ---------- Footer ---------- */
+.footer { border-top: 1px solid var(--line); padding-block: 28px; }
+.footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; color: var(--muted); }
+.footer .logo { color: var(--ink); font-size: 22px; }
+.footer .logo-mark { border-color: var(--ink); width: 28px; height: 28px; font-size: 15px; }
+.footer .logo-mark::after { background: var(--ink); }
+.foot-nav { display: flex; gap: 20px; }
+.foot-nav a { text-decoration: none; }
+.foot-nav a:hover { color: var(--ink); }
+
+@media (max-width: 880px) {
+  .cards { grid-template-columns: minmax(0, 1fr); }
+  .card-art { aspect-ratio: 2 / 1; }
+  .card-art img { width: min(70%, 420px); }
+}
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .hero-meta { justify-content: center; text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero::after { animation: none; }
+  .card, .card-cta, .card-cta .arrow, .hero-cta { transition: none; }
+  .card:hover, .hero-cta:hover { transform: none; }
+}
+
+/* ---------- Mobile menu ---------- */
+.menu-btn { display: none; width: 44px; height: 44px; padding: 0; place-items: center; border: 1px solid var(--hero-line); border-radius: 10px; background: transparent; color: var(--hero-ink); cursor: pointer; }
+.menu-btn span, .menu-btn span::before, .menu-btn span::after { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s, background .2s; }
+.menu-btn span { position: relative; }
+.menu-btn span::before, .menu-btn span::after { content: ""; position: absolute; left: 0; }
+.menu-btn span::before { top: -6px; }
+.menu-btn span::after { top: 6px; }
+.nav.open .menu-btn span { background: transparent; }
+.nav.open .menu-btn span::before { transform: translateY(6px) rotate(45deg); }
+.nav.open .menu-btn span::after { transform: translateY(-6px) rotate(-45deg); }
+@media (max-width: 880px) {
+  .nav { flex-wrap: wrap; }
+  .menu-btn { display: grid; }
+  .nav .nav-links { display: none; }
+  .nav.open .nav-links { display: flex; flex-direction: column; align-items: stretch; gap: 0; width: 100%; padding-top: 8px; }
+  .nav.open .nav-links li, .nav.open .nav-links li.other { display: block; }
+  .nav.open .nav-links a { display: block; padding: 14px 4px; border-top: 1px solid var(--hero-line); font-size: 17px; color: var(--hero-ink); }
+  .nav.open .nav-links a.nav-cta { margin-top: 14px; padding: 14px 18px; border-top: 0; text-align: center; color: var(--hero-bg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-btn span, .menu-btn span::before, .menu-btn span::after { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="orbit" aria-hidden="true"></div>
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="logo" href="#top" id="top">ROSCO</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><span></span></button>
+      <ul class="nav-links" id="site-menu">
+        <li><a href="360-booth.html">360 Booth</a></li>
+        <li><a href="photo-booth.html">Photo Booth</a></li>
+        <li><a href="visuals.html">Visuals</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap hero-body">
+    <p class="mono hero-eyebrow">All of Victoria · Events · Photo &amp; Video</p>
+    <h1 class="wordmark" aria-label="Rosco"><span>R</span><span class="o-ring">O</span><span>SCO</span></h1>
+    <p class="hero-sub">Three ways to capture your event. Choose the one that suits your night.</p>
+    <a class="hero-cta" href="#choose">Choose your service <span aria-hidden="true">↓</span></a>
+  </div>
+  <div class="wrap">
+    <div class="hero-meta mono">
+      <span>360 video booths</span>
+      <span>Photo booths</span>
+      <span>Photography &amp; videography</span>
+    </div>
+  </div>
+</header>
+
+<main class="choose" id="choose">
+  <div class="wrap">
+    <div class="choose-head">
+      <h2>Our services</h2>
+      <p>Each service has its own team and booking process. Choose one below to see packages and check your date.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card" id="rosco-360">
+        <div class="card-art">
+          <img src="logo-360.png" alt="Rosco 360 Photobooth logo" width="1000" height="408">
+        </div>
+        <div class="card-body">
+          <span class="tag mono">360° video</span>
+          <h3>Rosco 360 Photo Booth</h3>
+          <p>A spinning 360 video booth for weddings, birthdays and corporate events across Victoria.</p>
+          <ul class="specs">
+            <li>Slow-motion 360° video clips</li>
+            <li>Instant sharing on the night</li>
+            <li>Attendant on site</li>
+          </ul>
+          <a class="card-cta" href="360-booth.html">Choose 360 Booth <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <article class="card booth" id="rosco-booth">
+        <div class="card-art">
+          <img src="logo-photobooth.png" alt="Rosco Photobooth logo" width="1000" height="408">
+        </div>
+        <div class="card-body">
+          <span class="tag mono">Prints &amp; props</span>
+          <h3>Rosco Photo Booth</h3>
+          <p>A classic photo booth for parties and events across Victoria, with printed photo strips your guests take home.</p>
+          <ul class="specs">
+            <li>Unlimited prints on the night</li>
+            <li>Custom print designs</li>
+            <li>Props and backdrops</li>
+          </ul>
+          <a class="card-cta" href="photo-booth.html">Choose Photo Booth <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </article>
+
+      <article class="card visuals" id="rosco-visuals">
+        <div class="card-art">
+          <img src="logo-visuals.png" alt="Rosco Visuals logo" width="1000" height="417">
+        </div>
+        <div class="card-body">
+          <span class="tag mono">Photo &amp; videography</span>
+          <h3>Rosco Visuals</h3>
+          <p>Professional photography and videography for events, brands and special occasions.</p>
+          <ul class="specs">
+            <li>Event photography</li>
+            <li>Videography and highlight films</li>
+            <li>Professionally edited delivery</li>
+          </ul>
+          <a class="card-cta" href="visuals.html">Choose Visuals <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <a class="logo" href="#top">ROSCO</a>
+    <nav class="foot-nav" aria-label="Footer"><a href="about.html">About us</a><a href="contact.html">Contact us</a></nav>
+    <span class="mono">© 2026 Rosco · Melbourne, VIC</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var nav = document.querySelector('.nav');
+  var btn = nav && nav.querySelector('.menu-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    btn.setAttribute('aria-expanded', nav.classList.toggle('open'));
+  });
+  nav.querySelectorAll('.nav-links a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

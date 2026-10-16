@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About Rosco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: dark hero, short story, the three Rosco brands with their logos, how we work, then a contact band. */
+:root {
+  --bg: #EDEFF2; --surface: #FFFFFF; --ink: #15161C; --muted: #565B67; --line: #D5D9E0;
+  --gel-360: #C8285F; --gel-booth: #B86E00; --gel-visuals: #0F7C93;
+  --hero-bg: #0C0D11; --hero-ink: #F4F4F1; --hero-muted: #A2A6B0; --hero-line: #2A2D36;
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111217; --surface: #191B21; --ink: #ECEDF1; --muted: #9DA2AD; --line: #2B2E37;
+    --gel-360: #F0588E; --gel-booth: #F2A532; --gel-visuals: #3EC1DB;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111217; --surface: #191B21; --ink: #ECEDF1; --muted: #9DA2AD; --line: #2B2E37;
+  --gel-360: #F0588E; --gel-booth: #F2A532; --gel-visuals: #3EC1DB;
+  color-scheme: dark;
+}
+body { --gel: var(--gel-360); --gel-hi: #F0588E; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gel); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.mono { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* Nav */
+.top { background: var(--hero-bg); color: var(--hero-ink); }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--f-display); font-weight: 900; font-size: 26px; letter-spacing: 0.06em; }
+.logo-mark { width: 34px; height: 34px; border-radius: 50%; border: 2px solid currentColor; display: grid; place-items: center; font-size: 18px; line-height: 1; position: relative; }
+.logo-mark::after { content: ""; position: absolute; top: -3px; right: 2px; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.nav-links { display: flex; align-items: center; gap: 26px; list-style: none; margin: 0; padding: 0; }
+.nav-links a { text-decoration: none; color: var(--hero-muted); font-size: 14px; font-weight: 500; }
+.nav-links a:hover, .nav-links a[aria-current] { color: var(--hero-ink); }
+.nav-cta { padding: 9px 18px; border-radius: 999px; background: var(--hero-ink); color: var(--hero-bg) !important; text-decoration: none; font-weight: 600; font-size: 14px; }
+
+/* Hero */
+.page-hero { background: radial-gradient(70% 120% at 90% 110%, color-mix(in srgb, var(--gel-hi) 22%, transparent), transparent 60%), radial-gradient(60% 120% at 10% 120%, color-mix(in srgb, #3EC1DB 16%, transparent), transparent 60%), var(--hero-bg); color: var(--hero-ink); }
+.page-hero .wrap { padding-block: clamp(40px, 7vw, 90px) clamp(56px, 8vw, 110px); }
+.crumb { color: var(--hero-muted); margin: 0 0 18px; }
+.crumb a { text-decoration: none; }
+.crumb a:hover { color: var(--hero-ink); }
+.page-hero h1 { margin: 0; max-width: 14ch; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(54px, 9vw, 120px); line-height: 0.85; letter-spacing: 0.01em; text-wrap: balance; }
+.lede { margin: 24px 0 0; max-width: 52ch; font-size: clamp(17px, 2vw, 20px); color: var(--hero-muted); }
+
+/* Sections */
+.section { padding-block: clamp(56px, 8vw, 96px); }
+.section + .section { border-top: 1px solid var(--line); }
+.sec-head { display: flex; align-items: end; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; margin-bottom: 36px; }
+.sec-head h2 { margin: 0; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(38px, 5.5vw, 60px); line-height: 0.95; text-wrap: balance; }
+.sec-head p { margin: 0; color: var(--muted); max-width: 44ch; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--gel); margin-bottom: 10px; }
+.eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gel); }
+
+.story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 48px; align-items: start; }
+.story h2 { margin: 0; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(38px, 5.5vw, 60px); line-height: 0.95; }
+.story-body p { margin: 0 0 18px; font-size: 18px; }
+.story-body p:last-child { margin-bottom: 0; color: var(--muted); font-size: 16px; }
+
+.brands { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.brand { --gel: var(--gel-360); position: relative; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; min-width: 0; transition: transform .25s ease, border-color .25s ease; }
+.brand.booth { --gel: var(--gel-booth); }
+.brand.visuals { --gel: var(--gel-visuals); }
+.brand:hover { transform: translateY(-4px); border-color: var(--gel); }
+.brand-art { aspect-ratio: 2 / 1; display: grid; place-items: center; background: radial-gradient(70% 90% at 50% 100%, color-mix(in srgb, var(--gel) 22%, transparent), transparent 70%), var(--hero-bg); border-bottom: 1px solid var(--line); }
+.brand-art img { width: 74%; height: auto; display: block; }
+.brand-body { display: flex; flex-direction: column; gap: 10px; padding: 22px 22px 24px; flex: 1; }
+.brand-body p { margin: 0; color: var(--muted); }
+.brand-link { margin-top: auto; font-weight: 600; text-decoration: none; color: var(--gel); }
+.brand-link::after { content: ""; position: absolute; inset: 0; }
+
+.values { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 28px; list-style: none; margin: 0; padding: 0; }
+.value { border-top: 2px solid var(--ink); padding-top: 18px; min-width: 0; }
+.value h3 { margin: 0 0 6px; font-size: 19px; font-weight: 600; line-height: 1.3; }
+.value h3::before { content: "+ "; color: var(--gel); }
+.value p { margin: 0; color: var(--muted); }
+
+.cta-band { background: var(--hero-bg); color: var(--hero-ink); }
+.cta-band .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-block: clamp(48px, 7vw, 80px); }
+.cta-band h2 { margin: 0; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(36px, 5vw, 56px); line-height: 0.95; }
+.cta-band p { margin: 10px 0 0; color: var(--hero-muted); }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font: 600 15px/1 var(--f-body); text-decoration: none; background: var(--hero-ink); color: var(--hero-bg); transition: transform .2s; }
+.btn:hover { transform: translateY(-2px); }
+
+.footer { border-top: 1px solid var(--line); padding-block: 28px; }
+.footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; color: var(--muted); }
+.footer .logo { color: var(--ink); font-size: 22px; }
+.footer .logo-mark { width: 28px; height: 28px; font-size: 15px; }
+.footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer nav a { text-decoration: none; }
+.footer nav a:hover { color: var(--ink); }
+
+@media (max-width: 880px) {
+  .story { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .brands { grid-template-columns: minmax(0, 1fr); }
+  .brand-art img { width: min(70%, 420px); }
+  .values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nav-links li.other { display: none; }
+}
+@media (max-width: 560px) {
+  .values { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .brand { transition: none; }
+  .btn:hover, .brand:hover { transform: none; }
+}
+
+/* Mobile menu */
+.menu-btn { display: none; width: 44px; height: 44px; padding: 0; place-items: center; border: 1px solid var(--hero-line); border-radius: 10px; background: transparent; color: var(--hero-ink); cursor: pointer; }
+.menu-btn span, .menu-btn span::before, .menu-btn span::after { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s, background .2s; }
+.menu-btn span { position: relative; }
+.menu-btn span::before, .menu-btn span::after { content: ""; position: absolute; left: 0; }
+.menu-btn span::before { top: -6px; }
+.menu-btn span::after { top: 6px; }
+.nav.open .menu-btn span { background: transparent; }
+.nav.open .menu-btn span::before { transform: translateY(6px) rotate(45deg); }
+.nav.open .menu-btn span::after { transform: translateY(-6px) rotate(-45deg); }
+@media (max-width: 880px) {
+  .nav { flex-wrap: wrap; }
+  .menu-btn { display: grid; }
+  .nav .nav-links { display: none; }
+  .nav.open .nav-links { display: flex; flex-direction: column; align-items: stretch; gap: 0; width: 100%; padding-top: 8px; }
+  .nav.open .nav-links li, .nav.open .nav-links li.other { display: block; }
+  .nav.open .nav-links a { display: block; padding: 14px 4px; border-top: 1px solid var(--hero-line); font-size: 17px; color: var(--hero-ink); }
+  .nav.open .nav-links a.nav-cta { margin-top: 14px; padding: 14px 18px; border-top: 0; text-align: center; color: var(--hero-bg) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-btn span, .menu-btn span::before, .menu-btn span::after { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="logo" href="index.html">ROSCO</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><span></span></button>
+      <ul class="nav-links" id="site-menu">
+        <li class="other"><a href="360-booth.html">360 Booth</a></li>
+        <li class="other"><a href="photo-booth.html">Photo Booth</a></li>
+        <li class="other"><a href="visuals.html">Visuals</a></li>
+        <li><a href="about.html" aria-current="page">About</a></li>
+        <li><a class="nav-cta" href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<header class="page-hero">
+  <div class="wrap">
+    <p class="crumb mono"><a href="index.html">Rosco</a> / About us</p>
+    <h1>One crew. Three ways to capture your night.</h1>
+    <p class="lede">Rosco is a Melbourne events team behind the Rosco 360 Photo Booth, Rosco Photo Booth and Rosco Visuals. We bring the gear, run the night and hand you memories worth keeping.</p>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="wrap story">
+      <div>
+        <span class="eyebrow mono">Our story</span>
+        <h2>Made for the moments people talk about</h2>
+      </div>
+      <div class="story-body">
+        <p>Rosco started with a simple idea: the best part of any event is the people in it, so give them a reason to step in front of the camera.</p>
+        <p>Today we cover weddings, birthdays, school formals and corporate events right across Victoria. Whether it's a spin on the 360 booth, a strip of prints to take home or a full photo and video package, every booking is set up, run and packed down by our own team.</p>
+        <p>You focus on the celebration. We take care of the lights, the camera and the queue.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow mono">The Rosco family</span>
+          <h2>Our three services</h2>
+        </div>
+        <p>Book one, or mix them together for the whole event.</p>
+      </div>
+      <div class="brands">
+        <article class="brand">
+          <div class="brand-art"><img src="logo-360.png" alt="Rosco 360 Photobooth logo" width="1000" height="408"></div>
+          <div class="brand-body">
+            <p>A spinning 360 video booth with slow-motion clips your guests can share on the spot.</p>
+            <a class="brand-link" href="360-booth.html">Explore 360 Booth →</a>
+          </div>
+        </article>
+        <article class="brand booth">
+          <div class="brand-art"><img src="logo-photobooth.png" alt="Rosco Photobooth logo" width="1000" height="408"></div>
+          <div class="brand-body">
+            <p>A classic photo booth with props, backdrops and printed strips to take home.</p>
+            <a class="brand-link" href="photo-booth.html">Explore Photo Booth →</a>
+          </div>
+        </article>
+        <article class="brand visuals">
+          <div class="brand-art"><img src="logo-visuals.png" alt="Rosco Visuals logo" width="1000" height="417"></div>
+          <div class="brand-body">
+            <p>Professional photography and videography for events, brands and special occasions.</p>
+            <a class="brand-link" href="visuals.html">Explore Visuals →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow mono">How we work</span>
+          <h2>What you can count on</h2>
+        </div>
+      </div>
+      <ul class="values">
+        <li class="value"><h3>We handle the setup</h3><p>Delivery, setup and pack-down anywhere in Victoria are part of every booking.</p></li>
+        <li class="value"><h3>Friendly attendants</h3><p>Our team runs the booth on the night and keeps guests smiling and the line moving.</p></li>
+        <li class="value"><h3>Made to match</h3><p>Custom overlays, print designs and edits that fit your theme, names or brand.</p></li>
+        <li class="value"><h3>Fast delivery</h3><p>Instant sharing on the night, plus edited galleries and films after the event.</p></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<section class="cta-band">
+  <div class="wrap">
+    <div>
+      <h2>Planning an event?</h2>
+      <p>Tell us your date and we'll let you know what's available.</p>
+    </div>
+    <a class="btn" href="contact.html">Contact us <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <a class="logo" href="index.html">ROSCO</a>
+    <nav aria-label="Footer">
+      <a href="360-booth.html">360 Photo Booth</a>
+      <a href="photo-booth.html">Photo Booth</a>
+      <a href="visuals.html">Visuals</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <span class="mono">© 2026 Rosco · Melbourne, VIC</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var nav = document.querySelector('.nav');
+  var btn = nav && nav.querySelector('.menu-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    btn.setAttribute('aria-expanded', nav.classList.toggle('open'));
+  });
+  nav.querySelectorAll('.nav-links a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
+</body>
+</html>
