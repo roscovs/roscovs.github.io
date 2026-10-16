@@ -271,6 +271,30 @@ a { color: inherit; }
   .card:hover, .hero-cta:hover { transform: none; }
 }
 
+/* ---------- Reviews ---------- */
+.reviews { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var(--line); }
+.rating { display: flex; align-items: center; gap: 14px; }
+.rating strong { font-family: var(--f-display); font-weight: 900; font-size: 60px; line-height: 0.9; }
+.rating small { display: block; color: var(--muted); }
+.stars { color: var(--gel-booth); font-size: 18px; letter-spacing: 2px; }
+.review-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.review-list:empty { display: none; }
+.review { display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.review p { margin: 0; color: var(--muted); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; }
+.review-author { display: flex; align-items: center; gap: 10px; margin-top: auto; font-weight: 600; text-decoration: none; }
+.review-author img { width: 36px; height: 36px; border-radius: 50%; }
+.review-author small { display: block; color: var(--muted); font-weight: 400; font-size: 13px; }
+.review-empty { margin: 0; color: var(--muted); max-width: 48ch; }
+.review-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 28px; }
+.review-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; background: var(--ink); color: var(--surface); text-decoration: none; font-weight: 600; transition: background .2s; }
+.review-btn:hover { background: var(--gel-booth); }
+.review-link { color: var(--muted); font-weight: 600; }
+.review-link:hover { color: var(--ink); }
+.review-source { margin: 18px 0 0; color: var(--muted); }
+@media (max-width: 880px) {
+  .review-list { grid-template-columns: minmax(0, 1fr); }
+}
+
 /* ---------- Mobile menu ---------- */
 .menu-btn { display: none; width: 44px; height: 44px; padding: 0; place-items: center; border: 1px solid var(--hero-line); border-radius: 10px; background: transparent; color: var(--hero-ink); cursor: pointer; }
 .menu-btn span, .menu-btn span::before, .menu-btn span::after { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s, background .2s; }
@@ -389,6 +413,25 @@ a { color: inherit; }
   </div>
 </main>
 
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <div class="choose-head">
+      <h2>What our clients say</h2>
+      <div class="rating" id="rating" hidden>
+        <strong id="rating-value"></strong>
+        <span><span class="stars" id="rating-stars" aria-hidden="true"></span><small id="rating-count"></small></span>
+      </div>
+    </div>
+    <div class="review-list" id="review-list"></div>
+    <p class="review-empty" id="review-empty">Had Rosco at your event? We'd love to hear how it went. Your review helps other people find us.</p>
+    <div class="review-actions">
+      <a class="review-btn" href="https://g.page/r/Ce2zTwuR5o9cEBM/review" target="_blank" rel="noopener"><span aria-hidden="true">★</span> Leave a Google review</a>
+      <a class="review-link" id="maps-link" href="https://www.google.com/maps/place/?q=place_id:ChIJuZPIKghB1moR7bNPC5Hmj1w" target="_blank" rel="noopener">See all reviews on Google Maps →</a>
+    </div>
+    <p class="mono review-source" id="review-source" hidden>Reviews from Google</p>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="wrap">
     <a class="logo" href="#top">ROSCO</a>
@@ -411,6 +454,78 @@ a { color: inherit; }
       btn.setAttribute('aria-expanded', 'false');
     });
   });
+})();
+
+/* Google reviews: shows rating and latest reviews from the Rosco Business Profile. */
+(function () {
+  var KEY = ''; // Google Maps Platform key, restricted to roscovs.github.io
+  var PLACE_ID = 'ChIJuZPIKghB1moR7bNPC5Hmj1w';
+  if (!KEY) return;
+
+  function stars(n) {
+    var r = Math.round(n);
+    return '★★★★★'.slice(0, r) + '☆☆☆☆☆'.slice(0, 5 - r);
+  }
+
+  function render(place) {
+    if (place.googleMapsURI) document.getElementById('maps-link').href = place.googleMapsURI;
+    if (place.rating) {
+      document.getElementById('rating-value').textContent = place.rating.toFixed(1);
+      document.getElementById('rating-stars').textContent = stars(place.rating);
+      var c = place.userRatingCount || 0;
+      document.getElementById('rating-count').textContent = c + (c === 1 ? ' Google review' : ' Google reviews');
+      document.getElementById('rating').hidden = false;
+    }
+    var list = document.getElementById('review-list');
+    (place.reviews || []).forEach(function (rv) {
+      var card = document.createElement('article');
+      card.className = 'review';
+      var st = document.createElement('span');
+      st.className = 'stars';
+      st.textContent = stars(rv.rating || 0);
+      st.setAttribute('aria-label', (rv.rating || 0) + ' out of 5 stars');
+      card.appendChild(st);
+      if (rv.text) {
+        var p = document.createElement('p');
+        p.textContent = rv.text;
+        card.appendChild(p);
+      }
+      var who = rv.authorAttribution || {};
+      var a = document.createElement(who.uri ? 'a' : 'div');
+      a.className = 'review-author';
+      if (who.uri) { a.href = who.uri; a.target = '_blank'; a.rel = 'noopener'; }
+      if (who.photoURI) {
+        var img = document.createElement('img');
+        img.src = who.photoURI; img.alt = ''; img.width = 36; img.height = 36;
+        img.referrerPolicy = 'no-referrer';
+        a.appendChild(img);
+      }
+      var name = document.createElement('span');
+      name.textContent = who.displayName || 'Google user';
+      var when = document.createElement('small');
+      when.textContent = rv.relativePublishTimeDescription || '';
+      name.appendChild(when);
+      a.appendChild(name);
+      card.appendChild(a);
+      list.appendChild(card);
+    });
+    if (list.children.length) {
+      document.getElementById('review-empty').hidden = true;
+      document.getElementById('review-source').hidden = false;
+    }
+  }
+
+  window.initRoscoReviews = function () {
+    google.maps.importLibrary('places').then(function (lib) {
+      var place = new lib.Place({ id: PLACE_ID });
+      return place.fetchFields({ fields: ['rating', 'userRatingCount', 'reviews', 'googleMapsURI'] })
+        .then(function () { render(place); });
+    }).catch(function () { /* keep the review button and Maps link if Google can't be reached */ });
+  };
+  var s = document.createElement('script');
+  s.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(KEY) + '&loading=async&callback=initRoscoReviews';
+  s.async = true;
+  document.head.appendChild(s);
 })();
 </script>
 
