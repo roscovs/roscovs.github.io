@@ -97,6 +97,14 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
 .form-legal a { color: inherit; text-decoration: underline; }
 .form-legal a:hover { color: var(--ink); }
 
+.field { align-content: start; }
+.date-list { display: grid; gap: 8px; }
+.date-row { display: flex; gap: 8px; }
+.date-row input { flex: 1; min-width: 0; }
+.rm-date { flex: none; width: 46px; border: 1px solid var(--line); border-radius: 10px; background: transparent; color: var(--ink); font-size: 20px; line-height: 1; cursor: pointer; }
+.rm-date:hover { border-color: var(--ink); }
+.add-date { justify-self: start; margin-top: 2px; padding: 4px 0; border: 0; background: none; color: var(--gel); font: 600 14px/1.4 var(--f-body); cursor: pointer; }
+.add-date:hover { text-decoration: underline; }
 .footer { border-top: 1px solid var(--line); padding-block: 48px 28px; color: var(--muted); }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
 .footer .logo { color: var(--ink); font-size: 22px; }
@@ -211,7 +219,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
             <option>More than one</option>
           </select>
         </div>
-        <div class="field full"><label for="c-date">Event date <span class="opt">(if you have one)</span></label><input id="c-date" name="date" type="date"></div>
+        <div class="field full date-field"><label for="c-date">Event date(s) <span class="opt">(if you have one)</span></label><div class="date-list"><input id="c-date" name="date" type="date"></div><button class="add-date" type="button">+ Add another date</button></div>
         <div class="field full"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required placeholder="Tell us about your event or ask us anything…"></textarea></div>
         <label class="form-legal"><input type="checkbox" name="Agreed to terms and privacy" value="Yes" required><span>I agree to the <a href="terms.html" target="_blank">Terms and conditions</a> and <a href="privacy.html" target="_blank">Privacy policy</a>.</span></label>
         <div class="form-actions">
@@ -283,6 +291,34 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
   });
 })();
 (function () {
+  document.querySelectorAll('.date-field').forEach(function (field) {
+    var list = field.querySelector('.date-list');
+    var first = list.querySelector('input');
+    var add = field.querySelector('.add-date');
+    add.addEventListener('click', function () {
+      var row = document.createElement('div');
+      row.className = 'date-row';
+      var input = document.createElement('input');
+      input.type = 'date';
+      input.name = 'date';
+      input.min = first.min;
+      input.required = first.required;
+      input.setAttribute('aria-label', 'Another event date');
+      var rm = document.createElement('button');
+      rm.type = 'button';
+      rm.className = 'rm-date';
+      rm.setAttribute('aria-label', 'Remove this date');
+      rm.textContent = '\u00d7';
+      rm.addEventListener('click', function () { row.remove(); add.focus(); });
+      row.append(input, rm);
+      list.appendChild(row);
+      input.focus();
+    });
+    field.closest('form').addEventListener('reset', function () {
+      list.querySelectorAll('.date-row').forEach(function (r) { r.remove(); });
+    });
+  });
+})();(function () {
   var form = document.getElementById('contact-form');
   var status = document.getElementById('form-status');
   document.getElementById('c-date').min = new Date().toISOString().slice(0, 10);
@@ -292,10 +328,17 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
     status.textContent = '';
     var b = document.createElement('b');
     var data = {};
+    var dates = [], dateKey;
     form.querySelectorAll('input, select, textarea').forEach(function (el) {
       var label = form.querySelector('label[for="' + el.id + '"]');
+      if (el.name === 'date') {
+        if (!dateKey) { dateKey = label.firstChild.textContent.trim(); data[dateKey] = ''; }
+        if (el.value) dates.push(new Date(el.value + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' }));
+        return;
+      }
       data[label ? label.firstChild.textContent.trim() : el.name] = el.value.trim() || '-';
     });
+    data[dateKey] = dates.join(', ') || '-';
     data._subject = 'Website message from ' + document.getElementById('c-name').value.trim();
     data._cc = 'pasiduraviharas@gmail.com';
     data._replyto = document.getElementById('c-email').value.trim();
