@@ -323,6 +323,63 @@ span.flatpickr-weekday { color: var(--muted); background: transparent; }
     input.addEventListener('invalid', function () { fp.altInput.focus(); fp.open(); });
     input.form.addEventListener('reset', function () { fp.clear(); });
   });
-})();</script>
+})();
+(function () {
+  var form = document.getElementById('contact-form');
+  var status = document.getElementById('form-status');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('c-name').value.trim().split(' ')[0];
+    status.textContent = '';
+    var b = document.createElement('b');
+    var data = {};
+    var dates = [], dateKey, picked = [];
+    form.querySelectorAll('input, select, textarea').forEach(function (el) {
+      var label = form.querySelector('label[for="' + el.id + '"]');
+      if (el.name === 'date') {
+        if (!dateKey) { dateKey = label.firstChild.textContent.trim(); data[dateKey] = ''; }
+        el.value.split(',').map(function (v) { return v.trim(); }).filter(Boolean).sort().forEach(function (v) {
+          dates.push(new Date(v + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' }));
+        });
+        return;
+      }
+      if (el.hasAttribute('data-svc-pick')) {
+        if (!('Service(s)' in data)) data['Service(s)'] = '';
+        if (el.checked) picked.push(el.value);
+        return;
+      }
+      if (!el.name && !el.id) return;
+      data[label ? label.firstChild.textContent.trim() : el.name] = el.value.trim() || '-';
+    });
+    data[dateKey] = dates.join(', ') || '-';
+    data['Service(s)'] = picked.join(', ') || 'Not sure yet';
+    data._subject = 'Website message from ' + document.getElementById('c-name').value.trim();
+    data._cc = 'pasiduraviharas@gmail.com';
+    data._replyto = document.getElementById('c-email').value.trim();
+    data._template = 'table';
+    var submit = form.querySelector('button[type="submit"]');
+    submit.disabled = true;
+    b.textContent = 'Sending your message…';
+    status.appendChild(b);
+    status.hidden = false;
+    fetch('https://formsubmit.co/ajax/roscohq@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function (r) { return r.json(); }).then(function (res) {
+      if (String(res.success) !== 'true') throw new Error(res.message);
+      var summary = { kind: 'message', name: name, services: data['Service(s)'], dates: data[dateKey] };
+      form.reset();
+      location.href = 'thank-you.html?' + new URLSearchParams(summary).toString();
+    }).catch(function () {
+      b.textContent = 'Sorry, ' + name + ', your message didn\'t go through.';
+      status.appendChild(document.createTextNode('Please try again, email us at roscohq@gmail.com or call 0461 277 549.'));
+    }).then(function () {
+      submit.disabled = false;
+      status.focus();
+    });
+  });
+})();
+</script>
 </body>
 </html>

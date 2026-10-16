@@ -578,9 +578,9 @@ span.flatpickr-weekday { color: var(--muted); background: transparent; }
       body: JSON.stringify(data)
     }).then(function (r) { return r.json(); }).then(function (res) {
       if (String(res.success) !== 'true') throw new Error(res.message);
-      b.textContent = 'Thanks, ' + name + '. Your enquiry for ' + when + ' has been sent.';
-      status.appendChild(document.createTextNode('We usually reply within one business day.'));
+      var summary = { name: name, service: document.title, package: data['Package'], others: data['Other services'] || '', dates: when, total: data['Estimated total'] || '' };
       form.reset();
+      location.href = 'thank-you.html?' + new URLSearchParams(summary).toString();
     }).catch(function () {
       b.textContent = 'Sorry, ' + name + ', your enquiry didn\'t go through.';
       status.appendChild(document.createTextNode('Please try again, email us at roscohq@gmail.com or call 0461 277 549.'));
