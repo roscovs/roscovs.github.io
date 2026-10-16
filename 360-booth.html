@@ -144,6 +144,10 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
 .rm-date:hover { border-color: var(--ink); }
 .add-date { justify-self: start; margin-top: 2px; padding: 4px 0; border: 0; background: none; color: var(--gel); font: 600 14px/1.4 var(--f-body); cursor: pointer; }
 .add-date:hover { text-decoration: underline; }
+.price-total { grid-column: 1 / -1; margin: 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; color: var(--muted); }
+.price-total[hidden] { display: none; }
+.price-total strong { color: var(--ink); font-size: 18px; font-weight: 600; }
+.price-total small { flex-basis: 100%; font-size: 13px; }
 .footer { border-top: 1px solid var(--line); padding-block: 48px 28px; color: var(--muted); }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
 .footer .logo { color: var(--ink); font-size: 22px; }
@@ -367,6 +371,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
         <div class="field"><label for="f-venue">Venue or suburb</label><input id="f-venue" name="venue" required></div>
         <div class="field"><label for="f-guests">Guest count <span class="opt">(approx.)</span></label><input id="f-guests" name="guests" type="number" min="1" inputmode="numeric"></div>
         <div class="field full"><label for="f-msg">Anything else? <span class="opt">(optional)</span></label><textarea id="f-msg" name="message" placeholder="Start time, theme, special requests…"></textarea></div>
+        <p class="price-total" id="price-total" role="status" hidden>Estimated total: <strong></strong><small>Final price is confirmed in your quote.</small></p>
         <label class="form-legal"><input type="checkbox" name="Agreed to terms and privacy" value="Yes" required><span>I agree to the <a href="terms.html" target="_blank">Terms and conditions</a> and <a href="privacy.html" target="_blank">Privacy policy</a>.</span></label>
         <div class="form-actions">
           <button class="btn btn-submit" type="submit">Send enquiry <span aria-hidden="true">→</span></button>
@@ -468,9 +473,27 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
   var form = document.getElementById('enquiry-form');
   var status = document.getElementById('form-status');
   var pkg = document.getElementById('f-package');
-  document.getElementById('f-date').min = new Date().toISOString().slice(0, 10);
+  var totalEl = document.getElementById('price-total');
+  function priceTotal() {
+    var m = pkg.value.match(/\$([\d,]+)/);
+    if (!m) return '';
+    var each = Number(m[1].replace(/,/g, ''));
+    var n = 0;
+    form.querySelectorAll('input[name="date"]').forEach(function (i) { if (i.value) n++; });
+    n = n || 1;
+    var fmt = function (v) { return '$' + v.toLocaleString('en-AU'); };
+    return n > 1 ? fmt(each * n) + ' (' + n + ' dates \u00d7 ' + fmt(each) + ')' : fmt(each);
+  }
+  function showTotal() {
+    var t = priceTotal();
+    totalEl.hidden = !t;
+    totalEl.querySelector('strong').textContent = t;
+  }
+  ['input', 'change', 'click', 'reset'].forEach(function (ev) {
+    form.addEventListener(ev, function () { setTimeout(showTotal, 0); });
+  });  document.getElementById('f-date').min = new Date().toISOString().slice(0, 10);
   document.querySelectorAll('[data-package]').forEach(function (b) {
-    b.addEventListener('click', function () { pkg.value = b.dataset.package; });
+    b.addEventListener('click', function () { pkg.value = b.dataset.package; showTotal(); });
   });
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -487,6 +510,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
         return;
       }
       data[label ? label.firstChild.textContent.trim() : el.name] = el.value.trim() || '-';
+      if (el === pkg && priceTotal()) data['Estimated total'] = priceTotal();
     });
     data[dateKey] = dates.join(', ') || '-';    var when = dates.join(', ');
 
