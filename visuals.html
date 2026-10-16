@@ -131,7 +131,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
 .form-status { grid-column: 1 / -1; padding: 16px 18px; border-radius: 10px; border: 1px solid var(--gel); background: color-mix(in srgb, var(--gel) 10%, transparent); }
 .form-status b { display: block; }
 
-.form-legal { grid-column: 1 / -1; margin: 0; font-size: 13px; color: var(--muted); }
+.form-legal { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 10px; margin: 0; font-size: 14px; color: var(--muted); cursor: pointer; }
+.form-legal input { width: 18px; height: 18px; margin: 2px 0 0; padding: 0; flex: none; accent-color: var(--gel); cursor: pointer; }
 .form-legal a { color: inherit; text-decoration: underline; }
 .form-legal a:hover { color: var(--ink); }
 
@@ -358,11 +359,11 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
         <div class="field"><label for="f-venue">Venue or suburb</label><input id="f-venue" name="venue" required></div>
         <div class="field"><label for="f-guests">Guest count <span class="opt">(approx., if an event)</span></label><input id="f-guests" name="guests" type="number" min="1" inputmode="numeric"></div>
         <div class="field full"><label for="f-msg">Tell us about the shoot <span class="opt">(optional)</span></label><textarea id="f-msg" name="message" placeholder="Timings, must-have shots, where the photos or video will be used…"></textarea></div>
+        <label class="form-legal"><input type="checkbox" name="Agreed to terms and privacy" value="Yes" required><span>I agree to the <a href="terms.html" target="_blank">Terms and conditions</a> and <a href="privacy.html" target="_blank">Privacy policy</a>.</span></label>
         <div class="form-actions">
           <button class="btn btn-submit" type="submit">Send enquiry <span aria-hidden="true">→</span></button>
           <small>We usually reply within one business day.</small>
         </div>
-        <p class="form-legal">By sending this form you agree to our <a href="terms.html">Terms and conditions</a> and <a href="privacy.html">Privacy policy</a>.</p>
         <div class="form-status" id="form-status" role="status" tabindex="-1" hidden></div>
       </form>
     </div>
