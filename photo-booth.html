@@ -148,6 +148,15 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
 .price-total[hidden] { display: none; }
 .price-total strong { color: var(--ink); font-size: 18px; font-weight: 600; }
 .price-total small { flex-basis: 100%; font-size: 13px; }
+.extras { border: 0; padding: 0; margin: 0; gap: 0; }
+.extras legend { padding: 0; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+.extra-svc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 8px 18px; min-height: 66px; padding: 10px 0; border-top: 1px solid var(--line); }
+.extra-svc:last-child { border-bottom: 1px solid var(--line); }
+.chk { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; cursor: pointer; }
+.chk input { width: 18px; height: 18px; margin: 0; padding: 0; flex: none; accent-color: var(--gel); cursor: pointer; }
+@media (max-width: 560px) {
+  .extra-svc { grid-template-columns: minmax(0, 1fr); }
+}
 .footer { border-top: 1px solid var(--line); padding-block: 48px 28px; color: var(--muted); }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
 .footer .logo { color: var(--ink); font-size: 22px; }
@@ -368,6 +377,10 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
             <option>Classic (2 hours) &ndash; $449</option><option>Party (3 hours) &ndash; $599</option><option>All Night (4 hours) &ndash; $749</option>
           </select>
         </div>
+        <fieldset class="field full extras"><legend>Add other services <span class="opt">(optional)</span></legend>
+          <div class="extra-svc"><label class="chk"><input type="checkbox"> Rosco 360 Photo Booth</label><select data-svc="Rosco 360 Photo Booth" aria-label="Rosco 360 Photo Booth package" hidden disabled><option value="">Package not sure yet</option><option>Essentials (2 hours) &ndash; $549</option><option>Signature (3 hours) &ndash; $699</option><option>Ultimate (4 hours) &ndash; $849</option></select></div>
+          <div class="extra-svc"><label class="chk"><input type="checkbox"> Rosco Visuals</label><select data-svc="Rosco Visuals" aria-label="Rosco Visuals package" hidden disabled><option value="">Package not sure yet</option><option>Photo (2 hours) &ndash; $450</option><option>Photo + Video (4 hours) &ndash; $1,290</option><option>Full Day (8 hours) &ndash; $2,400</option><option>Custom quote</option></select></div>
+        </fieldset>
         <div class="field"><label for="f-venue">Venue or suburb</label><input id="f-venue" name="venue" required></div>
         <div class="field"><label for="f-guests">Guest count <span class="opt">(approx.)</span></label><input id="f-guests" name="guests" type="number" min="1" inputmode="numeric"></div>
         <div class="field full"><label for="f-msg">Anything else? <span class="opt">(optional)</span></label><textarea id="f-msg" name="message" placeholder="Start time, theme, backdrop preference…"></textarea></div>
@@ -469,15 +482,32 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
       list.querySelectorAll('.date-row').forEach(function (r) { r.remove(); });
     });
   });
-})();(function () {
+})();
+(function () {
   var form = document.getElementById('enquiry-form');
   var status = document.getElementById('form-status');
   var pkg = document.getElementById('f-package');
   var totalEl = document.getElementById('price-total');
+  var extras = form.querySelectorAll('.extra-svc');
+  function priceOf(v) {
+    var m = v.match(/\$([\d,]+)/);
+    return m ? Number(m[1].replace(/,/g, '')) : 0;
+  }
+  function otherServices() {
+    var list = [];
+    extras.forEach(function (row) {
+      var sel = row.querySelector('select');
+      if (!sel.disabled) list.push(sel.dataset.svc + ': ' + (sel.value || 'package not sure yet'));
+    });
+    return list.join('; ');
+  }
   function priceTotal() {
-    var m = pkg.value.match(/\$([\d,]+)/);
-    if (!m) return '';
-    var each = Number(m[1].replace(/,/g, ''));
+    var each = priceOf(pkg.value);
+    extras.forEach(function (row) {
+      var sel = row.querySelector('select');
+      if (!sel.disabled) each += priceOf(sel.value);
+    });
+    if (!each) return '';
     var n = 0;
     form.querySelectorAll('input[name="date"]').forEach(function (i) { if (i.value) n++; });
     n = n || 1;
@@ -491,7 +521,16 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
   }
   ['input', 'change', 'click', 'reset'].forEach(function (ev) {
     form.addEventListener(ev, function () { setTimeout(showTotal, 0); });
-  });  document.getElementById('f-date').min = new Date().toISOString().slice(0, 10);
+  });
+  function syncExtras() {
+    extras.forEach(function (row) {
+      var sel = row.querySelector('select');
+      sel.hidden = sel.disabled = !row.querySelector('input').checked;
+    });
+  }
+  extras.forEach(function (row) { row.querySelector('input').addEventListener('change', syncExtras); });
+  form.addEventListener('reset', function () { setTimeout(syncExtras, 0); });
+  document.getElementById('f-date').min = new Date().toISOString().slice(0, 10);
   document.querySelectorAll('[data-package]').forEach(function (b) {
     b.addEventListener('click', function () { pkg.value = b.dataset.package; showTotal(); });
   });
@@ -509,10 +548,15 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
         if (el.value) dates.push(new Date(el.value + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' }));
         return;
       }
+      if (el.closest('.extra-svc')) return;
       data[label ? label.firstChild.textContent.trim() : el.name] = el.value.trim() || '-';
-      if (el === pkg && priceTotal()) data['Estimated total'] = priceTotal();
+      if (el === pkg) {
+        if (otherServices()) data['Other services'] = otherServices();
+        if (priceTotal()) data['Estimated total'] = priceTotal();
+      }
     });
-    data[dateKey] = dates.join(', ') || '-';    var when = dates.join(', ');
+    data[dateKey] = dates.join(', ') || '-';
+    var when = dates.join(', ');
 
     data._subject = 'Booking enquiry: ' + document.title + ' - ' + when;
     data._cc = 'pasiduraviharas@gmail.com';

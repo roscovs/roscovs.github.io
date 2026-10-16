@@ -105,6 +105,12 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
 .rm-date:hover { border-color: var(--ink); }
 .add-date { justify-self: start; margin-top: 2px; padding: 4px 0; border: 0; background: none; color: var(--gel); font: 600 14px/1.4 var(--f-body); cursor: pointer; }
 .add-date:hover { text-decoration: underline; }
+.svc-pick { gap: 10px; }
+.svc-pick legend { margin-bottom: 4px; }
+.chk { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; cursor: pointer; }
+.chk input { width: 18px; height: 18px; margin: 0; padding: 0; flex: none; accent-color: var(--gel); cursor: pointer; }
+.extras { border: 0; padding: 0; margin: 0; }
+.extras legend { padding: 0; font-size: 14px; font-weight: 600; }
 .footer { border-top: 1px solid var(--line); padding-block: 48px 28px; color: var(--muted); }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
 .footer .logo { color: var(--ink); font-size: 22px; }
@@ -210,15 +216,11 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
         <div class="field"><label for="c-name">Full name</label><input id="c-name" name="name" autocomplete="name" required></div>
         <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
         <div class="field"><label for="c-phone">Phone <span class="opt">(optional)</span></label><input id="c-phone" name="phone" type="tel" autocomplete="tel"></div>
-        <div class="field"><label for="c-service">Service</label>
-          <select id="c-service" name="service">
-            <option value="">Not sure yet</option>
-            <option>Rosco 360 Photo Booth</option>
-            <option>Rosco Photo Booth</option>
-            <option>Rosco Visuals</option>
-            <option>More than one</option>
-          </select>
-        </div>
+        <fieldset class="field extras svc-pick"><legend>Service(s) <span class="opt">(tick any)</span></legend>
+          <label class="chk"><input type="checkbox" data-svc-pick value="Rosco 360 Photo Booth"> Rosco 360 Photo Booth</label>
+          <label class="chk"><input type="checkbox" data-svc-pick value="Rosco Photo Booth"> Rosco Photo Booth</label>
+          <label class="chk"><input type="checkbox" data-svc-pick value="Rosco Visuals"> Rosco Visuals</label>
+        </fieldset>
         <div class="field full date-field"><label for="c-date">Event date(s) <span class="opt">(if you have one)</span></label><div class="date-list"><input id="c-date" name="date" type="date"></div><button class="add-date" type="button">+ Add another date</button></div>
         <div class="field full"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required placeholder="Tell us about your event or ask us anything…"></textarea></div>
         <label class="form-legal"><input type="checkbox" name="Agreed to terms and privacy" value="Yes" required><span>I agree to the <a href="terms.html" target="_blank">Terms and conditions</a> and <a href="privacy.html" target="_blank">Privacy policy</a>.</span></label>
@@ -328,7 +330,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
     status.textContent = '';
     var b = document.createElement('b');
     var data = {};
-    var dates = [], dateKey;
+    var dates = [], dateKey, picked = [];
     form.querySelectorAll('input, select, textarea').forEach(function (el) {
       var label = form.querySelector('label[for="' + el.id + '"]');
       if (el.name === 'date') {
@@ -336,9 +338,15 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
         if (el.value) dates.push(new Date(el.value + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' }));
         return;
       }
+      if (el.hasAttribute('data-svc-pick')) {
+        if (!('Service(s)' in data)) data['Service(s)'] = '';
+        if (el.checked) picked.push(el.value);
+        return;
+      }
       data[label ? label.firstChild.textContent.trim() : el.name] = el.value.trim() || '-';
     });
     data[dateKey] = dates.join(', ') || '-';
+    data['Service(s)'] = picked.join(', ') || 'Not sure yet';
     data._subject = 'Website message from ' + document.getElementById('c-name').value.trim();
     data._cc = 'pasiduraviharas@gmail.com';
     data._replyto = document.getElementById('c-email').value.trim();
