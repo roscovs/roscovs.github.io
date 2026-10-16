@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
 <style>
 /* Layout: dark gel-lit hero, then services, contact-sheet gallery, three packages and an enquiry form. */
 :root {
@@ -137,13 +138,6 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
 .form-legal a:hover { color: var(--ink); }
 
 .field { align-content: start; }
-.date-list { display: grid; gap: 8px; }
-.date-row { display: flex; gap: 8px; }
-.date-row input { flex: 1; min-width: 0; }
-.rm-date { flex: none; width: 46px; border: 1px solid var(--line); border-radius: 10px; background: transparent; color: var(--ink); font-size: 20px; line-height: 1; cursor: pointer; }
-.rm-date:hover { border-color: var(--ink); }
-.add-date { justify-self: start; margin-top: 2px; padding: 4px 0; border: 0; background: none; color: var(--gel); font: 600 14px/1.4 var(--f-body); cursor: pointer; }
-.add-date:hover { text-decoration: underline; }
 .price-total { grid-column: 1 / -1; margin: 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; color: var(--muted); }
 .price-total[hidden] { display: none; }
 .price-total strong { color: var(--ink); font-size: 18px; font-weight: 600; }
@@ -157,6 +151,21 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
 @media (max-width: 560px) {
   .extra-svc { grid-template-columns: minmax(0, 1fr); }
 }
+.date-list { position: relative; }
+.fp-proxy { position: absolute; left: 0; bottom: 0; width: 100%; height: 1px; padding: 0; border: 0; opacity: 0; pointer-events: none; }
+.flatpickr-calendar { background: var(--surface); border: 1px solid var(--line); color: var(--ink); font-family: var(--f-body); box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35); }
+.flatpickr-calendar.arrowTop::before, .flatpickr-calendar.arrowTop::after { border-bottom-color: var(--line); }
+.flatpickr-calendar.arrowBottom::before, .flatpickr-calendar.arrowBottom::after { border-top-color: var(--line); }
+.flatpickr-calendar input, .flatpickr-calendar select { width: auto; padding: 0 0 0 0.5ch; border: 0; border-radius: 0; background: transparent; box-shadow: none; font: inherit; }
+.flatpickr-months .flatpickr-month, .flatpickr-months .flatpickr-prev-month, .flatpickr-months .flatpickr-next-month, .flatpickr-current-month input.cur-year, .flatpickr-current-month .flatpickr-monthDropdown-months { color: var(--ink); fill: var(--ink); }
+.flatpickr-months .flatpickr-prev-month:hover svg, .flatpickr-months .flatpickr-next-month:hover svg { fill: var(--gel); }
+.flatpickr-current-month .flatpickr-monthDropdown-months option { background: var(--surface); color: var(--ink); }
+span.flatpickr-weekday { color: var(--muted); background: transparent; }
+.flatpickr-day { color: var(--ink); }
+.flatpickr-day:hover, .flatpickr-day:focus { background: var(--line); border-color: var(--line); }
+.flatpickr-day.today { border-color: var(--gel); }
+.flatpickr-day.selected, .flatpickr-day.selected:hover, .flatpickr-day.selected:focus { background: var(--gel); border-color: var(--gel); color: #fff; }
+.flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover, .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay { color: var(--muted); opacity: 0.45; background: transparent; border-color: transparent; }
 .footer { border-top: 1px solid var(--line); padding-block: 48px 28px; color: var(--muted); }
 .foot-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
 .footer .logo { color: var(--ink); font-size: 22px; }
@@ -363,7 +372,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
         <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name" required></div>
         <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
         <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required></div>
-        <div class="field date-field"><label for="f-date">Event or shoot date(s)</label><div class="date-list"><input id="f-date" name="date" type="date" required></div><button class="add-date" type="button">+ Add another date</button></div>
+        <div class="field date-field"><label for="f-date">Event or shoot date(s)</label><div class="date-list"><input id="f-date" name="date" type="date" required></div></div>
         <div class="field"><label for="f-type">Type of shoot</label>
           <select id="f-type" name="type" required>
             <option value="">Select…</option>
@@ -439,6 +448,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
 <script>
 (function () {
   var nav = document.querySelector('.nav');
@@ -455,35 +465,27 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
   });
 })();
 (function () {
-  document.querySelectorAll('.date-field').forEach(function (field) {
-    var list = field.querySelector('.date-list');
-    var first = list.querySelector('input');
-    var add = field.querySelector('.add-date');
-    add.addEventListener('click', function () {
-      var row = document.createElement('div');
-      row.className = 'date-row';
-      var input = document.createElement('input');
-      input.type = 'date';
-      input.name = 'date';
-      input.min = first.min;
-      input.required = first.required;
-      input.setAttribute('aria-label', 'Another event date');
-      var rm = document.createElement('button');
-      rm.type = 'button';
-      rm.className = 'rm-date';
-      rm.setAttribute('aria-label', 'Remove this date');
-      rm.textContent = '\u00d7';
-      rm.addEventListener('click', function () { row.remove(); add.focus(); });
-      row.append(input, rm);
-      list.appendChild(row);
-      input.focus();
+  if (!window.flatpickr) return;
+  document.querySelectorAll('.date-field input[name="date"]').forEach(function (input) {
+    var fp = flatpickr(input, {
+      mode: 'multiple', dateFormat: 'Y-m-d', altInput: true, altFormat: 'j M Y', conjunction: ', ',
+      minDate: 'today', disableMobile: true,
+      onChange: function (selected) {
+        var sorted = selected.slice().sort(function (a, b) { return a - b; });
+        if (sorted.some(function (d, i) { return d !== selected[i]; })) this.setDate(sorted, false);
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
     });
-    field.closest('form').addEventListener('reset', function () {
-      list.querySelectorAll('.date-row').forEach(function (r) { r.remove(); });
-    });
+    fp.altInput.placeholder = 'Tap to pick one or more dates';
+    // Keep the real field validatable (flatpickr makes it hidden and the visible one read-only).
+    input.type = 'text';
+    input.className = 'fp-proxy';
+    input.tabIndex = -1;
+    input.setAttribute('aria-hidden', 'true');
+    input.addEventListener('invalid', function () { fp.altInput.focus(); fp.open(); });
+    input.form.addEventListener('reset', function () { fp.clear(); });
   });
-})();
-(function () {
+})();(function () {
   var form = document.getElementById('enquiry-form');
   var status = document.getElementById('form-status');
   var pkg = document.getElementById('f-package');
@@ -509,7 +511,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
     });
     if (!each) return '';
     var n = 0;
-    form.querySelectorAll('input[name="date"]').forEach(function (i) { if (i.value) n++; });
+    form.querySelectorAll('input[name="date"]').forEach(function (i) { n += i.value.split(',').filter(function (v) { return v.trim(); }).length; });
     n = n || 1;
     var fmt = function (v) { return '$' + v.toLocaleString('en-AU'); };
     return n > 1 ? fmt(each * n) + ' (' + n + ' dates \u00d7 ' + fmt(each) + ')' : fmt(each);
@@ -545,10 +547,13 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--g
       var label = form.querySelector('label[for="' + el.id + '"]');
       if (el.name === 'date') {
         if (!dateKey) { dateKey = label.firstChild.textContent.trim(); data[dateKey] = ''; }
-        if (el.value) dates.push(new Date(el.value + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' }));
+        el.value.split(',').map(function (v) { return v.trim(); }).filter(Boolean).sort().forEach(function (v) {
+          dates.push(new Date(v + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' }));
+        });
         return;
       }
       if (el.closest('.extra-svc')) return;
+      if (!el.name && !el.id) return;
       data[label ? label.firstChild.textContent.trim() : el.name] = el.value.trim() || '-';
       if (el === pkg) {
         if (otherServices()) data['Other services'] = otherServices();
