@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rosco Terms and Conditions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: dark hero, then the terms and conditions as a single readable column. */
+:root {
+  --bg: #EDEFF2; --surface: #FFFFFF; --ink: #15161C; --muted: #565B67; --line: #D5D9E0;
+  --gel-360: #C8285F; --gel-booth: #B86E00; --gel-visuals: #0F7C93;
+  --hero-bg: #0C0D11; --hero-ink: #F4F4F1; --hero-muted: #A2A6B0; --hero-line: #2A2D36;
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111217; --surface: #191B21; --ink: #ECEDF1; --muted: #9DA2AD; --line: #2B2E37;
+    --gel-360: #F0588E; --gel-booth: #F2A532; --gel-visuals: #3EC1DB;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111217; --surface: #191B21; --ink: #ECEDF1; --muted: #9DA2AD; --line: #2B2E37;
+  --gel-360: #F0588E; --gel-booth: #F2A532; --gel-visuals: #3EC1DB;
+  color-scheme: dark;
+}
+body { --gel: var(--gel-360); --gel-hi: #F0588E; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gel); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.mono { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* Nav */
+.top { background: var(--hero-bg); color: var(--hero-ink); }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--f-display); font-weight: 900; font-size: 26px; letter-spacing: 0.06em; }
+.logo-mark { width: 34px; height: 34px; border-radius: 50%; border: 2px solid currentColor; display: grid; place-items: center; font-size: 18px; line-height: 1; position: relative; }
+.logo-mark::after { content: ""; position: absolute; top: -3px; right: 2px; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.nav-links { display: flex; align-items: center; gap: 26px; list-style: none; margin: 0; padding: 0; }
+.nav-links a { text-decoration: none; color: var(--hero-muted); font-size: 14px; font-weight: 500; }
+.nav-links a:hover, .nav-links a[aria-current] { color: var(--hero-ink); }
+.nav-cta { padding: 9px 18px; border-radius: 999px; background: var(--hero-ink); color: var(--hero-bg) !important; text-decoration: none; font-weight: 600; font-size: 14px; }
+
+/* Hero */
+.page-hero { background: radial-gradient(70% 120% at 90% 110%, color-mix(in srgb, var(--gel-hi) 22%, transparent), transparent 60%), radial-gradient(60% 120% at 10% 120%, color-mix(in srgb, #3EC1DB 16%, transparent), transparent 60%), var(--hero-bg); color: var(--hero-ink); }
+.page-hero .wrap { padding-block: clamp(40px, 7vw, 90px) clamp(56px, 8vw, 110px); }
+.crumb { color: var(--hero-muted); margin: 0 0 18px; }
+.crumb a { text-decoration: none; }
+.crumb a:hover { color: var(--hero-ink); }
+.page-hero h1 { margin: 0; max-width: 14ch; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(54px, 9vw, 120px); line-height: 0.85; letter-spacing: 0.01em; text-wrap: balance; }
+.lede { margin: 24px 0 0; max-width: 52ch; font-size: clamp(17px, 2vw, 20px); color: var(--hero-muted); }
+
+/* Sections */
+.section { padding-block: clamp(56px, 8vw, 96px); }
+.section + .section { border-top: 1px solid var(--line); }
+.sec-head { display: flex; align-items: end; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; margin-bottom: 36px; }
+.sec-head h2 { margin: 0; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(38px, 5.5vw, 60px); line-height: 0.95; text-wrap: balance; }
+.sec-head p { margin: 0; color: var(--muted); max-width: 44ch; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--gel); margin-bottom: 10px; }
+.eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gel); }
+
+.story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 48px; align-items: start; }
+.story h2 { margin: 0; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(38px, 5.5vw, 60px); line-height: 0.95; }
+.story-body p { margin: 0 0 18px; font-size: 18px; }
+.story-body p:last-child { margin-bottom: 0; color: var(--muted); font-size: 16px; }
+
+.brands { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.brand { --gel: var(--gel-360); position: relative; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; min-width: 0; transition: transform .25s ease, border-color .25s ease; }
+.brand.booth { --gel: var(--gel-booth); }
+.brand.visuals { --gel: var(--gel-visuals); }
+.brand:hover { transform: translateY(-4px); border-color: var(--gel); }
+.brand-art { aspect-ratio: 2 / 1; display: grid; place-items: center; background: radial-gradient(70% 90% at 50% 100%, color-mix(in srgb, var(--gel) 22%, transparent), transparent 70%), var(--hero-bg); border-bottom: 1px solid var(--line); }
+.brand-art img { width: 74%; height: auto; display: block; }
+.brand-body { display: flex; flex-direction: column; gap: 10px; padding: 22px 22px 24px; flex: 1; }
+.brand-body p { margin: 0; color: var(--muted); }
+.brand-link { margin-top: auto; font-weight: 600; text-decoration: none; color: var(--gel); }
+.brand-link::after { content: ""; position: absolute; inset: 0; }
+
+.values { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 28px; list-style: none; margin: 0; padding: 0; }
+.value { border-top: 2px solid var(--ink); padding-top: 18px; min-width: 0; }
+.value h3 { margin: 0 0 6px; font-size: 19px; font-weight: 600; line-height: 1.3; }
+.value h3::before { content: "+ "; color: var(--gel); }
+.value p { margin: 0; color: var(--muted); }
+
+.cta-band { background: var(--hero-bg); color: var(--hero-ink); }
+.cta-band .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-block: clamp(48px, 7vw, 80px); }
+.cta-band h2 { margin: 0; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(36px, 5vw, 56px); line-height: 0.95; }
+.cta-band p { margin: 10px 0 0; color: var(--hero-muted); }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font: 600 15px/1 var(--f-body); text-decoration: none; background: var(--hero-ink); color: var(--hero-bg); transition: transform .2s; }
+.btn:hover { transform: translateY(-2px); }
+
+.policy { max-width: 760px; }
+.policy .updated { color: var(--muted); margin: 0 0 24px; }
+.policy h2 { margin: 40px 0 12px; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(26px, 3.5vw, 34px); line-height: 1; }
+.policy p { margin: 0 0 14px; }
+.policy ul { margin: 0 0 14px; padding-left: 20px; display: grid; gap: 8px; }
+.policy a { color: var(--gel); }
+.footer { border-top: 1px solid var(--line); padding-block: 48px 28px; color: var(--muted); }
+.foot-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
+.footer .logo { color: var(--ink); font-size: 22px; }
+.foot-slogan { margin: 10px 0 18px; max-width: 32ch; }
+.foot-social { display: flex; gap: 10px; flex-wrap: wrap; }
+.foot-social a { width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; color: var(--ink); }
+.foot-social a:hover { border-color: var(--ink); }
+.foot-social svg { width: 18px; height: 18px; }
+.foot-head { font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); margin: 0 0 12px; }
+.foot-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.foot-col a { text-decoration: none; }
+.foot-col a:hover { color: var(--ink); }
+.foot-col p { margin: 0 0 8px; }
+.foot-col strong { display: block; color: var(--ink); font-weight: 600; }
+.foot-bottom { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 880px) {
+  .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .foot-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 480px) {
+  .foot-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 880px) {
+  .story { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .brands { grid-template-columns: minmax(0, 1fr); }
+  .brand-art img { width: min(70%, 420px); }
+  .values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nav-links li.other { display: none; }
+}
+@media (max-width: 560px) {
+  .values { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .brand { transition: none; }
+  .btn:hover, .brand:hover { transform: none; }
+}
+
+/* Mobile menu */
+.menu-btn { display: none; width: 44px; height: 44px; padding: 0; place-items: center; border: 1px solid var(--hero-line); border-radius: 10px; background: transparent; color: var(--hero-ink); cursor: pointer; }
+.menu-btn span, .menu-btn span::before, .menu-btn span::after { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s, background .2s; }
+.menu-btn span { position: relative; }
+.menu-btn span::before, .menu-btn span::after { content: ""; position: absolute; left: 0; }
+.menu-btn span::before { top: -6px; }
+.menu-btn span::after { top: 6px; }
+.nav.open .menu-btn span { background: transparent; }
+.nav.open .menu-btn span::before { transform: translateY(6px) rotate(45deg); }
+.nav.open .menu-btn span::after { transform: translateY(-6px) rotate(-45deg); }
+@media (max-width: 880px) {
+  .nav { flex-wrap: wrap; }
+  .menu-btn { display: grid; }
+  .nav .nav-links { display: none; }
+  .nav.open .nav-links { display: flex; flex-direction: column; align-items: stretch; gap: 0; width: 100%; padding-top: 8px; }
+  .nav.open .nav-links li, .nav.open .nav-links li.other { display: block; }
+  .nav.open .nav-links a { display: block; padding: 14px 4px; border-top: 1px solid var(--hero-line); font-size: 17px; color: var(--hero-ink); }
+  .nav.open .nav-links a.nav-cta { margin-top: 14px; padding: 14px 18px; border-top: 0; text-align: center; color: var(--hero-bg) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-btn span, .menu-btn span::before, .menu-btn span::after { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="logo" href="index.html">ROSCO</a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><span></span></button>
+      <ul class="nav-links" id="site-menu">
+        <li class="other"><a href="360-booth.html">360 Booth</a></li>
+        <li class="other"><a href="photo-booth.html">Photo Booth</a></li>
+        <li class="other"><a href="visuals.html">Visuals</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a class="nav-cta" href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<header class="page-hero">
+  <div class="wrap">
+    <p class="crumb mono"><a href="index.html">Rosco</a> / Terms and conditions</p>
+    <h1>Terms and conditions</h1>
+    <p class="lede">The terms that apply when you book Rosco 360 Photo Booth, Rosco Photo Booth or Rosco Visuals for your event.</p>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="wrap policy">
+      <p class="mono updated">Last updated: 16 October 2026</p>
+
+      <p>These terms apply to every booking with Rosco ("we", "us", "our"), a Melbourne events business serving all of Victoria. By paying a deposit or confirming a booking, you ("the client") agree to these terms. Please also read our <a href="privacy.html">privacy policy</a>.</p>
+
+      <h2>1. Quotes and bookings</h2>
+      <ul>
+        <li>Prices on this website are in Australian dollars and are a guide. Your written quote is the final price.</li>
+        <li>Quotes are valid for 14 days unless stated otherwise.</li>
+        <li>Your date is only secured once we have received your deposit and confirmed the booking in writing. Until then, the date may be booked by someone else.</li>
+      </ul>
+
+      <h2>2. Deposit and payment</h2>
+      <ul>
+        <li>A 30% deposit is required to secure your date.</li>
+        <li>The remaining balance is due 7 days before your event.</li>
+        <li>If the balance is not paid on time, we may treat the booking as cancelled by you (see section 3).</li>
+        <li>Extra time added on the night is charged at the rate in your quote and is payable within 7 days of the event.</li>
+      </ul>
+
+      <h2>3. Cancellations and changes</h2>
+      <ul>
+        <li><strong>If you cancel:</strong> the deposit is non-refundable, because we turn away other bookings for your date. If you cancel within 7 days of the event, the full amount is payable.</li>
+        <li><strong>Changing your date:</strong> we will move your booking to a new date once at no cost, subject to availability, if you tell us at least 14 days before the event. Your deposit carries over.</li>
+        <li><strong>Changing your package:</strong> you can upgrade at any time, subject to availability. Downgrades must be made at least 14 days before the event.</li>
+        <li><strong>If we cancel:</strong> if we have to cancel for any reason, we will try to arrange a suitable replacement. If we cannot, we will refund everything you have paid.</li>
+      </ul>
+
+      <h2>4. Venue, setup and access</h2>
+      <ul>
+        <li>Delivery, setup and pack-down are included as described in your package and quote. Any extra travel or access costs will be confirmed in your quote before you book.</li>
+        <li>Please let us know about stairs, lifts, parking limits, loading times or venue rules in advance. You are responsible for getting any venue approval needed for our equipment.</li>
+        <li>We need a flat, level, indoor area (or covered area if outdoors) of the size we tell you, and access to a standard power outlet within 5 metres.</li>
+        <li>We arrive before your booked time to set up. Booked hours are counted from when the booth or coverage starts, not from setup.</li>
+        <li>For safety, we may stop operating outdoors in rain, strong wind or extreme heat. Time lost because the venue is unsuitable or unavailable is not refundable.</li>
+      </ul>
+
+      <h2>5. Equipment, safety and conduct</h2>
+      <ul>
+        <li>Our attendants run the equipment and may pause or stop use if guests are unsafe, intoxicated, aggressive or misusing it. No refund applies in these cases.</li>
+        <li>For the 360 booth, guests must follow the attendant's instructions, including the number of people on the platform at one time.</li>
+        <li>You are responsible for loss or damage to our equipment caused by you or your guests, other than normal wear and tear.</li>
+        <li>Food and drinks must be kept away from the equipment.</li>
+      </ul>
+
+      <h2>6. Photos, videos and delivery</h2>
+      <ul>
+        <li>360 videos and booth photos are shared on the night where your package includes it. Edited photo galleries and films are delivered within the time stated in your quote.</li>
+        <li>We will do our best to capture your event, but we cannot guarantee specific shots, moments or guests. Results also depend on venue lighting, space and guest participation.</li>
+        <li>Please download and back up your files once delivered. Galleries are kept online for a limited time only.</li>
+      </ul>
+
+      <h2>7. Copyright and use of images</h2>
+      <ul>
+        <li>Rosco keeps the copyright in all photos and videos we create. You may use, share and print them for personal use. Commercial use needs our written permission, unless your quote includes it.</li>
+        <li>We may use selected photos and videos to promote our work, as described in our <a href="privacy.html">privacy policy</a>. Tell us if you would rather we didn't.</li>
+        <li>You are responsible for making sure your guests know photos and videos are being taken at your event.</li>
+      </ul>
+
+      <h2>8. Things outside our control</h2>
+      <p>We are not responsible for delays or failure to deliver caused by events outside our reasonable control, such as extreme weather, natural disasters, road closures, illness, venue problems or government restrictions. If this happens, we will work with you to move your booking to another date, or refund any amount paid for services we could not provide.</p>
+
+      <h2>9. Liability</h2>
+      <p>Our services come with guarantees that cannot be excluded under the Australian Consumer Law. Nothing in these terms limits your rights under that law. To the extent the law allows, our total liability for any booking is limited to the amount you paid for it, and we are not liable for indirect losses.</p>
+
+      <h2>10. Changes to these terms</h2>
+      <p>We may update these terms from time to time. The version on this page when you book is the one that applies to your booking.</p>
+
+      <h2>11. Governing law</h2>
+      <p>These terms are governed by the laws of Victoria, Australia.</p>
+
+      <h2>12. Contact us</h2>
+      <p>Rosco &middot; Melbourne, VIC<br>
+      Email: <a href="mailto:roscohq@gmail.com">roscohq@gmail.com</a><br>
+      Phone: <a href="tel:+61461277549">0461 277 549</a></p>
+    </div>
+  </section>
+</main>
+
+<section class="cta-band">
+  <div class="wrap">
+    <div>
+      <h2>Planning an event?</h2>
+      <p>Tell us your date and we'll let you know what's available.</p>
+    </div>
+    <a class="btn" href="contact.html">Contact us <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="index.html">ROSCO</a>
+        <p class="foot-slogan">Elevating every event with unforgettable 360&deg;, photo booth and visual experiences.</p>
+        <div class="foot-social">
+          <a href="https://www.instagram.com/rosco_360_photobooth/" target="_blank" rel="noopener" aria-label="Rosco on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg></a>
+          <a href="https://www.facebook.com/profile.php?id=61591656851494" target="_blank" rel="noopener" aria-label="Rosco on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8.1v3h2.5V21h2.9z"/></svg></a>
+          <a href="https://www.tiktok.com/@rosco360photobooth" target="_blank" rel="noopener" aria-label="Rosco on TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 0 1-2.6 2.5 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 3.4-2.5V9.6a5.7 5.7 0 0 0-6.5 5.7A5.7 5.7 0 0 0 9.8 21a5.7 5.7 0 0 0 5.7-5.7V9a7.4 7.4 0 0 0 4.3 1.4V7.3a4.3 4.3 0 0 1-3.2-1.5z"/></svg></a>
+        </div>
+      </div>
+      <nav class="foot-col" aria-label="Services">
+        <p class="foot-head">Services</p>
+        <ul>
+          <li><a href="360-booth.html">360 Photo Booth</a></li>
+          <li><a href="photo-booth.html">Photo Booth</a></li>
+          <li><a href="visuals.html">Visuals</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-label="Company">
+        <p class="foot-head">Rosco</p>
+        <ul>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="contact.html">Contact us</a></li>
+          <li><a href="https://g.page/r/Ce2zTwuR5o9cEBM/review" target="_blank" rel="noopener">Leave a review</a></li>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="terms.html">Terms and conditions</a></li>
+        </ul>
+      </nav>
+      <div class="foot-col">
+        <p class="foot-head">Opening hours</p>
+        <p><strong>Monday &ndash; Sunday</strong>7:00 am &ndash; 11:59 pm</p>
+        <p><a href="tel:+61461277549">0461 277 549</a><br><a href="mailto:roscohq@gmail.com">roscohq@gmail.com</a></p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="mono">&copy; 2026 Rosco &middot; Melbourne, VIC</span>
+      <span class="mono">Serving all of Victoria</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var nav = document.querySelector('.nav');
+  var btn = nav && nav.querySelector('.menu-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    btn.setAttribute('aria-expanded', nav.classList.toggle('open'));
+  });
+  nav.querySelectorAll('.nav-links a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
+</body>
+</html>
