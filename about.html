@@ -102,14 +102,28 @@ a { color: inherit; }
 .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font: 600 15px/1 var(--f-body); text-decoration: none; background: var(--hero-ink); color: var(--hero-bg); transition: transform .2s; }
 .btn:hover { transform: translateY(-2px); }
 
-.footer { border-top: 1px solid var(--line); padding-block: 28px; }
-.footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; color: var(--muted); }
+.footer { border-top: 1px solid var(--line); padding-block: 48px 28px; color: var(--muted); }
+.foot-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
 .footer .logo { color: var(--ink); font-size: 22px; }
-.footer .logo-mark { width: 28px; height: 28px; font-size: 15px; }
-.footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
-.footer nav a { text-decoration: none; }
-.footer nav a:hover { color: var(--ink); }
-
+.foot-slogan { margin: 10px 0 18px; max-width: 32ch; }
+.foot-social { display: flex; gap: 10px; flex-wrap: wrap; }
+.foot-social a { width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; color: var(--ink); }
+.foot-social a:hover { border-color: var(--ink); }
+.foot-social svg { width: 18px; height: 18px; }
+.foot-head { font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); margin: 0 0 12px; }
+.foot-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.foot-col a { text-decoration: none; }
+.foot-col a:hover { color: var(--ink); }
+.foot-col p { margin: 0 0 8px; }
+.foot-col strong { display: block; color: var(--ink); font-weight: 600; }
+.foot-bottom { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 880px) {
+  .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .foot-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 480px) {
+  .foot-grid { grid-template-columns: minmax(0, 1fr); }
+}
 @media (max-width: 880px) {
   .story { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .brands { grid-template-columns: minmax(0, 1fr); }
@@ -256,15 +270,40 @@ a { color: inherit; }
 
 <footer class="footer">
   <div class="wrap">
-    <a class="logo" href="index.html">ROSCO</a>
-    <nav aria-label="Footer">
-      <a href="360-booth.html">360 Photo Booth</a>
-      <a href="photo-booth.html">Photo Booth</a>
-      <a href="visuals.html">Visuals</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <span class="mono">© 2026 Rosco · Melbourne, VIC</span>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="index.html">ROSCO</a>
+        <p class="foot-slogan">Elevating every event with unforgettable 360&deg;, photo booth and visual experiences.</p>
+        <div class="foot-social">
+          <a href="https://www.instagram.com/rosco_360_photobooth/" target="_blank" rel="noopener" aria-label="Rosco on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+      <nav class="foot-col" aria-label="Services">
+        <p class="foot-head">Services</p>
+        <ul>
+          <li><a href="360-booth.html">360 Photo Booth</a></li>
+          <li><a href="photo-booth.html">Photo Booth</a></li>
+          <li><a href="visuals.html">Visuals</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-label="Company">
+        <p class="foot-head">Rosco</p>
+        <ul>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="contact.html">Contact us</a></li>
+          <li><a href="https://g.page/r/Ce2zTwuR5o9cEBM/review" target="_blank" rel="noopener">Leave a review</a></li>
+        </ul>
+      </nav>
+      <div class="foot-col">
+        <p class="foot-head">Opening hours</p>
+        <p><strong>Monday &ndash; Sunday</strong>7:00 am &ndash; 11:59 pm</p>
+        <p><a href="tel:+61461277549">0461 277 549</a><br><a href="mailto:roscohq@gmail.com">roscohq@gmail.com</a></p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="mono">&copy; 2026 Rosco &middot; Melbourne, VIC</span>
+      <span class="mono">Serving all of Victoria</span>
+    </div>
   </div>
 </footer>
 
