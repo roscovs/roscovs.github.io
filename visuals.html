@@ -253,6 +253,24 @@ span.flatpickr-weekday { color: var(--muted); background: transparent; }
 input, textarea { caret-color: var(--gel, var(--gel-360)); }
 ::placeholder { color: var(--muted); opacity: 1; }
 .btn:disabled, .btn:disabled:hover { background: var(--ink); color: var(--surface); opacity: 0.6; cursor: progress; transform: none; }
+/* Floating chat button: WhatsApp or text message */
+.chat { position: fixed; z-index: 50; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.chat-fab { width: 56px; height: 56px; padding: 0; display: grid; place-items: center; border: 0; border-radius: 50%; background: var(--gel-hi, #F0588E); color: var(--hero-bg); cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28); transition: transform .2s; }
+.chat-fab:hover { transform: translateY(-2px); }
+.chat-fab svg { width: 24px; height: 24px; }
+.chat-fab .i-close { display: none; }
+.chat.open .chat-fab .i-chat { display: none; }
+.chat.open .chat-fab .i-close { display: block; }
+.chat-menu { display: none; min-width: 220px; padding: 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25); }
+.chat.open .chat-menu { display: grid; gap: 4px; }
+.chat-head { margin: 4px 8px 6px; color: var(--muted); }
+.chat-menu a { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: 600; }
+.chat-menu a:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.chat-menu svg { width: 22px; height: 22px; flex: none; }
+.chat-menu .wa svg { color: #25D366; }
+.chat-menu .sms svg { color: var(--gel, var(--gel-360)); }
+@media (prefers-reduced-motion: reduce) { .chat-fab { transition: none; } .chat-fab:hover { transform: none; } }
+@media print { .chat { display: none; } }
 </style>
 <script type="application/ld+json">
 {
@@ -671,6 +689,34 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
     }).then(function () {
       submit.disabled = false;
       status.focus();
+    });
+  });
+})();
+</script>
+<div class="chat" id="chat">
+  <div class="chat-menu" id="chat-menu" role="menu" aria-label="Message Rosco">
+    <p class="mono chat-head">Message us</p>
+    <a class="wa" role="menuitem" data-kind="whatsapp" href="https://wa.me/61461277549" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>WhatsApp</a>
+    <a class="sms" role="menuitem" data-kind="sms" href="sms:+61461277549"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/></svg>Text 0461 277 549</a>
+  </div>
+  <button class="chat-fab" type="button" aria-expanded="false" aria-controls="chat-menu" aria-label="Message us on WhatsApp or text"><svg class="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg><svg class="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+<script>
+(function () {
+  var box = document.getElementById('chat');
+  var btn = box.querySelector('.chat-fab');
+  var service = document.body.dataset.service;
+  var text = 'Hi Rosco, ' + (service ? "I'd like to ask about the " + service + '.' : "I'd like to ask about booking for an event.");
+  box.querySelector('.wa').href = 'https://wa.me/61461277549?text=' + encodeURIComponent(text);
+  box.querySelector('.sms').href = 'sms:+61461277549?&body=' + encodeURIComponent(text);
+  function set(open) { box.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); }
+  btn.addEventListener('click', function () { set(!box.classList.contains('open')); });
+  document.addEventListener('click', function (e) { if (!box.contains(e.target)) set(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && box.classList.contains('open')) { set(false); btn.focus(); } });
+  box.querySelectorAll('.chat-menu a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      if (window.gtag) gtag('event', 'contact_click', { method: a.dataset.kind, service: service || 'general' });
+      set(false);
     });
   });
 })();
