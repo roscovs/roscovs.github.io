@@ -201,6 +201,8 @@ a { color: inherit; }
 input, textarea { caret-color: var(--gel, var(--gel-360)); }
 ::placeholder { color: var(--muted); opacity: 1; }
 </style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W6FSW4LB8Z"></script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-W6FSW4LB8Z');</script>
 </head>
 <body>
 
@@ -334,6 +336,13 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
     list.append(dt, dd);
   });
   if (list.children.length) document.getElementById('ty-card').hidden = false;
+  try {
+    var key = 'lead:' + location.search;
+    if (location.search && !sessionStorage.getItem(key)) {
+      sessionStorage.setItem(key, '1');
+      gtag('event', 'generate_lead', { form_type: isMessage ? 'message' : 'booking', service: q.get('service') || q.get('services') || 'general' });
+    }
+  } catch (e) {}
 })();</script>
 </body>
 </html>
