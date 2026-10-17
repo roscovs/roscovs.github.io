@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://roscovs.github.io/sitemap.xml

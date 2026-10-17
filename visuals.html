@@ -3,8 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Rosco Visuals</title>
+<title>Event Photography &amp; Videography in Melbourne | Rosco Visuals</title>
 <meta name="description" content="Professional photography and videography for events, brands and special occasions across Victoria, with edited photos and films you&#39;ll keep for years.">
+<link rel="canonical" href="https://roscovs.github.io/visuals.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Rosco">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Event Photography &amp; Videography in Melbourne | Rosco Visuals">
+<meta property="og:description" content="Professional photography and videography for events, brands and special occasions across Victoria, with edited photos and films you&#39;ll keep for years.">
+<meta property="og:url" content="https://roscovs.github.io/visuals.html">
+<meta property="og:image" content="https://roscovs.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rosco 360 Photobooth, Rosco Photobooth and Rosco Visuals logos">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#0C0D11">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -242,7 +254,7 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
 .btn:disabled, .btn:disabled:hover { background: var(--ink); color: var(--surface); opacity: 0.6; cursor: progress; transform: none; }
 </style>
 </head>
-<body class="p-visuals">
+<body data-service="Rosco Visuals" class="p-visuals">
 
 <div class="top">
   <div class="wrap">
@@ -574,7 +586,7 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
     data[dateKey] = dates.join(', ') || '-';
     var when = dates.join(', ');
 
-    data._subject = 'Booking enquiry: ' + document.title + ' - ' + when;
+    data._subject = 'Booking enquiry: ' + document.body.dataset.service + ' - ' + when;
     data._cc = 'pasiduraviharas@gmail.com';
     data._replyto = document.getElementById('f-email').value.trim();
     data._template = 'table';
@@ -589,7 +601,7 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
       body: JSON.stringify(data)
     }).then(function (r) { return r.json(); }).then(function (res) {
       if (String(res.success) !== 'true') throw new Error(res.message);
-      var summary = { name: name, service: document.title, package: data['Package'], others: data['Other services'] || '', dates: when, total: data['Estimated total'] || '' };
+      var summary = { name: name, service: document.body.dataset.service, package: data['Package'], others: data['Other services'] || '', dates: when, total: data['Estimated total'] || '' };
       form.reset();
       location.href = 'thank-you.html?' + new URLSearchParams(summary).toString();
     }).catch(function () {
