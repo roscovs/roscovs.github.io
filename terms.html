@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rosco Terms and Conditions</title>
+<meta name="description" content="The terms that apply when you book Rosco 360 Photo Booth, Rosco Photo Booth or Rosco Visuals for your event.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0C0D11">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -11,8 +14,8 @@
 /* Layout: dark hero, then the terms and conditions as a single readable column. */
 :root {
   --bg: #EDEFF2; --surface: #FFFFFF; --ink: #15161C; --muted: #565B67; --line: #D5D9E0;
-  --gel-360: #C8285F; --gel-booth: #B86E00; --gel-visuals: #0F7C93;
-  --hero-bg: #0C0D11; --hero-ink: #F4F4F1; --hero-muted: #A2A6B0; --hero-line: #2A2D36;
+  --gel-360: #C8285F; --gel-booth: #9A5A00; --gel-visuals: #0B7086;
+  --hero-bg: #0C0D11; --hero-ink: #F4F4F1; --hero-muted: #ACB0B9; --hero-line: #2A2D36;
   --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
   --f-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
@@ -168,6 +171,11 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .menu-btn span, .menu-btn span::before, .menu-btn span::after { transition: none; }
 }
+/* Browser surfaces and shared states */
+[hidden] { display: none !important; }
+::selection { background: color-mix(in srgb, var(--gel, var(--gel-360)) 30%, transparent); }
+input, textarea { caret-color: var(--gel, var(--gel-360)); }
+::placeholder { color: var(--muted); opacity: 1; }
 </style>
 </head>
 <body>
