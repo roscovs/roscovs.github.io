@@ -308,6 +308,44 @@ a { color: inherit; }
   .review-list { grid-template-columns: minmax(0, 1fr); }
 }
 
+/* ---------- FAQ ---------- */
+.faq { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var(--line); }
+.faq-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 32px 48px; align-items: start; }
+.faq-aside { color: var(--muted); display: grid; gap: 18px; }
+.faq-aside p { margin: 0; max-width: 34ch; }
+.faq-aside a { font-weight: 600; color: var(--ink); }
+.faq-list { border-top: 1px solid var(--line); }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 20px 2px;
+  cursor: pointer; list-style: none;
+  font-weight: 600; font-size: 17px; line-height: 1.4;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  flex: none;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--line);
+  display: grid; place-items: center;
+  font-family: var(--f-mono); font-size: 18px; font-weight: 400;
+  color: var(--gel-360);
+  transition: transform .2s, border-color .2s;
+}
+.faq-item summary:hover::after { border-color: var(--ink); }
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-answer { padding: 0 2px 22px; color: var(--muted); max-width: 64ch; }
+.faq-answer p { margin: 0 0 10px; }
+.faq-answer p:last-child { margin-bottom: 0; }
+.faq-answer a { color: var(--ink); font-weight: 600; }
+@media (max-width: 880px) {
+  .faq-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-item summary::after { transition: none; }
+}
+
 /* ---------- Mobile menu ---------- */
 .menu-btn { display: none; width: 44px; height: 44px; padding: 0; place-items: center; border: 1px solid var(--hero-line); border-radius: 10px; background: transparent; color: var(--hero-ink); cursor: pointer; }
 .menu-btn span, .menu-btn span::before, .menu-btn span::after { display: block; width: 20px; height: 2px; border-radius: 2px; background: currentColor; transition: transform .2s, background .2s; }
@@ -445,6 +483,117 @@ a { color: inherit; }
   </div>
 </section>
 
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="faq-grid">
+      <div>
+        <div class="choose-head" style="margin-bottom:20px">
+          <h2>FAQs</h2>
+        </div>
+        <div class="faq-aside">
+          <p>Quick answers about booking, prices, setup and delivery.</p>
+          <p>Can't find your answer? Call <a href="tel:+61461277549">0461 277 549</a> or <a href="contact.html">send us an enquiry</a>.</p>
+        </div>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>How do I book Rosco for my event?</summary>
+          <div class="faq-answer">
+            <p>Send us an enquiry on the <a href="contact.html">contact page</a> with your date, venue and the service you want. We'll check availability and send you a quote.</p>
+            <p>Your date is only secured once we receive your 30% deposit and confirm the booking in writing.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How much does it cost?</summary>
+          <div class="faq-answer">
+            <p>360 Photo Booth packages start at $549 for 2 hours. Photo Booth packages start at $449 for 2 hours. Visuals photography starts at $450 for 2 hours, and we can quote for custom coverage.</p>
+            <p>See the <a href="360-booth.html">360 Booth</a>, <a href="photo-booth.html">Photo Booth</a> and <a href="visuals.html">Visuals</a> pages for every package.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Do you travel outside Melbourne?</summary>
+          <div class="faq-answer">
+            <p>Yes. We're based in Melbourne and cover all of Victoria. Travel fees may apply depending on your location. We'll include them in your quote before you book.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Are setup and pack-down included?</summary>
+          <div class="faq-answer">
+            <p>Yes. Every package includes delivery, setup and pack-down. We arrive before your booked time to set up, and your hours start when the booth or coverage starts, not during setup.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How much space do you need?</summary>
+          <div class="faq-answer">
+            <p>We need a flat, level area and a standard power outlet within 5 metres. We'll tell you the exact space for your package when we send your quote.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can the booth be set up outdoors?</summary>
+          <div class="faq-answer">
+            <p>Yes, as long as the area is covered. For safety, we may pause outdoors in rain, strong wind or extreme heat.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Is someone there to run the booth?</summary>
+          <div class="faq-answer">
+            <p>Yes. A Rosco attendant sets up and runs the booth for the whole event and helps your guests, so you can enjoy the night.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>When do we get our photos and videos?</summary>
+          <div class="faq-answer">
+            <p>360 videos and booth photos are shared with guests on the night when your package includes it. Edited Visuals photos are usually delivered within 7 days. Your quote will give the delivery time for films and larger packages.</p>
+            <p>Please download and back up your files, because galleries stay online for a limited time.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I book more than one service?</summary>
+          <div class="faq-answer">
+            <p>Yes. Many events pair a booth with photography or video. Tick each service you want on the <a href="contact.html">enquiry form</a> and we'll quote them together.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What if I need to change the date or cancel?</summary>
+          <div class="faq-answer">
+            <p>If you tell us at least 14 days before the event, we'll move your booking to a new date once at no cost, subject to availability. Your deposit carries over.</p>
+            <p>If you cancel, the deposit is non-refundable. If you cancel within 7 days of the event, the full amount is payable. Read the full <a href="terms.html">terms and conditions</a>.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "How do I book Rosco for my event?", "acceptedAnswer": {"@type": "Answer", "text": "Send us an enquiry on the contact page with your date, venue and the service you want. We'll check availability and send you a quote. Your date is only secured once we receive your 30% deposit and confirm the booking in writing."}},
+    {"@type": "Question", "name": "How much does it cost?", "acceptedAnswer": {"@type": "Answer", "text": "360 Photo Booth packages start at $549 for 2 hours. Photo Booth packages start at $449 for 2 hours. Visuals photography starts at $450 for 2 hours, and we can quote for custom coverage."}},
+    {"@type": "Question", "name": "Do you travel outside Melbourne?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. We're based in Melbourne and cover all of Victoria. Travel fees may apply depending on your location. We'll include them in your quote before you book."}},
+    {"@type": "Question", "name": "Are setup and pack-down included?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Every package includes delivery, setup and pack-down. We arrive before your booked time to set up, and your hours start when the booth or coverage starts, not during setup."}},
+    {"@type": "Question", "name": "How much space do you need?", "acceptedAnswer": {"@type": "Answer", "text": "We need a flat, level area and a standard power outlet within 5 metres. We'll tell you the exact space for your package when we send your quote."}},
+    {"@type": "Question", "name": "Can the booth be set up outdoors?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, as long as the area is covered. For safety, we may pause outdoors in rain, strong wind or extreme heat."}},
+    {"@type": "Question", "name": "Is someone there to run the booth?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. A Rosco attendant sets up and runs the booth for the whole event and helps your guests, so you can enjoy the night."}},
+    {"@type": "Question", "name": "When do we get our photos and videos?", "acceptedAnswer": {"@type": "Answer", "text": "360 videos and booth photos are shared with guests on the night when your package includes it. Edited Visuals photos are usually delivered within 7 days. Your quote will give the delivery time for films and larger packages."}},
+    {"@type": "Question", "name": "Can I book more than one service?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Many events pair a booth with photography or video. Tick each service you want on the enquiry form and we'll quote them together."}},
+    {"@type": "Question", "name": "What if I need to change the date or cancel?", "acceptedAnswer": {"@type": "Answer", "text": "If you tell us at least 14 days before the event, we'll move your booking to a new date once at no cost, subject to availability. Your deposit carries over. If you cancel, the deposit is non-refundable. If you cancel within 7 days of the event, the full amount is payable."}}
+  ]
+}
+</script>
+
 <footer class="footer">
   <div class="wrap">
     <div class="foot-grid">
@@ -470,6 +619,7 @@ a { color: inherit; }
         <ul>
           <li><a href="about.html">About us</a></li>
           <li><a href="contact.html">Contact us</a></li>
+          <li><a href="#faq">FAQs</a></li>
           <li><a href="https://g.page/r/Ce2zTwuR5o9cEBM/review" target="_blank" rel="noopener">Leave a review</a></li>
           <li><a href="privacy.html">Privacy policy</a></li>
           <li><a href="terms.html">Terms and conditions</a></li>
