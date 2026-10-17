@@ -249,6 +249,9 @@ a { color: inherit; }
 }
 .specs li { display: flex; gap: 10px; }
 .specs li::before { content: "+"; color: var(--gel); }
+.card-price { display: flex; align-items: baseline; gap: 8px; margin: 2px 0 0; }
+.card .card-price { color: var(--muted); }
+.card-price strong { font-family: var(--f-display); font-weight: 900; font-size: 34px; line-height: 1; color: var(--ink); }
 .card-cta {
   margin-top: auto;
   display: flex; align-items: center; justify-content: space-between;
@@ -324,6 +327,17 @@ a { color: inherit; }
 @media (max-width: 880px) {
   .review-list { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ---------- How booking works ---------- */
+.how { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var(--line); }
+.how-steps { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 28px; }
+.how-steps li { counter-increment: step; min-width: 0; border-top: 2px solid var(--ink); padding-top: 18px; }
+.how-steps li::before { content: "0" counter(step); display: block; margin-bottom: 12px; font-family: var(--f-mono); font-size: 13px; letter-spacing: 0.08em; color: var(--gel-360); }
+.how-steps h3 { margin: 0 0 6px; font-size: 19px; font-weight: 600; line-height: 1.3; }
+.how-steps p { margin: 0; color: var(--muted); }
+.how-steps a { color: var(--ink); font-weight: 600; }
+@media (max-width: 880px) { .how-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .how-steps { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---------- FAQ ---------- */
 .faq { padding-block: clamp(56px, 8vw, 96px); border-top: 1px solid var(--line); }
@@ -465,6 +479,7 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
             <li>Instant sharing on the night</li>
             <li>Attendant on site</li>
           </ul>
+          <p class="card-price"><span class="mono">From</span> <strong>$549</strong> <span class="mono">2 hours</span></p>
           <a class="card-cta" href="360-booth.html">Choose 360 Booth <span class="arrow" aria-hidden="true">→</span></a>
         </div>
       </article>
@@ -482,6 +497,7 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
             <li>Custom print designs</li>
             <li>Props and backdrops</li>
           </ul>
+          <p class="card-price"><span class="mono">From</span> <strong>$449</strong> <span class="mono">2 hours</span></p>
           <a class="card-cta" href="photo-booth.html">Choose Photo Booth <span class="arrow" aria-hidden="true">→</span></a>
         </div>
       </article>
@@ -499,12 +515,28 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
             <li>Videography and highlight films</li>
             <li>Professionally edited delivery</li>
           </ul>
+          <p class="card-price"><span class="mono">From</span> <strong>$450</strong> <span class="mono">2 hours</span></p>
           <a class="card-cta" href="visuals.html">Choose Visuals <span class="arrow" aria-hidden="true">→</span></a>
         </div>
       </article>
     </div>
   </div>
 </main>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="choose-head">
+      <h2>How booking works</h2>
+      <p>Four simple steps from first message to the night itself.</p>
+    </div>
+    <ol class="how-steps">
+      <li><h3>Send an enquiry</h3><p>Tell us your date, venue and the service you want, on the <a href="contact.html">contact page</a> or by message.</p></li>
+      <li><h3>Get your quote</h3><p>We check your date and send a quote, usually within one business day.</p></li>
+      <li><h3>Pay a 30% deposit</h3><p>Pay by PayID to lock in your date. The balance is due on the day.</p></li>
+      <li><h3>Enjoy your event</h3><p>We arrive early to set up, run everything on the night and pack down after.</p></li>
+    </ol>
+  </div>
+</section>
 
 <section class="reviews" id="reviews">
   <div class="wrap">
