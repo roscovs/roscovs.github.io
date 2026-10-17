@@ -272,6 +272,8 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
 .faq-answer p:last-child { margin-bottom: 0; }
 .faq-answer a { color: var(--ink); font-weight: 600; }
 @media (prefers-reduced-motion: reduce) { .faq-item summary::after { transition: none; } }
+/* Spam trap field, hidden from people */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 /* Floating chat button: WhatsApp or text message */
 .chat { position: fixed; z-index: 50; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
 .chat-fab { width: 56px; height: 56px; padding: 0; display: grid; place-items: center; border: 0; border-radius: 50%; background: var(--gel-hi, #F0588E); color: var(--hero-bg); cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28); transition: transform .2s; }
@@ -596,6 +598,7 @@ addEventListener('load', function () { var s = document.createElement('script');
         </ol>
       </div>
       <form id="enquiry-form">
+        <div class="hp" aria-hidden="true"><label>Leave this field empty <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
         <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name" required></div>
         <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
         <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required></div>
@@ -775,6 +778,7 @@ addEventListener('load', function () { var s = document.createElement('script');
     var data = {};
     var dates = [], dateKey;
     form.querySelectorAll('input, select, textarea').forEach(function (el) {
+      if (el.name === '_honey') return;
       var label = form.querySelector('label[for="' + el.id + '"]');
       if (el.name === 'date') {
         if (!dateKey) { dateKey = label.firstChild.textContent.trim(); data[dateKey] = ''; }
@@ -794,6 +798,7 @@ addEventListener('load', function () { var s = document.createElement('script');
     data[dateKey] = dates.join(', ') || '-';
     var when = dates.join(', ');
 
+    data._honey = form.querySelector('input[name="_honey"]').value; // spam trap: bots fill it, FormSubmit drops those
     data._subject = 'Booking enquiry: ' + document.body.dataset.service + ' - ' + when;
     data._cc = 'pasiduraviharas@gmail.com';
     data._replyto = document.getElementById('f-email').value.trim();
