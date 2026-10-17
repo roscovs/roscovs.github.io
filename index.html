@@ -622,7 +622,7 @@ addEventListener('load', function () { var s = document.createElement('script');
         <details class="faq-item">
           <summary>Do you travel outside Melbourne?</summary>
           <div class="faq-answer">
-            <p>Yes. We're based in Melbourne and cover all of Victoria. Travel fees may apply depending on your location. We'll include them in your quote before you book.</p>
+            <p>Yes. We're based in Melbourne and cover all of Victoria. Travel fees may apply depending on your location. We'll include them in your quote before you book. See <a href="areas.html">areas we serve</a>.</p>
           </div>
         </details>
 
@@ -701,10 +701,29 @@ addEventListener('load', function () { var s = document.createElement('script');
     "addressRegion": "VIC",
     "addressCountry": "AU"
   },
-  "areaServed": {
-    "@type": "State",
-    "name": "Victoria"
-  },
+  "areaServed": [
+    {"@type": "State", "name": "Victoria"},
+    {"@type": "City", "name": "Melbourne"},
+    {"@type": "City", "name": "Geelong"},
+    {"@type": "City", "name": "Ballarat"},
+    {"@type": "City", "name": "Bendigo"},
+    {"@type": "City", "name": "Mornington"},
+    {"@type": "City", "name": "Frankston"},
+    {"@type": "City", "name": "Warragul"},
+    {"@type": "City", "name": "Traralgon"},
+    {"@type": "City", "name": "Shepparton"},
+    {"@type": "City", "name": "Wodonga"},
+    {"@type": "City", "name": "Warrnambool"},
+    {"@type": "City", "name": "Mildura"},
+    {"@type": "Place", "name": "Mornington Peninsula"},
+    {"@type": "Place", "name": "Yarra Valley"},
+    {"@type": "Place", "name": "Dandenong Ranges"},
+    {"@type": "Place", "name": "Macedon Ranges"},
+    {"@type": "Place", "name": "Bellarine Peninsula"},
+    {"@type": "Place", "name": "Gippsland"},
+    {"@type": "Place", "name": "Phillip Island"},
+    {"@type": "Place", "name": "Great Ocean Road"}
+  ],
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
@@ -776,6 +795,7 @@ addEventListener('load', function () { var s = document.createElement('script');
         <ul>
           <li><a href="about.html">About us</a></li>
           <li><a href="contact.html">Contact us</a></li>
+          <li><a href="areas.html">Areas we serve</a></li>
           <li><a href="#faq">FAQs</a></li>
           <li><a href="https://g.page/r/Ce2zTwuR5o9cEBM/review" target="_blank" rel="noopener">Leave a review</a></li>
           <li><a href="privacy.html">Privacy policy</a></li>
