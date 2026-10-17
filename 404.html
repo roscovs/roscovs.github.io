@@ -8,10 +8,14 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0C0D11">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preload" href="/fonts/big-shoulders-display.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* Fonts, hosted on this site (SIL Open Font License) */
+@font-face { font-family: "Big Shoulders Display"; font-style: normal; font-weight: 700 900; font-display: swap; src: url(/fonts/big-shoulders-display.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 400 600; font-display: swap; src: url(/fonts/instrument-sans.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/ibm-plex-mono-400.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/ibm-plex-mono-500.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 /* Layout: dark hero saying the page is missing, then the three services and a way home. */
 :root {
   --bg: #EDEFF2; --surface: #FFFFFF; --ink: #15161C; --muted: #565B67; --line: #D5D9E0;
@@ -259,21 +263,21 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
       </div>
       <div class="brands">
         <article class="brand">
-          <div class="brand-art"><img src="/logo-360.png" alt="Rosco 360 Photobooth logo" width="1000" height="408"></div>
+          <div class="brand-art"><img src="/logo-360-960.png" srcset="/logo-360-480.png 480w, /logo-360-960.png 960w" sizes="(max-width: 880px) min(70vw, 420px), 340px" loading="lazy" decoding="async" alt="Rosco 360 Photobooth logo" width="1000" height="408"></div>
           <div class="brand-body">
             <p>A spinning 360 video booth with slow-motion clips your guests can share on the spot.</p>
             <a class="brand-link" href="/360-booth.html">Explore 360 Booth →</a>
           </div>
         </article>
         <article class="brand booth">
-          <div class="brand-art"><img src="/logo-photobooth.png" alt="Rosco Photobooth logo" width="1000" height="408"></div>
+          <div class="brand-art"><img src="/logo-photobooth-960.png" srcset="/logo-photobooth-480.png 480w, /logo-photobooth-960.png 960w" sizes="(max-width: 880px) min(70vw, 420px), 340px" loading="lazy" decoding="async" alt="Rosco Photobooth logo" width="1000" height="408"></div>
           <div class="brand-body">
             <p>A classic photo booth with props, backdrops and printed strips to take home.</p>
             <a class="brand-link" href="/photo-booth.html">Explore Photo Booth →</a>
           </div>
         </article>
         <article class="brand visuals">
-          <div class="brand-art"><img src="/logo-visuals.png" alt="Rosco Visuals logo" width="1000" height="417"></div>
+          <div class="brand-art"><img src="/logo-visuals-960.png" srcset="/logo-visuals-480.png 480w, /logo-visuals-960.png 960w" sizes="(max-width: 880px) min(70vw, 420px), 340px" loading="lazy" decoding="async" alt="Rosco Visuals logo" width="1000" height="417"></div>
           <div class="brand-body">
             <p>Photography and videography for weddings, events, brands and special occasions.</p>
             <a class="brand-link" href="/visuals.html">Explore Rosco photography →</a>
@@ -307,6 +311,9 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
           <li><a href="/360-booth.html">360 Photo Booth</a></li>
           <li><a href="/photo-booth.html">Photo Booth</a></li>
           <li><a href="/visuals.html">Photography &amp; Video</a></li>
+          <li><a href="/weddings.html">Weddings</a></li>
+          <li><a href="/corporate-events.html">Corporate events</a></li>
+          <li><a href="/parties.html">Birthdays &amp; parties</a></li>
         </ul>
       </nav>
       <nav class="foot-col" aria-label="Company">

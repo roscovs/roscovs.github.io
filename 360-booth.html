@@ -12,19 +12,24 @@
 <meta property="og:title" content="360 Photo Booth Hire Melbourne | Rosco 360 Photo Booth">
 <meta property="og:description" content="360 photo booth hire in Melbourne and across Victoria for weddings, birthdays and corporate events. Slow-motion 360 videos, instant sharing and an on-site attendant. From $549.">
 <meta property="og:url" content="https://roscovs.github.io/360-booth.html">
-<meta property="og:image" content="https://roscovs.github.io/og-image.png">
+<meta property="og:image" content="https://roscovs.github.io/og-360.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Rosco 360 Photobooth, Rosco Photobooth and Rosco Visuals logos">
+<meta property="og:image:alt" content="Rosco 360 Photobooth logo with 360 photo booth hire packages from $549">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#0C0D11">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
+<link rel="preload" href="/fonts/big-shoulders-display.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css"></noscript>
 <style>
+/* Fonts, hosted on this site (SIL Open Font License) */
+@font-face { font-family: "Big Shoulders Display"; font-style: normal; font-weight: 700 900; font-display: swap; src: url(/fonts/big-shoulders-display.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 400 600; font-display: swap; src: url(/fonts/instrument-sans.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/ibm-plex-mono-400.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/ibm-plex-mono-500.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 /* Layout: dark gel-lit hero, then services, contact-sheet gallery, three packages and an enquiry form. */
 :root {
   --bg: #EDEFF2; --surface: #FFFFFF; --ink: #15161C; --muted: #565B67; --line: #D5D9E0;
@@ -344,8 +349,9 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
   ]
 }
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-W6FSW4LB8Z"></script>
-<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-W6FSW4LB8Z');</script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-W6FSW4LB8Z');
+/* Load Google Analytics after the page has finished loading, so it never slows the first view. */
+addEventListener('load', function () { var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=G-W6FSW4LB8Z'; document.head.appendChild(s); });</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -442,7 +448,7 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
       </div>
     </div>
     <div class="hero-art">
-      <img src="logo-360.png" alt="Rosco 360 Photobooth logo, 360 photo booth hire Melbourne" width="1000" height="408">
+      <img src="logo-360-960.png" srcset="logo-360-480.png 480w, logo-360-960.png 960w" sizes="(max-width: 560px) 240px, (max-width: 880px) 340px, 480px" fetchpriority="high" alt="Rosco 360 Photobooth logo, 360 photo booth hire Melbourne" width="1000" height="408">
     </div>
   </div>
 </header>
@@ -644,6 +650,9 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
           <li><a href="360-booth.html">360 Photo Booth</a></li>
           <li><a href="photo-booth.html">Photo Booth</a></li>
           <li><a href="visuals.html">Photography &amp; Video</a></li>
+          <li><a href="weddings.html">Weddings</a></li>
+          <li><a href="corporate-events.html">Corporate events</a></li>
+          <li><a href="parties.html">Birthdays &amp; parties</a></li>
         </ul>
       </nav>
       <nav class="foot-col" aria-label="Company">
