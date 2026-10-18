@@ -324,6 +324,7 @@ addEventListener('load', function () { var s = document.createElement('script');
           <li><a href="/weddings">Weddings</a></li>
           <li><a href="/corporate-events">Corporate events</a></li>
           <li><a href="/parties">Birthdays &amp; parties</a></li>
+          <li><a href="/christmas-parties">Christmas parties</a></li>
         </ul>
       </nav>
       <nav class="foot-col" aria-label="Company">
@@ -453,7 +454,8 @@ addEventListener('load', function () { var s = document.createElement('script');
         return;
       }
       if (!el.name && !el.id) return;
-      data[label ? label.firstChild.textContent.trim() : el.name] = el.value.trim() || '-';
+      // FormSubmit needs the customer's address under the key "email" to send the auto-reply
+      data[el.type === 'email' ? 'email' : (label ? label.firstChild.textContent.trim() : el.name)] = el.value.trim() || '-';
     });
     data[dateKey] = dates.join(', ') || '-';
     data['Service(s)'] = chosen().map(function (c) { return c.svc + ': ' + (c.pkg || 'package not sure yet'); }).join('; ') || 'Not sure yet';
@@ -471,6 +473,10 @@ addEventListener('load', function () { var s = document.createElement('script');
     data._cc = 'pasiduraviharas@gmail.com';
     data._replyto = document.getElementById('c-email').value.trim();
     data._template = 'table';
+    data._autoresponse = 'Hi ' + form.querySelector('input[name="name"]').value.trim().split(' ')[0] + ',\n\n' +
+      'Thanks for your enquiry with Rosco! We have received your details and will get back to you with a quote within one business day.\n\n' +
+      'Need us sooner? Call, text or WhatsApp us on 0461 277 549, or email roscohq@gmail.com.\n\n' +
+      'Rosco 360 Photo Booth · Rosco Photo Booth · Rosco Visuals\nhttps://roscovs.github.io';
     var submit = form.querySelector('button[type="submit"]');
     submit.disabled = true;
     b.textContent = 'Sending your message…';
