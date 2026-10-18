@@ -189,7 +189,7 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
 ::placeholder { color: var(--muted); opacity: 1; }
 /* Floating contact buttons: WhatsApp and text message, see-through to match the page */
 .chat { position: fixed; z-index: 50; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 10px; }
-.chat-btn { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent); background: color-mix(in srgb, var(--surface) 55%, transparent); -webkit-backdrop-filter: blur(12px) saturate(140%); backdrop-filter: blur(12px) saturate(140%); color: var(--gel, var(--gel-360)); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); text-decoration: none; transition: transform .2s, background .2s, color .2s, border-color .2s; }
+.chat-btn { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); background: color-mix(in srgb, var(--surface) 82%, transparent); -webkit-backdrop-filter: blur(12px) saturate(140%); backdrop-filter: blur(12px) saturate(140%); color: var(--gel, var(--gel-360)); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); text-decoration: none; transition: transform .2s, background .2s, color .2s, border-color .2s; }
 .chat-btn svg { width: 22px; height: 22px; }
 .chat-btn:hover, .chat-btn:focus-visible { transform: translateY(-2px); background: var(--gel, var(--gel-360)); border-color: var(--gel, var(--gel-360)); color: var(--surface); }
 @media (prefers-reduced-motion: reduce) { .chat-btn { transition: none; } .chat-btn:hover, .chat-btn:focus-visible { transform: none; } }
