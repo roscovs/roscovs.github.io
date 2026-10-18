@@ -402,6 +402,16 @@ a { color: inherit; }
 .nav.open .menu-btn span { background: transparent; }
 .nav.open .menu-btn span::before { transform: translateY(6px) rotate(45deg); }
 .nav.open .menu-btn span::after { transform: translateY(-6px) rotate(-45deg); }
+/* Sticky top bar */
+.top { position: sticky; top: 0; z-index: 40; background: var(--hero-bg); color: var(--hero-ink); transition: box-shadow .2s; }
+.top.stuck { box-shadow: 0 1px 0 var(--hero-line), 0 10px 24px rgba(0,0,0,0.22); }
+.top .nav { transition: padding .2s; }
+.top.stuck .nav { padding-block: 12px; }
+html { scroll-padding-top: 96px; }
+@media (max-width: 880px) {
+  .nav.open .nav-links { max-height: calc(100vh - 90px); max-height: calc(100svh - 90px); overflow-y: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .top, .top .nav { transition: none; } }
 @media (max-width: 880px) {
   .nav { flex-wrap: wrap; }
   .menu-btn { display: grid; }
@@ -433,8 +443,7 @@ addEventListener('load', function () { var s = document.createElement('script');
 </head>
 <body>
 
-<header class="hero">
-  <div class="orbit" aria-hidden="true"></div>
+<div class="top">
   <div class="wrap">
     <nav class="nav" aria-label="Main">
       <a class="logo" href="#top" id="top">ROSCO</a>
@@ -448,6 +457,10 @@ addEventListener('load', function () { var s = document.createElement('script');
       </ul>
     </nav>
   </div>
+</div>
+
+<header class="hero">
+  <div class="orbit" aria-hidden="true"></div>
   <div class="wrap hero-body">
     <p class="mono hero-eyebrow">Melbourne &amp; all of Victoria · Photo &amp; Video</p>
     <h1 class="wordmark" aria-label="Rosco"><span>R</span><span class="o-ring">O</span><span>SCO</span></h1>
@@ -806,6 +819,12 @@ addEventListener('load', function () { var s = document.createElement('script');
 
 <script>
 (function () {
+  var bar = document.querySelector('.top');
+  if (bar) {
+    var onScroll = function () { bar.classList.toggle('stuck', window.scrollY > 8); };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
   var nav = document.querySelector('.nav');
   var btn = nav && nav.querySelector('.menu-btn');
   if (!btn) return;
