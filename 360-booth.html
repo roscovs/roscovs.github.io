@@ -116,6 +116,13 @@ a { color: inherit; }
 .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .shot { position: relative; aspect-ratio: 4 / 3; max-width: 100%; border-radius: 10px; overflow: hidden; background: radial-gradient(90% 80% at 30% 100%, color-mix(in srgb, var(--gel-hi) 22%, transparent), transparent 70%), var(--hero-bg); color: var(--hero-muted); display: grid; place-items: center; text-align: center; }
 .shot:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+.vids { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 900px; }
+.vid { margin: 0; aspect-ratio: 9 / 16; border-radius: 12px; overflow: hidden; background: var(--hero-bg); }
+.vid video { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--hero-bg); }
+@media (max-width: 640px) {
+  .vids { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; overscroll-behavior-x: contain; }
+  .vid { scroll-snap-align: start; }
+}
 .shot::before { content: ""; position: absolute; inset: 10px; border: 1px dashed var(--hero-line); border-radius: 6px; }
 .shot .frame { position: absolute; left: 18px; bottom: 14px; }
 .shot .add { display: grid; gap: 6px; justify-items: center; font-size: 14px; }
@@ -480,15 +487,12 @@ addEventListener('load', function () { var s = document.createElement('script');
           <span class="eyebrow mono">Gallery</span>
           <h2>From recent events</h2>
         </div>
-        <p>360 videos from recent events will go here.</p>
+        <p>Real 360 clips from recent events. Tap a video to play it with sound.</p>
       </div>
-      <div class="gallery">
-        <div class="shot"><span class="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg>Video coming soon</span><span class="frame mono">Frame 01</span></div>
-        <div class="shot"><span class="frame mono">Frame 02</span></div>
-        <div class="shot"><span class="frame mono">Frame 03</span></div>
-        <div class="shot"><span class="frame mono">Frame 04</span></div>
-        <div class="shot"><span class="frame mono">Frame 05</span></div>
-        <div class="shot"><span class="frame mono">Frame 06</span></div>
+      <div class="vids">
+        <figure class="vid"><video controls playsinline preload="none" poster="media/360/360-video-1.jpg" width="540" height="960" aria-label="360 booth video 1 from a recent event"><source src="media/360/360-video-1.mp4" type="video/mp4"></video></figure>
+        <figure class="vid"><video controls playsinline preload="none" poster="media/360/360-video-2.jpg" width="540" height="960" aria-label="360 booth video 2 from a recent event"><source src="media/360/360-video-2.mp4" type="video/mp4"></video></figure>
+        <figure class="vid"><video controls playsinline preload="none" poster="media/360/360-video-3.jpg" width="540" height="960" aria-label="360 booth video 3 from a recent event"><source src="media/360/360-video-3.mp4" type="video/mp4"></video></figure>
       </div>
     </div>
   </section>
@@ -846,6 +850,14 @@ addEventListener('load', function () { var s = document.createElement('script');
     });
   });
 })();
+</script>
+<script>
+document.querySelectorAll('.vid video').forEach(function (v, i, all) {
+  v.addEventListener('play', function () {
+    all.forEach(function (o) { if (o !== v) o.pause(); });
+    if (window.gtag) gtag('event', 'video_play', { video: 'video ' + (i + 1), page: '360' });
+  });
+});
 </script>
 </body>
 </html>
