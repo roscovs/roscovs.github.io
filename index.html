@@ -822,7 +822,12 @@ addEventListener('load', function () { var s = document.createElement('script');
 (function () {
   var bar = document.querySelector('.top');
   if (bar) {
-    var onScroll = function () { bar.classList.toggle('stuck', window.scrollY > 8); };
+    // Two switch points: slimming the bar moves the page 20px, so a single point made it flicker near the top.
+    var onScroll = function () {
+      var y = window.scrollY, stuck = bar.classList.contains('stuck');
+      if (!stuck && y > 48) bar.classList.add('stuck');
+      else if (stuck && y < 8) bar.classList.remove('stuck');
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
   }
