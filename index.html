@@ -319,7 +319,7 @@ a { color: inherit; }
 .review-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .review-list:empty { display: none; }
 .review { display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
-.review p { margin: 0; color: var(--muted); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; }
+.review p { margin: 0; color: var(--muted); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 9; -webkit-box-orient: vertical; overflow: hidden; }
 .review-author { display: flex; align-items: center; gap: 10px; margin-top: auto; font-weight: 600; text-decoration: none; }
 .review-author img { width: 36px; height: 36px; border-radius: 50%; }
 .review-author small { display: block; color: var(--muted); font-weight: 400; font-size: 13px; }
@@ -579,18 +579,34 @@ addEventListener('load', function () { var s = document.createElement('script');
   <div class="wrap">
     <div class="choose-head">
       <h2>What our clients say</h2>
-      <div class="rating" id="rating" hidden>
-        <strong id="rating-value"></strong>
-        <span><span class="stars" id="rating-stars" aria-hidden="true"></span><small id="rating-count"></small></span>
+      <div class="rating" id="rating">
+        <strong id="rating-value">5.0</strong>
+        <span><span class="stars" id="rating-stars" aria-hidden="true">★★★★★</span><small id="rating-count">9 Google reviews</small></span>
       </div>
     </div>
-    <div class="review-list" id="review-list"></div>
-    <p class="review-empty" id="review-empty">Had Rosco at your event? We'd love to hear how it went. Your review helps other people find us.</p>
+    <div class="review-list" id="review-list">
+      <article class="review">
+        <span class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>
+        <p>We had a 360 photo booth at my birthday party, and it was such a fun experience! Everyone enjoyed it, and the videos turned out amazing. It made my birthday even more special and memorable. The service was great, and I highly recommend it for anyone looking to add something fun to their special occasion!</p>
+        <div class="review-author"><span>Nirushi W.<small>Google review, October 2026</small></span></div>
+      </article>
+      <article class="review">
+        <span class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>
+        <p>Had a great experience with Rosco 360 Photo Booth! Everything was smooth and enjoyable. Highly recommend them for anyone looking to make their event more fun and memorable!</p>
+        <div class="review-author"><span>Umesh E.<small>Google review, October 2026</small></span></div>
+      </article>
+      <article class="review">
+        <span class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>
+        <p>Exceptional quality, fantastic videos and photos, overall great service.</p>
+        <div class="review-author"><span>Pawan M.<small>Google review, October 2026</small></span></div>
+      </article>
+    </div>
+    <p class="review-empty" id="review-empty" hidden>Had Rosco at your event? We'd love to hear how it went. Your review helps other people find us.</p>
     <div class="review-actions">
       <a class="review-btn" href="https://g.page/r/Ce2zTwuR5o9cEBM/review" target="_blank" rel="noopener"><span aria-hidden="true">★</span> Leave a Google review</a>
       <a class="review-link" id="maps-link" href="https://www.google.com/maps/place/?q=place_id:ChIJuZPIKghB1moR7bNPC5Hmj1w" target="_blank" rel="noopener">See all reviews on Google Maps →</a>
     </div>
-    <p class="mono review-source" id="review-source" hidden>Reviews from Google</p>
+    <p class="mono review-source" id="review-source">Reviews from Google</p>
   </div>
 </section>
 
@@ -875,6 +891,7 @@ addEventListener('load', function () { var s = document.createElement('script');
       document.getElementById('rating').hidden = false;
     }
     var list = document.getElementById('review-list');
+    if ((place.reviews || []).length) list.textContent = '';
     (place.reviews || []).forEach(function (rv) {
       var card = document.createElement('article');
       card.className = 'review';
