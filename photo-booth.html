@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Photo Booth Hire Melbourne | Rosco Photo Booth</title>
-<meta name="description" content="Photo booth hire in Melbourne and across Victoria with unlimited prints, props, backdrops and an on-site attendant. Packages from $449 for weddings, parties and events.">
+<meta name="description" content="Self-serve iPad photo booth hire in Melbourne and across Victoria. Instant sharing to phones, unlimited prints, backdrops and props. Delivered, set up and collected. From $149.">
 <link rel="canonical" href="https://roscovs.github.io/photo-booth">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Rosco">
 <meta property="og:locale" content="en_AU">
 <meta property="og:title" content="Photo Booth Hire Melbourne | Rosco Photo Booth">
-<meta property="og:description" content="Photo booth hire in Melbourne and across Victoria with unlimited prints, props, backdrops and an on-site attendant. Packages from $449 for weddings, parties and events.">
+<meta property="og:description" content="Self-serve iPad photo booth hire in Melbourne and across Victoria. Instant sharing to phones, unlimited prints, backdrops and props. Delivered, set up and collected. From $149.">
 <meta property="og:url" content="https://roscovs.github.io/photo-booth">
 <meta property="og:image" content="https://roscovs.github.io/og-photobooth.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Rosco Photobooth logo with photo booth hire packages from $449">
+<meta property="og:image:alt" content="Rosco Photobooth logo with photo booth hire packages from $149">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
@@ -129,6 +129,7 @@ a { color: inherit; }
 .price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .price strong { font-family: var(--f-display); font-weight: 900; font-size: 58px; line-height: 0.9; font-variant-numeric: tabular-nums; }
 .price span { color: var(--muted); }
+.price-alt { margin: -8px 0 0; color: var(--muted); }
 .plan ul { list-style: none; margin: 0; padding: 16px 0 0; border-top: 1px dashed var(--line); display: grid; gap: 8px; font-size: 15px; }
 .plan li { display: flex; gap: 10px; }
 .plan li::before { content: "+"; color: var(--gel); font-family: var(--f-mono); }
@@ -301,7 +302,7 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
   "name": "Rosco Photo Booth",
   "alternateName": ["Rosco Photobooth"],
   "serviceType": "Photo booth hire",
-  "description": "Classic photo booth hire with printed photo strips, props and backdrops in Melbourne and across Victoria.",
+  "description": "Self-serve iPad photo booth hire with instant sharing, prints, props and backdrops in Melbourne and across Victoria.",
   "url": "https://roscovs.github.io/photo-booth",
   "provider": {
     "@id": "https://roscovs.github.io/#business"
@@ -313,20 +314,32 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
   "offers": [
     {
       "@type": "Offer",
-      "name": "Classic (2 hours)",
+      "name": "Digital (2 hours)",
+      "price": "149",
+      "priceCurrency": "AUD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Digital (4 hours)",
+      "price": "199",
+      "priceCurrency": "AUD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Prints (2 hours)",
+      "price": "249",
+      "priceCurrency": "AUD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Prints (4 hours)",
+      "price": "349",
+      "priceCurrency": "AUD"
+    },
+    {
+      "@type": "Offer",
+      "name": "All Night (6 hours)",
       "price": "449",
-      "priceCurrency": "AUD"
-    },
-    {
-      "@type": "Offer",
-      "name": "Party (3 hours)",
-      "price": "599",
-      "priceCurrency": "AUD"
-    },
-    {
-      "@type": "Offer",
-      "name": "All Night (4 hours)",
-      "price": "749",
       "priceCurrency": "AUD"
     }
   ]
@@ -362,18 +375,42 @@ addEventListener('load', function () { var s = document.createElement('script');
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "How many prints do guests get?",
+      "name": "How does the photo booth work?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Unlimited. Guests can print as many photo strips as they like during your booking."
+        "text": "It's a self-serve iPad photo booth. Guests tap the button on the screen to take their photo, then send it to their phone. We deliver it, set it up, show you how it works and collect it after your event."
       }
     },
     {
       "@type": "Question",
-      "name": "Can we have our own print design?",
+      "name": "Is someone there to run the booth?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Classic includes a standard print design. Party and All Night include a custom design with your names, date, logo or event theme."
+        "text": "No. The photo booth is self-serve, which keeps the price down. It takes one tap, so guests of all ages can use it. If you'd like a booth with an attendant, see our 360 booth."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do guests get their photos on their phone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, with every package, by QR code, text or email. QR sharing needs an internet connection at the venue, so let us know if there's no Wi-Fi or mobile signal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many prints do guests get?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Unlimited, with the Prints and All Night packages. The Digital package has no prints. Guests get their photos on their phone instead."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can we have our own design?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Every package includes an overlay with your names, date or logo. Prints and All Night also include a custom print design."
       }
     },
     {
@@ -381,15 +418,7 @@ addEventListener('load', function () { var s = document.createElement('script');
       "name": "Can we choose the backdrop?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, with the Party and All Night packages. Pick one to match your venue, from sequins to flower walls."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do guests get digital copies?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "With the Party and All Night packages, guests can send their photos to their phone by QR code, text or email. All Night also includes an online gallery and a guest book with a copy of every strip."
+        "text": "Yes, with the Prints and All Night packages. Pick one to match your venue, from sequins to flower walls."
       }
     },
     {
@@ -444,7 +473,7 @@ addEventListener('load', function () { var s = document.createElement('script');
     <div>
       <p class="crumb mono"><a href="/">Rosco</a> / Photo Booth</p>
       <h1>Rosco <em>Photo</em> Booth</h1>
-      <p class="lede">A classic photo booth for hire in Melbourne and across Victoria. Guests strike a pose, grab the props and walk away with printed photo strips from the night.</p>
+      <p class="lede">A self-serve iPad photo booth for hire in Melbourne and across Victoria. Guests tap to take their photo, send it straight to their phone and, with prints, take a copy home.</p>
       <div class="hero-actions">
         <a class="btn btn-gel" href="#enquire">Check your date <span aria-hidden="true">→</span></a>
         <a class="btn btn-ghost" href="#pricing">See packages</a>
@@ -464,15 +493,15 @@ addEventListener('load', function () { var s = document.createElement('script');
           <span class="eyebrow mono">Services</span>
           <h2>What's included</h2>
         </div>
-        <p>Every booking comes set up, styled and run by our team, so you can enjoy the event.</p>
+        <p>We deliver, set up and collect the booth. Guests run it themselves with one tap, so you can enjoy the event.</p>
       </div>
       <ul class="services">
-        <li class="service"><h3>Unlimited prints</h3><p>Guests can print as many photo strips as they like during your booking.</p></li>
-        <li class="service"><h3>Custom print designs</h3><p>Strip layouts designed with your names, date, logo or event theme.</p></li>
-        <li class="service"><h3>Digital copies</h3><p>Guests can send their photos to their phone by QR code, text or email.</p></li>
-        <li class="service"><h3>Props box</h3><p>Hats, glasses, signs and more, chosen to suit your crowd.</p></li>
-        <li class="service"><h3>Backdrop choice</h3><p>Pick a backdrop to match your venue, from sequins to flower walls.</p></li>
-        <li class="service"><h3>On-site attendant</h3><p>A friendly attendant runs the booth, helps with props and keeps prints flowing.</p></li>
+        <li class="service"><h3>One-tap iPad booth</h3><p>Guests tap the screen to take their photo. Easy for every age.</p></li>
+        <li class="service"><h3>Instant sharing</h3><p>Guests send photos to their phone by QR code, text or email.</p></li>
+        <li class="service"><h3>Unlimited prints</h3><p>Print on the night with the Prints and All Night packages.</p></li>
+        <li class="service"><h3>Your design</h3><p>An overlay with your names, date or logo on every photo.</p></li>
+        <li class="service"><h3>Backdrop and props</h3><p>Pick a backdrop to match your venue, plus a props table.</p></li>
+        <li class="service"><h3>Delivered and collected</h3><p>We set up before your event and collect after it ends.</p></li>
       </ul>
     </div>
   </section>
@@ -504,44 +533,47 @@ addEventListener('load', function () { var s = document.createElement('script');
           <span class="eyebrow mono">Pricing</span>
           <h2>Photo booth packages</h2>
         </div>
-        <p>All packages include delivery, setup and pack-down. Travel fees may apply depending on your location.</p>
+        <p>All packages include delivery, setup and collection after your event. Travel fees may apply depending on your location.</p>
       </div>
       <div class="pricing">
         <article class="plan">
-          <h3>Classic</h3>
-          <div class="price"><strong>$449</strong><span class="mono">2 hours</span></div>
+          <h3>Digital</h3>
+          <div class="price"><strong>$149</strong><span class="mono">2 hours</span></div>
+          <p class="price-alt mono">or $199 for 4 hours</p>
           <ul>
-            <li>Unlimited photo strips</li>
-            <li>Standard print design</li>
-            <li>Props box</li>
-            <li>On-site attendant</li>
+            <li>Self-serve iPad photo booth</li>
+            <li>Unlimited photos</li>
+            <li>Guests send photos to their phone</li>
+            <li>Overlay with your names, date or logo</li>
+            <li>Delivered, set up and collected</li>
           </ul>
-          <a class="btn" href="#enquire" data-package="Classic (2 hours) &ndash; $449">Enquire about Classic <span aria-hidden="true">→</span></a>
+          <a class="btn" href="#enquire" data-package="Digital (2 hours) &ndash; $149">Enquire about Digital <span aria-hidden="true">→</span></a>
         </article>
         <article class="plan">
-          <h3>Party</h3>
-          <div class="price"><strong>$599</strong><span class="mono">3 hours</span></div>
+          <h3>Prints</h3>
+          <div class="price"><strong>$249</strong><span class="mono">2 hours</span></div>
+          <p class="price-alt mono">or $349 for 4 hours</p>
           <ul>
-            <li>Everything in Classic</li>
+            <li>Everything in Digital</li>
+            <li>Unlimited prints on the night</li>
             <li>Custom print design</li>
             <li>Choice of backdrop</li>
-            <li>Digital copies for guests</li>
+            <li>Props table</li>
           </ul>
-          <a class="btn" href="#enquire" data-package="Party (3 hours) &ndash; $599">Enquire about Party <span aria-hidden="true">→</span></a>
+          <a class="btn" href="#enquire" data-package="Prints (2 hours) &ndash; $249">Enquire about Prints <span aria-hidden="true">→</span></a>
         </article>
         <article class="plan">
           <h3>All Night</h3>
-          <div class="price"><strong>$749</strong><span class="mono">4 hours</span></div>
+          <div class="price"><strong>$449</strong><span class="mono">6 hours</span></div>
           <ul>
-            <li>Everything in Party</li>
-            <li>Guest book with a copy of every strip</li>
-            <li>Online gallery</li>
-            <li>Extra hour at a reduced rate</li>
+            <li>Everything in Prints</li>
+            <li>6 hours of photos and prints</li>
+            <li>Online gallery of every photo after the event</li>
           </ul>
-          <a class="btn" href="#enquire" data-package="All Night (4 hours) &ndash; $749">Enquire about All Night <span aria-hidden="true">→</span></a>
+          <a class="btn" href="#enquire" data-package="All Night (6 hours) &ndash; $449">Enquire about All Night <span aria-hidden="true">→</span></a>
         </article>
       </div>
-      <p class="price-note mono">Prices in AUD</p>
+      <p class="price-note mono">Prices in AUD &middot; Extra hour $40 &middot; Travel fee may apply</p>
     </div>
   </section>
 
@@ -556,28 +588,36 @@ addEventListener('load', function () { var s = document.createElement('script');
       </div>
       <div class="faq-list">
         <details class="faq-item">
-          <summary>How many prints do guests get?</summary>
-          <div class="faq-answer"><p>Unlimited. Guests can print as many photo strips as they like during your booking.</p></div>
+          <summary>How does the photo booth work?</summary>
+          <div class="faq-answer"><p>It&#x27;s a self-serve iPad photo booth. Guests tap the button on the screen to take their photo, then send it to their phone. We deliver it, set it up, show you how it works and collect it after your event.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Can we have our own print design?</summary>
-          <div class="faq-answer"><p>Yes. Classic includes a standard print design. Party and All Night include a custom design with your names, date, logo or event theme.</p></div>
+          <summary>Is someone there to run the booth?</summary>
+          <div class="faq-answer"><p>No. The photo booth is self-serve, which keeps the price down. It takes one tap, so guests of all ages can use it. If you&#x27;d like a booth with an attendant, see our <a href="/360-booth">360 booth</a>.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Do guests get their photos on their phone?</summary>
+          <div class="faq-answer"><p>Yes, with every package, by QR code, text or email. QR sharing needs an internet connection at the venue, so let us know if there&#x27;s no Wi-Fi or mobile signal.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>How many prints do guests get?</summary>
+          <div class="faq-answer"><p>Unlimited, with the Prints and All Night packages. The Digital package has no prints. Guests get their photos on their phone instead.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Can we have our own design?</summary>
+          <div class="faq-answer"><p>Yes. Every package includes an overlay with your names, date or logo. Prints and All Night also include a custom print design.</p></div>
         </details>
         <details class="faq-item">
           <summary>Can we choose the backdrop?</summary>
-          <div class="faq-answer"><p>Yes, with the Party and All Night packages. Pick one to match your venue, from sequins to flower walls.</p></div>
-        </details>
-        <details class="faq-item">
-          <summary>Do guests get digital copies?</summary>
-          <div class="faq-answer"><p>With the Party and All Night packages, guests can send their photos to their phone by QR code, text or email. All Night also includes an online gallery and a guest book with a copy of every strip.</p></div>
+          <div class="faq-answer"><p>Yes, with the Prints and All Night packages. Pick one to match your venue, from sequins to flower walls.</p></div>
         </details>
         <details class="faq-item">
           <summary>How much space does the photo booth need?</summary>
-          <div class="faq-answer"><p>We need a flat, level area and a standard power outlet within 5 metres. We'll tell you the exact space for your package when we send your quote.</p></div>
+          <div class="faq-answer"><p>We need a flat, level area and a standard power outlet within 5 metres. We&#x27;ll tell you the exact space for your package when we send your quote.</p></div>
         </details>
         <details class="faq-item">
           <summary>Do you travel outside Melbourne?</summary>
-          <div class="faq-answer"><p>Yes. We're based in Melbourne and cover all of Victoria. Travel fees may apply depending on your location, and we include them in your quote before you book.</p></div>
+          <div class="faq-answer"><p>Yes. We&#x27;re based in Melbourne and cover all of Victoria. Travel fees may apply depending on your location, and we include them in your quote before you book.</p></div>
         </details>
         <details class="faq-item">
           <summary>How do I lock in my date?</summary>
@@ -614,7 +654,7 @@ addEventListener('load', function () { var s = document.createElement('script');
         <div class="field"><label for="f-package">Package</label>
           <select id="f-package" name="package">
             <option value="">Not sure yet</option>
-            <option>Classic (2 hours) &ndash; $449</option><option>Party (3 hours) &ndash; $599</option><option>All Night (4 hours) &ndash; $749</option>
+            <option>Digital (2 hours) &ndash; $149</option><option>Digital (4 hours) &ndash; $199</option><option>Prints (2 hours) &ndash; $249</option><option>Prints (4 hours) &ndash; $349</option><option>All Night (6 hours) &ndash; $449</option>
           </select>
         </div>
         <fieldset class="field full extras"><legend>Add other services <span class="opt">(optional)</span></legend>
