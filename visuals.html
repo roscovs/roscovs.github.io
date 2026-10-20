@@ -123,7 +123,8 @@ a { color: inherit; }
 .shot .add { display: grid; gap: 6px; justify-items: center; font-size: 14px; }
 .shot .add svg { width: 30px; height: 30px; color: var(--gel-hi); }
 
-.pricing { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.price-alt { margin: -8px 0 0; color: var(--muted); }
 .plan { display: flex; flex-direction: column; gap: 16px; padding: 28px 24px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; min-width: 0; }
 .plan h3 { margin: 0; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: 30px; line-height: 1; }
 .price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
@@ -319,14 +320,32 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
     },
     {
       "@type": "Offer",
+      "name": "Photo (3 hours)",
+      "price": "590",
+      "priceCurrency": "AUD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Photo (4 hours)",
+      "price": "750",
+      "priceCurrency": "AUD"
+    },
+    {
+      "@type": "Offer",
       "name": "Photo + Video (4 hours)",
-      "price": "1290",
+      "price": "1590",
       "priceCurrency": "AUD"
     },
     {
       "@type": "Offer",
       "name": "Full Day (8 hours)",
-      "price": "2400",
+      "price": "3290",
+      "priceCurrency": "AUD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Team headshots (2 hours)",
+      "price": "450",
       "priceCurrency": "AUD"
     }
   ]
@@ -382,6 +401,14 @@ addEventListener('load', function () { var s = document.createElement('script');
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Yes. If the packages don't fit your event or project, choose \"Custom quote\" on the enquiry form and tell us what you need."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you photograph team headshots?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Our Team headshots package is $450 for 2 hours at your office, with as many team members as fit in that time and edited headshots delivered in an online gallery."
       }
     },
     {
@@ -510,6 +537,7 @@ addEventListener('load', function () { var s = document.createElement('script');
         <article class="plan">
           <h3>Photo</h3>
           <div class="price"><strong>$450</strong><span class="mono">2 hours</span></div>
+          <p class="price-alt mono">$590 for 3 hours &middot; $750 for 4 hours</p>
           <ul>
             <li>One photographer</li>
             <li>Edited high-resolution photos</li>
@@ -520,28 +548,39 @@ addEventListener('load', function () { var s = document.createElement('script');
         </article>
         <article class="plan">
           <h3>Photo + Video</h3>
-          <div class="price"><strong>$1,290</strong><span class="mono">4 hours</span></div>
+          <div class="price"><strong>$1,590</strong><span class="mono">4 hours</span></div>
           <ul>
             <li>Photographer and videographer</li>
             <li>Edited photos and online gallery</li>
             <li>2–3 minute highlight film</li>
             <li>Social media cut</li>
           </ul>
-          <a class="btn" href="#enquire" data-package="Photo + Video (4 hours) &ndash; $1,290">Enquire about Photo + Video <span aria-hidden="true">→</span></a>
+          <a class="btn" href="#enquire" data-package="Photo + Video (4 hours) &ndash; $1,590">Enquire about Photo + Video <span aria-hidden="true">→</span></a>
         </article>
         <article class="plan">
           <h3>Full Day</h3>
-          <div class="price"><strong>$2,400</strong><span class="mono">8 hours</span></div>
+          <div class="price"><strong>$3,290</strong><span class="mono">8 hours</span></div>
           <ul>
             <li>Photographer and videographer</li>
             <li>Full edited photo set</li>
             <li>5–8 minute feature film</li>
             <li>Drone footage where permitted</li>
           </ul>
-          <a class="btn" href="#enquire" data-package="Full Day (8 hours) &ndash; $2,400">Enquire about Full Day <span aria-hidden="true">→</span></a>
+          <a class="btn" href="#enquire" data-package="Full Day (8 hours) &ndash; $3,290">Enquire about Full Day <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="plan">
+          <h3>Team headshots</h3>
+          <div class="price"><strong>$450</strong><span class="mono">2 hours</span></div>
+          <ul>
+            <li>We come to your office</li>
+            <li>As many team members as fit in 2 hours</li>
+            <li>Edited headshots</li>
+            <li>Online gallery</li>
+          </ul>
+          <a class="btn" href="#enquire" data-package="Team headshots (2 hours) &ndash; $450">Enquire about headshots <span aria-hidden="true">→</span></a>
         </article>
       </div>
-      <p class="price-note mono">Prices in AUD</p>
+      <p class="price-note mono">Prices in AUD &middot; Extra photo hour $150 &middot; Travel fee may apply</p>
     </div>
   </section>
 
@@ -566,6 +605,10 @@ addEventListener('load', function () { var s = document.createElement('script');
         <details class="faq-item">
           <summary>Can we get a custom quote?</summary>
           <div class="faq-answer"><p>Yes. If the packages don't fit your event or project, choose "Custom quote" on the enquiry form and tell us what you need.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Do you photograph team headshots?</summary>
+          <div class="faq-answer"><p>Yes. Our Team headshots package is $450 for 2 hours at your office, with as many team members as fit in that time and edited headshots delivered in an online gallery.</p></div>
         </details>
         <details class="faq-item">
           <summary>Do you offer drone footage?</summary>
@@ -614,7 +657,7 @@ addEventListener('load', function () { var s = document.createElement('script');
         <div class="field"><label for="f-package">Package</label>
           <select id="f-package" name="package">
             <option value="">Not sure yet</option>
-            <option>Photo (2 hours) &ndash; $450</option><option>Photo + Video (4 hours) &ndash; $1,290</option><option>Full Day (8 hours) &ndash; $2,400</option><option>Custom quote</option>
+            <option>Photo (2 hours) &ndash; $450</option><option>Photo (3 hours) &ndash; $590</option><option>Photo (4 hours) &ndash; $750</option><option>Photo + Video (4 hours) &ndash; $1,590</option><option>Full Day (8 hours) &ndash; $3,290</option><option>Team headshots (2 hours) &ndash; $450</option><option>Custom quote</option>
           </select>
         </div>
         <fieldset class="field full extras"><legend>Add other services <span class="opt">(optional)</span></legend>
