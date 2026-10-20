@@ -91,6 +91,9 @@ a { color: inherit; }
 .biz-hero h1 { margin: 0; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(54px, 9vw, 120px); line-height: 0.85; letter-spacing: 0.01em; text-wrap: balance; }
 .biz-hero h1 em { font-style: normal; color: var(--gel-hi); }
 .lede { margin: 24px 0 0; max-width: 46ch; font-size: clamp(17px, 2vw, 20px); color: var(--hero-muted); }
+.price-note { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin: 18px 0 0; color: var(--hero-muted); }
+.price-note strong { font-family: var(--f-display); font-weight: 900; font-size: 30px; line-height: 1; color: var(--hero-ink); }
+.price-note a { color: var(--hero-ink); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font: 600 15px/1 var(--f-body); text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: transform .2s, background .2s, color .2s; }
 .btn:hover { transform: translateY(-2px); }
@@ -460,6 +463,7 @@ addEventListener('load', function () { var s = document.createElement('script');
       <p class="crumb mono"><a href="/">Rosco</a> / 360 Photo Booth</p>
       <h1>Rosco <em>360</em> Photo Booth</h1>
       <p class="lede">A spinning 360 video booth for hire in Melbourne and across Victoria. Guests step on the platform, the camera circles them, and they get a slow-motion clip to share on the spot.</p>
+      <p class="price-note"><span class="mono">From</span> <strong>$399</strong> <span class="mono">3 hours</span> <span>One of the lowest 360 booth prices in Melbourne. <a href="/photo-booth-prices-melbourne">Compare prices</a></span></p>
       <div class="hero-actions">
         <a class="btn btn-gel" href="#enquire">Check your date <span aria-hidden="true">→</span></a>
         <a class="btn btn-ghost" href="#pricing">See packages</a>
