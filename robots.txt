@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://roscovs.github.io/sitemap.xml
+Sitemap: https://roscoevent.com.au/sitemap.xml
