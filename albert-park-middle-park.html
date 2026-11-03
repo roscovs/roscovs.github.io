@@ -232,6 +232,8 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
 .chat-btn:hover, .chat-btn:focus-visible { transform: translateY(-2px); background: var(--gel, var(--gel-360)); border-color: var(--gel, var(--gel-360)); color: var(--surface); }
 @media (prefers-reduced-motion: reduce) { .chat-btn { transition: none; } .chat-btn:hover, .chat-btn:focus-visible { transform: none; } }
 @media print { .chat { display: none; } }
+.price-alt { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+.price-alt strong { color: var(--ink); font-weight: 600; }
 </style>
 <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-W6FSW4LB8Z');
 /* Load Google Analytics after the page has finished loading, so it never slows the first view. */
@@ -378,7 +380,8 @@ addEventListener('load', function () { var s = document.createElement('script');
           <div class="brand-art"><img src="logo-visuals-960.png" srcset="logo-visuals-480.png 480w, logo-visuals-960.png 960w" sizes="(max-width: 880px) min(70vw, 420px), 340px" loading="lazy" decoding="async" alt="Rosco Visuals logo" width="1000" height="417"></div>
           <div class="brand-body">
             <p>Event photography and videography, edited and delivered in an online gallery, usually within 7 days.</p>
-            <p class="brand-price"><span class="mono">From</span> <strong>$450</strong> <span class="mono">2 hours</span></p>
+            <p class="brand-price"><span class="mono">Photo from</span> <strong>$450</strong> <span class="mono">2 hours</span></p>
+            <p class="price-alt">Photo + video from <strong>$1,590</strong> &middot; 4 hours</p>
             <a class="brand-link" href="/visuals">Explore photography →</a>
           </div>
         </article>

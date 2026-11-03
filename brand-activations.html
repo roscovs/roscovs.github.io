@@ -251,6 +251,8 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
 .read-next { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); }
 @media (max-width: 880px) { .guide-list { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .guide-card { transition: none; } .guide-card:hover { transform: none; } }
+.price-alt { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+.price-alt strong { color: var(--ink); font-weight: 600; }
 </style>
 <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-W6FSW4LB8Z');
 /* Load Google Analytics after the page has finished loading, so it never slows the first view. */
@@ -390,7 +392,8 @@ addEventListener('load', function () { var s = document.createElement('script');
           <div class="brand-art"><img src="logo-visuals-960.png" srcset="logo-visuals-480.png 480w, logo-visuals-960.png 960w" sizes="(max-width: 880px) min(70vw, 420px), 340px" loading="lazy" decoding="async" alt="Rosco Visuals logo" width="1000" height="417"></div>
           <div class="brand-body">
             <p>Photos and short videos of the activation for your website, social media and campaign reports, with commercial use included in your quote when you need it.</p>
-            <p class="brand-price"><span class="mono">From</span> <strong>$450</strong> <span class="mono">2 hours</span></p>
+            <p class="brand-price"><span class="mono">Photo from</span> <strong>$450</strong> <span class="mono">2 hours</span></p>
+            <p class="price-alt">Photo + video from <strong>$1,590</strong> &middot; 4 hours</p>
             <a class="brand-link" href="/visuals">Explore photography →</a>
           </div>
         </article>

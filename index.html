@@ -438,6 +438,8 @@ input, textarea { caret-color: var(--gel, var(--gel-360)); }
 .chat-btn:hover, .chat-btn:focus-visible { transform: translateY(-2px); background: var(--gel, var(--gel-360)); border-color: var(--gel, var(--gel-360)); color: var(--surface); }
 @media (prefers-reduced-motion: reduce) { .chat-btn { transition: none; } .chat-btn:hover, .chat-btn:focus-visible { transform: none; } }
 @media print { .chat { display: none; } }
+.price-alt { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+.price-alt strong { color: var(--ink); font-weight: 600; }
 </style>
 <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-W6FSW4LB8Z');
 /* Load Google Analytics after the page has finished loading, so it never slows the first view. */
@@ -500,7 +502,6 @@ addEventListener('load', function () { var s = document.createElement('script');
             <li>Attendant on site</li>
           </ul>
           <p class="card-price"><span class="mono">From</span> <strong>$399</strong> <span class="mono">3 hours</span></p>
-          <p class="card-note">One of the lowest 360 booth prices in Melbourne</p>
           <a class="card-cta" href="/360-booth">Choose 360 Booth <span class="arrow" aria-hidden="true">→</span></a>
         </div>
       </article>
@@ -512,13 +513,14 @@ addEventListener('load', function () { var s = document.createElement('script');
         <div class="card-body">
           <span class="tag mono">Self-serve iPad booth</span>
           <h3>Rosco Photo Booth</h3>
-          <p>A one-tap iPad photo booth for parties and events across Victoria. Guests share to their phone and print on the night.</p>
+          <p>A one-tap iPad photo booth for parties and events across Victoria. Guests share to their phone, and print on the night with a Prints package.</p>
           <ul class="specs">
             <li>Photos sent straight to phones</li>
-            <li>Unlimited prints on the night</li>
+            <li>Unlimited prints with Prints packages</li>
             <li>Delivered, set up and collected</li>
           </ul>
-          <p class="card-price"><span class="mono">From</span> <strong>$149</strong> <span class="mono">2 hours</span></p>
+          <p class="card-price"><span class="mono">Digital from</span> <strong>$149</strong> <span class="mono">2 hours</span></p>
+          <p class="price-alt">With prints from <strong>$249</strong> &middot; 2 hours</p>
           <a class="card-cta" href="/photo-booth">Choose Photo Booth <span class="arrow" aria-hidden="true">→</span></a>
         </div>
       </article>
@@ -536,7 +538,8 @@ addEventListener('load', function () { var s = document.createElement('script');
             <li>Videography and highlight films</li>
             <li>Professionally edited delivery</li>
           </ul>
-          <p class="card-price"><span class="mono">From</span> <strong>$450</strong> <span class="mono">2 hours</span></p>
+          <p class="card-price"><span class="mono">Photo from</span> <strong>$450</strong> <span class="mono">2 hours</span></p>
+          <p class="price-alt">Photo + video from <strong>$1,590</strong> &middot; 4 hours</p>
           <a class="card-cta" href="/visuals">Choose Visuals <span class="arrow" aria-hidden="true">→</span></a>
         </div>
       </article>
