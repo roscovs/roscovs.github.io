@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Invoices | Rosco</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0C0D11">
+<link rel="preload" href="/fonts/big-shoulders-display.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Private invoice tool. Not linked from the site, not in the sitemap, no analytics.
+   Everything the owner types is saved only in this browser (localStorage), never uploaded. */
+@font-face { font-family: "Big Shoulders Display"; font-style: normal; font-weight: 700 900; font-display: swap; src: url(/fonts/big-shoulders-display.woff2) format("woff2"); }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 400 600; font-display: swap; src: url(/fonts/instrument-sans.woff2) format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/ibm-plex-mono-400.woff2) format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/ibm-plex-mono-500.woff2) format("woff2"); }
+:root {
+  --bg: #EDEFF2; --surface: #FFFFFF; --ink: #15161C; --muted: #565B67; --line: #D5D9E0; --field: #F6F7F9;
+  --gel: #C8285F; --ok: #1E7A46; --warn: #9A5A00;
+  --hero-bg: #0C0D11; --hero-ink: #F4F4F1; --hero-muted: #ACB0B9;
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111217; --surface: #191B21; --ink: #ECEDF1; --muted: #9DA2AD; --line: #2B2E37; --field: #101116;
+    --gel: #F0588E; --ok: #4CC07E; --warn: #F2A532;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111217; --surface: #191B21; --ink: #ECEDF1; --muted: #9DA2AD; --line: #2B2E37; --field: #101116;
+  --gel: #F0588E; --ok: #4CC07E; --warn: #F2A532;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gel); outline-offset: 2px; border-radius: 6px; }
+.mono { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+[hidden] { display: none !important; }
+
+/* Top bar */
+.bar { position: sticky; top: 0; z-index: 5; background: var(--hero-bg); color: var(--hero-ink); padding: 12px max(16px, env(safe-area-inset-left)); display: flex; align-items: center; gap: 10px 16px; flex-wrap: wrap; }
+.bar-logo { font-family: var(--f-display); font-weight: 900; font-size: 24px; letter-spacing: 0.06em; margin-right: auto; }
+.bar-logo span { color: var(--hero-muted); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; margin-left: 8px; font-weight: 400; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tab { border: 1px solid #2A2D36; background: transparent; color: var(--hero-muted); padding: 7px 14px; border-radius: 999px; cursor: pointer; font-size: 14px; font-weight: 500; }
+.tab[aria-pressed="true"] { background: var(--hero-ink); color: var(--hero-bg); border-color: var(--hero-ink); }
+.tab:hover { color: var(--hero-ink); }
+.tab[aria-pressed="true"]:hover { color: var(--hero-bg); }
+
+.notice { margin: 12px auto 0; max-width: 1400px; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--warn); color: var(--ink); background: color-mix(in srgb, var(--warn) 12%, var(--surface)); font-size: 14px; }
+.page { max-width: 1400px; margin: 0 auto; padding: 20px max(16px, env(safe-area-inset-left)) 60px; }
+
+/* Editor + preview */
+.layout { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 24px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.panel + .panel { margin-top: 14px; }
+.panel h2 { margin: 0 0 12px; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: 22px; letter-spacing: 0.02em; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
+.full { grid-column: 1 / -1; }
+label.f { display: grid; gap: 4px; font-size: 13px; color: var(--muted); font-weight: 500; }
+input, select, textarea { width: 100%; min-width: 0; background: var(--field); border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; font-size: 15px; }
+textarea { resize: vertical; min-height: 70px; }
+input:focus, select:focus, textarea:focus { border-color: var(--gel); outline: none; }
+.hint { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+
+.items { display: grid; gap: 8px; }
+.item { display: grid; grid-template-columns: minmax(0, 1fr) 58px 92px 34px; gap: 6px; align-items: center; }
+.item-head { font-size: 12px; color: var(--muted); }
+.icon-btn { width: 34px; height: 38px; border-radius: 8px; border: 1px solid var(--line); background: transparent; cursor: pointer; color: var(--muted); font-size: 18px; line-height: 1; }
+.icon-btn:hover { color: var(--gel); border-color: var(--gel); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 600; font-size: 14px; text-decoration: none; }
+.btn:hover { border-color: var(--ink); }
+.btn-main { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn-main:hover { opacity: 0.9; }
+.btn-small { padding: 6px 12px; font-size: 13px; }
+.btn-danger { color: var(--gel); }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-size: 14px; font-weight: 500; z-index: 20; }
+.save-state { font-size: 12px; color: var(--muted); }
+
+.preview-wrap { position: sticky; top: 76px; }
+.preview-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
+
+/* The invoice paper: always white, whatever the theme */
+.paper { --p-ink: #15161C; --p-muted: #5D6270; --p-line: #DADDE3; --p-accent: #C8285F;
+  background: #fff; color: var(--p-ink); width: 100%; max-width: 820px; aspect-ratio: auto; padding: 44px 48px; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,0.18); font-size: 13.5px; line-height: 1.5; position: relative; overflow: hidden; color-scheme: light; }
+.p-top { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; }
+.p-brand { font-family: var(--f-display); font-weight: 900; font-size: 46px; letter-spacing: 0.06em; line-height: 0.9; }
+.p-brand-sub { margin-top: 6px; color: var(--p-muted); font-size: 12px; }
+.p-title { text-align: right; }
+.p-title h1 { margin: 0; font-family: var(--f-display); font-weight: 900; font-size: 34px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; }
+.p-meta { margin-top: 10px; display: grid; grid-template-columns: auto auto; gap: 2px 14px; justify-content: end; font-size: 12.5px; }
+.p-meta dt { color: var(--p-muted); }
+.p-meta dd { margin: 0; font-weight: 600; text-align: right; }
+.p-rule { height: 3px; background: var(--p-accent); margin: 22px 0; border-radius: 2px; }
+.p-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.p-label { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--p-muted); margin-bottom: 4px; }
+.p-parties p { margin: 0; white-space: pre-line; }
+.p-strong { font-weight: 600; }
+.p-event { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 12px 14px; border: 1px solid var(--p-line); border-radius: 8px; }
+.p-event p { margin: 0; font-weight: 600; }
+.p-table { width: 100%; border-collapse: collapse; margin-top: 22px; }
+.p-table th { text-align: left; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--p-muted); font-weight: 500; padding: 0 0 8px; border-bottom: 1px solid var(--p-ink); }
+.p-table td { padding: 10px 0; border-bottom: 1px solid var(--p-line); vertical-align: top; }
+.p-table .n { text-align: right; white-space: nowrap; padding-left: 12px; }
+.p-totals { margin-left: auto; margin-top: 14px; width: min(320px, 100%); display: grid; grid-template-columns: 1fr auto; gap: 5px 0; }
+.p-totals dt { color: var(--p-muted); }
+.p-totals dd { margin: 0; padding-left: 16px; text-align: right; font-variant-numeric: tabular-nums; }
+.p-totals .big { font-weight: 700; font-size: 17px; color: var(--p-ink); padding-top: 8px; border-top: 1px solid var(--p-ink); }
+.p-pay { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.p-box { border: 1px solid var(--p-line); border-radius: 8px; padding: 12px 14px; }
+.p-box.accent { border-color: var(--p-accent); background: #FDF2F6; }
+.p-box p { margin: 0; }
+.p-due { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.p-notes { margin-top: 18px; white-space: pre-line; }
+.p-foot { margin-top: 24px; padding-top: 12px; border-top: 1px solid var(--p-line); color: var(--p-muted); font-size: 11.5px; }
+.p-foot p { margin: 0 0 3px; }
+.p-stamp { position: absolute; top: 150px; right: 40px; transform: rotate(-12deg); border: 3px solid #1E7A46; color: #1E7A46; font-family: var(--f-display); font-weight: 900; font-size: 40px; letter-spacing: 0.1em; padding: 2px 16px; border-radius: 8px; opacity: 0.85; }
+
+/* Saved list */
+.list { width: 100%; border-collapse: collapse; }
+.list th { text-align: left; font-size: 12px; color: var(--muted); font-weight: 500; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.list td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.list tr:hover td { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+.list .n { text-align: right; font-variant-numeric: tabular-nums; }
+.pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1px solid currentColor; white-space: nowrap; }
+.pill.paid { color: var(--ok); } .pill.part { color: var(--warn); } .pill.unpaid { color: var(--gel); }
+.list-actions { display: flex; gap: 6px; justify-content: flex-end; flex-wrap: wrap; }
+.search { max-width: 320px; }
+.empty { color: var(--muted); padding: 24px 0; }
+.summary { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.stat { background: var(--field); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; min-width: 150px; }
+.stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 12px; color: var(--muted); }
+
+@media (max-width: 980px) {
+  .layout { grid-template-columns: 1fr; }
+  .preview-wrap { position: static; }
+  .paper { padding: 26px 20px; font-size: 12.5px; }
+  .p-brand { font-size: 34px; }
+  .p-title h1 { font-size: 26px; }
+  .p-stamp { top: 110px; right: 16px; font-size: 30px; }
+}
+@media (max-width: 560px) {
+  .grid2, .p-parties, .p-pay { grid-template-columns: 1fr; }
+  .p-event { grid-template-columns: 1fr 1fr; }
+  .p-top { flex-direction: column; }
+  .p-title { text-align: left; }
+  .p-meta { justify-content: start; }
+  .p-meta dd { text-align: left; }
+  .list .hide-sm { display: none; }
+}
+
+/* Print / Save as PDF: only the invoice paper */
+@page { size: A4; margin: 12mm; }
+@media print {
+  body { background: #fff !important; }
+  .bar, .notice, .editor, .preview-actions, .preview-wrap > .hint, #view-list, #view-settings, .toast { display: none !important; }
+  .page { padding: 0; max-width: none; }
+  .layout { display: block; }
+  .preview-wrap { position: static; }
+  .paper { box-shadow: none; border-radius: 0; padding: 0; max-width: none; font-size: 12.5px; }
+  .p-box.accent { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .p-rule, .p-stamp { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="bar-logo">ROSCO<span>Invoices</span></div>
+  <nav class="tabs" aria-label="Invoice tool">
+    <button class="tab" type="button" data-view="edit" aria-pressed="true">Invoice</button>
+    <button class="tab" type="button" data-view="list" aria-pressed="false">Saved <span id="count"></span></button>
+    <button class="tab" type="button" data-view="settings" aria-pressed="false">My details</button>
+    <button class="tab" type="button" id="new-btn">+ New</button>
+  </nav>
+</header>
+
+<p class="notice" id="storage-warn" hidden>This browser is blocking storage (private window?). You can still make and print an invoice, but it won't be saved.</p>
+<p class="notice" id="setup-warn" hidden>Add your PayID and ABN in <button class="btn btn-small" type="button" data-goto="settings">My details</button> before sending invoices.</p>
+
+<main class="page">
+  <!-- EDIT -->
+  <section id="view-edit" class="layout">
+    <div class="editor">
+      <div class="panel">
+        <h2>Invoice</h2>
+        <div class="grid2">
+          <label class="f">Invoice number<input data-f="no" autocomplete="off"></label>
+          <label class="f">Issue date<input type="date" data-f="issue"></label>
+          <label class="f">Deposit due by<input type="date" data-f="depositDue"></label>
+          <label class="f">Deposit %<input type="number" min="0" max="100" step="1" data-f="depositPct" inputmode="numeric"></label>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Client</h2>
+        <div class="grid2">
+          <label class="f">Name<input data-f="client.name" autocomplete="off"></label>
+          <label class="f">Company (optional)<input data-f="client.company" autocomplete="off"></label>
+          <label class="f">Email<input type="email" data-f="client.email" autocomplete="off"></label>
+          <label class="f">Phone<input type="tel" data-f="client.phone" autocomplete="off"></label>
+          <label class="f full">Address (optional)<textarea rows="2" data-f="client.address"></textarea></label>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Event</h2>
+        <div class="grid2">
+          <label class="f">Event date<input type="date" data-f="event.date"></label>
+          <label class="f">Time<input data-f="event.time" placeholder="e.g. 7pm to 10pm" autocomplete="off"></label>
+          <label class="f full">Venue<input data-f="event.venue" autocomplete="off"></label>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Items</h2>
+        <label class="f">Add a package
+          <select id="preset">
+            <option value="">Choose a package or extra…</option>
+            <optgroup label="Rosco 360 Photo Booth">
+              <option value="360 Photo Booth – Essentials (3 hours)|399">Essentials · 3 hours · $399</option>
+              <option value="360 Photo Booth – Signature (5 hours)|699">Signature · 5 hours · $699</option>
+              <option value="360 Photo Booth – Ultimate (7 hours)|899">Ultimate · 7 hours · $899</option>
+            </optgroup>
+            <optgroup label="Rosco Photo Booth (self-serve iPad)">
+              <option value="Photo Booth – Digital (2 hours)|149">Digital · 2 hours · $149</option>
+              <option value="Photo Booth – Digital (4 hours)|199">Digital · 4 hours · $199</option>
+              <option value="Photo Booth – Prints (2 hours)|249">Prints · 2 hours · $249</option>
+              <option value="Photo Booth – Prints (4 hours)|349">Prints · 4 hours · $349</option>
+              <option value="Photo Booth – All Night (6 hours, online gallery)|449">All Night · 6 hours · $449</option>
+              <option value="Photo Booth – extra hour|40">Extra hour · $40</option>
+            </optgroup>
+            <optgroup label="Rosco Visuals">
+              <option value="Event photography (2 hours)|450">Photo · 2 hours · $450</option>
+              <option value="Event photography (3 hours)|590">Photo · 3 hours · $590</option>
+              <option value="Event photography (4 hours)|750">Photo · 4 hours · $750</option>
+              <option value="Photo + Video (4 hours)|1590">Photo + Video · 4 hours · $1,590</option>
+              <option value="Full Day photo + video (8 hours)|3290">Full Day · 8 hours · $3,290</option>
+              <option value="Team headshots on site (2 hours)|450">Team headshots · 2 hours · $450</option>
+              <option value="Extra photography hour|150">Extra photo hour · $150</option>
+            </optgroup>
+            <optgroup label="Other">
+              <option value="Travel fee|">Travel fee (enter amount)</option>
+              <option value="|">Blank line</option>
+            </optgroup>
+          </select>
+        </label>
+        <div class="items" id="items" style="margin-top:12px"></div>
+        <div class="grid2" style="margin-top:12px">
+          <label class="f">Discount ($)<input type="number" min="0" step="1" data-f="discount" inputmode="decimal"></label>
+          <label class="f">Paid so far ($)<input type="number" min="0" step="1" data-f="paid" inputmode="decimal"></label>
+        </div>
+        <div class="row">
+          <button class="btn btn-small" type="button" id="mark-deposit">Mark deposit paid</button>
+          <button class="btn btn-small" type="button" id="mark-paid">Mark paid in full</button>
+          <button class="btn btn-small" type="button" id="mark-unpaid">Reset to unpaid</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Notes</h2>
+        <label class="f">Shown on the invoice<textarea rows="3" data-f="notes" placeholder="e.g. Custom overlay: “Sam & Alex · 12.12.26”"></textarea></label>
+      </div>
+    </div>
+
+    <div class="preview-wrap">
+      <div class="preview-actions">
+        <button class="btn btn-main" type="button" id="print-btn">Save PDF / Print</button>
+        <button class="btn" type="button" id="email-btn">Email client</button>
+        <button class="btn" type="button" id="copy-btn">Copy message</button>
+        <span class="save-state" id="save-state"></span>
+      </div>
+      <article class="paper" id="paper" aria-label="Invoice preview"></article>
+      <p class="hint">To send: tap <b>Save PDF / Print</b> and choose “Save as PDF” (on iPhone, tap Share → Save to Files). Then tap <b>Email client</b> and attach the PDF.</p>
+    </div>
+  </section>
+
+  <!-- SAVED LIST -->
+  <section id="view-list" hidden>
+    <div class="panel">
+      <h2>Saved invoices</h2>
+      <div class="summary" id="summary"></div>
+      <input class="search" type="search" id="search" placeholder="Search client, number or venue" aria-label="Search invoices">
+      <div style="overflow-x:auto; margin-top:12px">
+        <table class="list">
+          <thead><tr><th>No.</th><th>Client</th><th class="hide-sm">Event</th><th class="n">Total</th><th class="n hide-sm">Owing</th><th>Status</th><th></th></tr></thead>
+          <tbody id="list-body"></tbody>
+        </table>
+      </div>
+      <p class="empty" id="list-empty" hidden>No invoices yet. Tap “+ New” to make one.</p>
+    </div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="view-settings" hidden>
+    <div class="panel" style="max-width:760px">
+      <h2>My details</h2>
+      <p class="hint" style="margin:0 0 14px">These appear on every invoice. They're saved only in this browser, not on the website.</p>
+      <div class="grid2">
+        <label class="f">Business name<input data-s="bizName"></label>
+        <label class="f">Your name<input data-s="ownerName"></label>
+        <label class="f full">Line under the logo<input data-s="tagline"></label>
+        <label class="f">ABN<input data-s="abn" inputmode="numeric" placeholder="11 digits"></label>
+        <label class="f">Invoice number prefix<input data-s="prefix"></label>
+        <label class="f">Phone<input data-s="phone"></label>
+        <label class="f">Email<input data-s="email"></label>
+        <label class="f">Website<input data-s="website"></label>
+        <label class="f">Address / area<input data-s="address"></label>
+        <label class="f">PayID (phone or email)<input data-s="payid"></label>
+        <label class="f">PayID account name<input data-s="payidName"></label>
+        <label class="f">BSB (optional)<input data-s="bsb" inputmode="numeric"></label>
+        <label class="f">Account number (optional)<input data-s="acct" inputmode="numeric"></label>
+        <label class="f">Default deposit %<input type="number" min="0" max="100" data-s="depositPct"></label>
+        <label class="f">Deposit due after (days)<input type="number" min="0" max="60" data-s="depositDays"></label>
+        <label class="f full">GST
+          <select data-s="gst">
+            <option value="no">Not registered for GST (invoice shows no GST)</option>
+            <option value="yes">Registered for GST (tax invoice, prices include GST)</option>
+          </select>
+        </label>
+        <label class="f full">Terms at the bottom of the invoice<textarea rows="4" data-s="terms"></textarea></label>
+      </div>
+      <p class="hint">Add your ABN: business clients can hold back 47% of a payment if an invoice has no ABN.</p>
+    </div>
+
+    <div class="panel" style="max-width:760px">
+      <h2>Backup</h2>
+      <p class="hint" style="margin:0 0 12px">Invoices live only in this browser. Download a backup now and then, and use it to move your invoices to another computer or phone.</p>
+      <div class="row">
+        <button class="btn" type="button" id="export-btn">Download backup</button>
+        <label class="btn" for="import-file">Restore from backup</label>
+        <input type="file" id="import-file" accept="application/json,.json" hidden>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function () {
+  "use strict";
+  var KEY = "rosco-invoices-v1";
+  var DEFAULT_TERMS = "A 30% deposit secures your date. The balance is due on the event day, before the service starts.\nThe deposit is non-refundable. Cancellations within 7 days of the event are payable in full.\nFull terms: roscoevent.com.au/terms";
+
+  function defaults() {
+    return {
+      bizName: "Rosco", ownerName: "", tagline: "Rosco 360 Photo Booth · Rosco Photo Booth · Rosco Visuals",
+      abn: "", prefix: "ROS-", phone: "0461 277 549", email: "roscohq@gmail.com", website: "roscoevent.com.au",
+      address: "Melbourne, Victoria", payid: "", payidName: "", bsb: "", acct: "",
+      depositPct: 30, depositDays: 3, gst: "no", terms: DEFAULT_TERMS
+    };
+  }
+
+  // ---------- storage ----------
+  var canStore = true;
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) {
+        var s = JSON.parse(raw);
+        if (s && s.settings && Array.isArray(s.invoices)) {
+          s.settings = Object.assign(defaults(), s.settings);
+          s.nextNo = s.nextNo || s.invoices.length + 1;
+          return s;
+        }
+      }
+    } catch (e) { canStore = false; }
+    return { settings: defaults(), invoices: [], nextNo: 1 };
+  }
+  var store = load();
+  var saveTimer = null;
+  function save() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function () {
+      try { localStorage.setItem(KEY, JSON.stringify(store)); canStore = true; setState("Saved"); }
+      catch (e) { canStore = false; setState("Not saved"); }
+      document.getElementById("storage-warn").hidden = canStore;
+    }, 250);
+  }
+  function setState(t) { document.getElementById("save-state").textContent = t; }
+
+  // ---------- helpers ----------
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function esc(v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function num(v) { var n = parseFloat(v); return isFinite(n) ? n : 0; }
+  function cents(v) { return Math.round(num(v) * 100); }
+  var fmt = new Intl.NumberFormat("en-AU", { style: "currency", currency: "AUD" });
+  function money(c) { return fmt.format(c / 100); }
+  function today() { var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); }
+  function addDays(iso, n) { var d = new Date(iso + "T00:00:00"); d.setDate(d.getDate() + n); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); }
+  function niceDate(iso) {
+    if (!iso) return "";
+    var d = new Date(iso + "T00:00:00");
+    return isNaN(d) ? iso : d.toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" });
+  }
+  function getPath(o, p) { return p.split(".").reduce(function (a, k) { return a == null ? a : a[k]; }, o); }
+  function setPath(o, p, v) { var ks = p.split("."), last = ks.pop(); ks.reduce(function (a, k) { return a[k] = a[k] || {}; }, o)[last] = v; }
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function toast(t) { var el = $("#toast"); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { el.hidden = true; }, 2600); }
+
+  function totals(inv) {
+    var sub = 0;
+    inv.items.forEach(function (it) { sub += Math.round(num(it.qty) * cents(it.price)); });
+    var disc = Math.min(cents(inv.discount), sub);
+    var total = sub - disc;
+    var paid = Math.min(cents(inv.paid), total);
+    var pct = Math.max(0, Math.min(100, num(inv.depositPct)));
+    var deposit = Math.round(total * pct / 100);
+    var owing = total - paid;
+    var status = total > 0 && owing <= 0 ? "paid" : paid > 0 ? "part" : "unpaid";
+    return { sub: sub, disc: disc, total: total, paid: paid, deposit: deposit, pct: pct, owing: owing, status: status,
+      gstIncl: store.settings.gst === "yes" ? Math.round(total / 11) : 0 };
+  }
+  function statusText(s) { return s === "paid" ? "Paid" : s === "part" ? "Part paid" : "Unpaid"; }
+
+  // ---------- invoices ----------
+  function newInvoice() {
+    var s = store.settings, issue = today();
+    var inv = {
+      id: uid(), no: (s.prefix || "") + String(store.nextNo).padStart(4, "0"),
+      issue: issue, depositDue: addDays(issue, num(s.depositDays)), depositPct: num(s.depositPct),
+      client: { name: "", company: "", email: "", phone: "", address: "" },
+      event: { date: "", time: "", venue: "" },
+      items: [], discount: "", paid: "", notes: "", created: Date.now(), updated: Date.now()
+    };
+    store.nextNo += 1;
+    store.invoices.unshift(inv);
+    return inv;
+  }
+  var cur = null;
+  function openInvoice(id) {
+    cur = store.invoices.filter(function (i) { return i.id === id; })[0] || null;
+    if (!cur) { cur = newInvoice(); save(); }
+    try { sessionStorage.setItem(KEY + "-open", cur.id); } catch (e) {}
+    fillForm(); renderItems(); renderPreview(); show("edit");
+  }
+  function touch() { cur.updated = Date.now(); save(); renderPreview(); updateCount(); }
+
+  // ---------- form ----------
+  function fillForm() {
+    $$("[data-f]").forEach(function (el) { var v = getPath(cur, el.dataset.f); el.value = v == null ? "" : v; });
+    setState("");
+  }
+  $$("[data-f]").forEach(function (el) {
+    el.addEventListener("input", function () { setPath(cur, el.dataset.f, el.value); touch(); });
+  });
+
+  function renderItems() {
+    var box = $("#items");
+    var html = '<div class="item item-head"><span>Description</span><span>Qty</span><span>Price $</span><span></span></div>';
+    cur.items.forEach(function (it, i) {
+      html += '<div class="item" data-i="' + i + '">' +
+        '<input aria-label="Description" data-k="desc" value="' + esc(it.desc) + '">' +
+        '<input aria-label="Quantity" data-k="qty" type="number" min="0" step="1" inputmode="decimal" value="' + esc(it.qty) + '">' +
+        '<input aria-label="Price" data-k="price" type="number" min="0" step="1" inputmode="decimal" value="' + esc(it.price) + '">' +
+        '<button class="icon-btn" type="button" data-remove="' + i + '" aria-label="Remove line">×</button></div>';
+    });
+    if (!cur.items.length) html += '<p class="hint" style="margin:0">No items yet. Pick a package above.</p>';
+    box.innerHTML = html;
+  }
+  $("#items").addEventListener("input", function (e) {
+    var row = e.target.closest(".item"); if (!row || !e.target.dataset.k) return;
+    cur.items[+row.dataset.i][e.target.dataset.k] = e.target.value; touch();
+  });
+  $("#items").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-remove]"); if (!b) return;
+    cur.items.splice(+b.dataset.remove, 1); renderItems(); touch();
+  });
+  $("#preset").addEventListener("change", function () {
+    if (!this.value) return;
+    var p = this.value.split("|");
+    cur.items.push({ desc: p[0], qty: 1, price: p[1] });
+    this.value = ""; renderItems(); touch();
+    var rows = $$("#items .item[data-i]"), last = rows[rows.length - 1];
+    if (last) { var target = p[1] === "" ? (p[0] ? last.querySelector('[data-k="price"]') : last.querySelector('[data-k="desc"]')) : null; if (target) target.focus(); }
+  });
+  function setPaid(c) { cur.paid = c ? String(c / 100) : ""; $('[data-f="paid"]').value = cur.paid; touch(); }
+  $("#mark-deposit").addEventListener("click", function () { setPaid(totals(cur).deposit); });
+  $("#mark-paid").addEventListener("click", function () { setPaid(totals(cur).total); });
+  $("#mark-unpaid").addEventListener("click", function () { setPaid(0); });
+
+  // ---------- preview ----------
+  function renderPreview() {
+    var s = store.settings, t = totals(cur), c = cur.client, ev = cur.event;
+    var gst = s.gst === "yes";
+    var fromLines = [s.ownerName ? s.ownerName + (s.bizName ? " trading as " + s.bizName : "") : s.bizName,
+      s.address, s.phone, s.email, s.website].filter(Boolean).join("\n");
+    var toLines = [c.company, c.address, c.email, c.phone].filter(Boolean).join("\n");
+    var rows = cur.items.map(function (it) {
+      var line = Math.round(num(it.qty) * cents(it.price));
+      return "<tr><td>" + esc(it.desc || "—") + '</td><td class="n">' + esc(num(it.qty)) + '</td><td class="n">' + money(cents(it.price)) + '</td><td class="n">' + money(line) + "</td></tr>";
+    }).join("") || '<tr><td colspan="4" style="color:#8A8F9A">Add a package to start.</td></tr>';
+
+    var dueBox;
+    if (t.status === "paid") {
+      dueBox = '<div class="p-box"><div class="p-label">Amount due</div><p class="p-due">' + money(0) + '</p><p>Paid in full. Thank you!</p></div>';
+    } else if (t.status === "unpaid" && t.pct > 0 && t.pct < 100) {
+      dueBox = '<div class="p-box accent"><div class="p-label">Deposit to secure your date (' + esc(t.pct) + '%)</div><p class="p-due">' + money(t.deposit) + '</p>' +
+        '<p>Due by ' + esc(niceDate(cur.depositDue) || "—") + '</p><p style="margin-top:6px">Balance ' + money(t.total - t.deposit) + ' due on the event day' + (ev.date ? " (" + esc(niceDate(ev.date)) + ")" : "") + '.</p></div>';
+    } else {
+      dueBox = '<div class="p-box accent"><div class="p-label">Amount due</div><p class="p-due">' + money(t.owing) + '</p>' +
+        '<p>' + (t.status === "part" ? "Balance due on the event day" + (ev.date ? " (" + esc(niceDate(ev.date)) + ")" : "") : "Due by " + esc(niceDate(cur.depositDue) || "—")) + '.</p></div>';
+    }
+    var payLines = [];
+    if (s.payid) payLines.push("<p><b>PayID:</b> " + esc(s.payid) + "</p>");
+    if (s.payidName) payLines.push("<p><b>Name:</b> " + esc(s.payidName) + "</p>");
+    if (s.bsb || s.acct) payLines.push("<p><b>BSB:</b> " + esc(s.bsb) + " &nbsp; <b>Account:</b> " + esc(s.acct) + "</p>");
+    if (!payLines.length) payLines.push('<p style="color:#C8285F">Add your PayID in My details.</p>');
+    payLines.push("<p><b>Reference:</b> " + esc(cur.no) + "</p>");
+
+    var termsHtml = (s.terms || "").split("\n").filter(Boolean).map(function (l) { return "<p>" + esc(l) + "</p>"; }).join("");
+
+    $("#paper").innerHTML =
+      (t.status === "paid" ? '<div class="p-stamp">PAID</div>' : "") +
+      '<div class="p-top"><div><div class="p-brand">' + esc((s.bizName || "ROSCO").toUpperCase()) + '</div><div class="p-brand-sub">' + esc(s.tagline) + '</div></div>' +
+      '<div class="p-title"><h1>' + (gst ? "Tax invoice" : "Invoice") + '</h1><dl class="p-meta">' +
+        '<dt>Invoice no.</dt><dd>' + esc(cur.no) + '</dd><dt>Issued</dt><dd>' + esc(niceDate(cur.issue)) + '</dd>' +
+        (s.abn ? '<dt>ABN</dt><dd>' + esc(s.abn) + '</dd>' : "") + '</dl></div></div>' +
+      '<div class="p-rule"></div>' +
+      '<div class="p-parties"><div><div class="p-label">From</div><p>' + esc(fromLines) + '</p></div>' +
+      '<div><div class="p-label">Bill to</div><p class="p-strong">' + esc(c.name || "Client name") + '</p><p>' + esc(toLines) + '</p></div></div>' +
+      '<div class="p-event"><div><div class="p-label">Event date</div><p>' + esc(niceDate(ev.date) || "—") + '</p></div>' +
+      '<div><div class="p-label">Time</div><p>' + esc(ev.time || "—") + '</p></div>' +
+      '<div><div class="p-label">Venue</div><p>' + esc(ev.venue || "—") + '</p></div></div>' +
+      '<table class="p-table"><thead><tr><th>Description</th><th class="n">Qty</th><th class="n">Price</th><th class="n">Amount</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+      '<dl class="p-totals">' +
+        (t.disc ? '<dt>Subtotal</dt><dd>' + money(t.sub) + '</dd><dt>Discount</dt><dd>−' + money(t.disc) + '</dd>' : "") +
+        '<dt class="big">Total' + (gst ? " (inc. GST)" : "") + '</dt><dd class="big">' + money(t.total) + '</dd>' +
+        (gst ? '<dt>GST included</dt><dd>' + money(t.gstIncl) + '</dd>' : "") +
+        (t.paid ? '<dt>Paid</dt><dd>−' + money(t.paid) + '</dd><dt class="p-strong" style="color:#15161C">Balance owing</dt><dd class="p-strong">' + money(t.owing) + '</dd>' : "") +
+      '</dl>' +
+      '<div class="p-pay">' + dueBox + '<div class="p-box"><div class="p-label">How to pay</div>' + payLines.join("") + '</div></div>' +
+      (cur.notes ? '<div class="p-notes"><div class="p-label">Notes</div>' + esc(cur.notes) + '</div>' : "") +
+      '<div class="p-foot">' + (gst ? "" : "<p>No GST has been charged. " + esc(s.bizName || "We") + " is not registered for GST.</p>") + termsHtml + '</div>';
+
+    document.getElementById("setup-warn").hidden = !!(s.payid && s.abn);
+  }
+
+  // ---------- send ----------
+  function message() {
+    var s = store.settings, t = totals(cur), c = cur.client;
+    var first = (c.name || "").trim().split(/\s+/)[0] || "there";
+    var lines = ["Hi " + first + ",", "",
+      "Thanks for booking with " + (s.bizName || "Rosco") + (cur.event.date ? " for " + niceDate(cur.event.date) : "") + ". Your invoice " + cur.no + " is attached.", "",
+      "Total: " + money(t.total)];
+    if (t.status === "paid") lines.push("Paid in full. Thank you!");
+    else if (t.status === "unpaid" && t.pct > 0 && t.pct < 100) {
+      lines.push("Deposit to secure your date (" + t.pct + "%): " + money(t.deposit) + (cur.depositDue ? ", due by " + niceDate(cur.depositDue) : ""));
+      lines.push("Balance due on the event day: " + money(t.total - t.deposit));
+    } else lines.push("Amount due: " + money(t.owing));
+    if (t.status !== "paid") {
+      lines.push("");
+      lines.push("Please pay by PayID" + (s.payid ? " to " + s.payid : "") + (s.payidName ? " (" + s.payidName + ")" : "") + " and use " + cur.no + " as the reference.");
+    }
+    lines.push("", "Any questions, just reply or call " + (s.phone || "") + ".", "", "Thanks,", s.ownerName || s.bizName || "Rosco", s.website || "");
+    return lines.join("\n");
+  }
+  function subject() { return (store.settings.gst === "yes" ? "Tax invoice " : "Invoice ") + cur.no + " – " + (store.settings.bizName || "Rosco"); }
+  $("#email-btn").addEventListener("click", function () {
+    var to = (cur.client.email || "").trim();
+    location.href = "mailto:" + encodeURIComponent(to).replace(/%40/g, "@") + "?subject=" + encodeURIComponent(subject()) + "&body=" + encodeURIComponent(message());
+    toast("Opening your email app. Remember to attach the PDF.");
+  });
+  $("#copy-btn").addEventListener("click", function () {
+    var text = message();
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { toast("Message copied"); }, function () { toast("Couldn't copy"); });
+    else toast("Copy isn't supported in this browser");
+  });
+  $("#print-btn").addEventListener("click", function () {
+    var old = document.title;
+    document.title = cur.no + (cur.client.name ? " " + cur.client.name : "") + " - Rosco";
+    window.print();
+    setTimeout(function () { document.title = old; }, 1000);
+  });
+
+  // ---------- saved list ----------
+  function updateCount() { $("#count").textContent = store.invoices.length ? "(" + store.invoices.length + ")" : ""; }
+  function renderList() {
+    var q = ($("#search").value || "").toLowerCase();
+    var owed = 0, paidSum = 0;
+    store.invoices.forEach(function (inv) { var t = totals(inv); owed += t.owing > 0 ? t.owing : 0; paidSum += t.paid; });
+    $("#summary").innerHTML = '<div class="stat"><b>' + store.invoices.length + '</b><span>Invoices</span></div>' +
+      '<div class="stat"><b>' + money(owed) + '</b><span>Still owing</span></div>' +
+      '<div class="stat"><b>' + money(paidSum) + '</b><span>Received</span></div>';
+    var list = store.invoices.slice().sort(function (a, b) { return (b.no > a.no) - (b.no < a.no); }).filter(function (inv) {
+      return !q || [inv.no, inv.client.name, inv.client.company, inv.event.venue].join(" ").toLowerCase().indexOf(q) > -1;
+    });
+    $("#list-body").innerHTML = list.map(function (inv) {
+      var t = totals(inv);
+      return "<tr><td>" + esc(inv.no) + "</td><td>" + esc(inv.client.name || "(no name)") + '</td><td class="hide-sm">' + esc(niceDate(inv.event.date)) + '</td>' +
+        '<td class="n">' + money(t.total) + '</td><td class="n hide-sm">' + money(t.owing) + '</td><td><span class="pill ' + t.status + '">' + statusText(t.status) + '</span></td>' +
+        '<td><div class="list-actions"><button class="btn btn-small" type="button" data-open="' + inv.id + '">Open</button>' +
+        '<button class="btn btn-small" type="button" data-copy="' + inv.id + '">Copy</button>' +
+        '<button class="btn btn-small btn-danger" type="button" data-del="' + inv.id + '">Delete</button></div></td></tr>';
+    }).join("");
+    $("#list-empty").hidden = store.invoices.length > 0;
+  }
+  $("#search").addEventListener("input", renderList);
+  $("#list-body").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.open) openInvoice(b.dataset.open);
+    else if (b.dataset.copy) {
+      var src = store.invoices.filter(function (i) { return i.id === b.dataset.copy; })[0]; if (!src) return;
+      var inv = newInvoice(), keep = { id: inv.id, no: inv.no, issue: inv.issue, depositDue: inv.depositDue, created: inv.created };
+      var copy = JSON.parse(JSON.stringify(src));
+      Object.assign(copy, keep, { paid: "", event: { date: "", time: "", venue: "" }, updated: Date.now() });
+      store.invoices[0] = copy; save(); openInvoice(copy.id); toast("Copied as " + copy.no);
+    } else if (b.dataset.del) {
+      if (b.dataset.armed) {
+        store.invoices = store.invoices.filter(function (i) { return i.id !== b.dataset.del; });
+        if (cur && cur.id === b.dataset.del) cur = null;
+        save(); renderList(); updateCount(); toast("Invoice deleted");
+      } else {
+        b.dataset.armed = "1"; b.textContent = "Confirm delete";
+        setTimeout(function () { if (b.isConnected) { delete b.dataset.armed; b.textContent = "Delete"; } }, 4000);
+      }
+    }
+  });
+
+  // ---------- settings ----------
+  function fillSettings() { $$("[data-s]").forEach(function (el) { el.value = store.settings[el.dataset.s] == null ? "" : store.settings[el.dataset.s]; }); }
+  $$("[data-s]").forEach(function (el) {
+    el.addEventListener("input", function () { store.settings[el.dataset.s] = el.value; save(); if (cur) renderPreview(); });
+  });
+  $("#export-btn").addEventListener("click", function () {
+    var blob = new Blob([JSON.stringify(store, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "rosco-invoices-backup-" + today() + ".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+  });
+  $("#import-file").addEventListener("change", function () {
+    var f = this.files && this.files[0]; if (!f) return;
+    var r = new FileReader();
+    r.onload = function () {
+      try {
+        var data = JSON.parse(r.result);
+        if (!data || !Array.isArray(data.invoices)) throw new Error("bad");
+        var byId = {}; store.invoices.forEach(function (i) { byId[i.id] = i; });
+        data.invoices.forEach(function (i) { if (i && i.id) byId[i.id] = i; });
+        store.invoices = Object.keys(byId).map(function (k) { return byId[k]; });
+        if (data.settings) store.settings = Object.assign(defaults(), data.settings);
+        store.nextNo = Math.max(store.nextNo || 1, data.nextNo || 1);
+        save(); fillSettings(); updateCount(); renderList(); toast("Backup restored (" + data.invoices.length + " invoices)");
+      } catch (e) { toast("That file isn't a Rosco invoice backup"); }
+    };
+    r.readAsText(f); this.value = "";
+  });
+
+  // ---------- views ----------
+  function show(v) {
+    $$(".tab[data-view]").forEach(function (t) { t.setAttribute("aria-pressed", String(t.dataset.view === v)); });
+    $("#view-edit").hidden = v !== "edit"; $("#view-list").hidden = v !== "list"; $("#view-settings").hidden = v !== "settings";
+    if (v === "list") renderList();
+    if (v === "settings") fillSettings();
+    if (v === "edit" && !cur) openInvoice(null);
+    window.scrollTo(0, 0);
+  }
+  $$(".tab[data-view]").forEach(function (t) { t.addEventListener("click", function () { show(t.dataset.view); }); });
+  $$("[data-goto]").forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.goto); }); });
+  $("#new-btn").addEventListener("click", function () { var inv = newInvoice(); save(); openInvoice(inv.id); toast("New invoice " + inv.no); });
+
+  // ---------- start ----------
+  document.getElementById("storage-warn").hidden = canStore;
+  updateCount();
+  var lastOpen = null; try { lastOpen = sessionStorage.getItem(KEY + "-open"); } catch (e) {}
+  var startId = lastOpen || (store.invoices[0] && store.invoices[0].id);
+  if (startId) openInvoice(startId);
+  else if (!store.settings.payid) { cur = null; show("settings"); toast("Start by adding your details"); }
+  else openInvoice(null);
+})();
+</script>
+</body>
+</html>
