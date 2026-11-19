@@ -316,14 +316,17 @@ a { color: inherit; }
 .rating strong { font-family: var(--f-display); font-weight: 900; font-size: 60px; line-height: 0.9; }
 .rating small { display: block; color: var(--muted); }
 .stars { color: var(--gel-booth); font-size: 18px; letter-spacing: 2px; }
-.review-marquee { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.review-slider { position: relative; }
+.review-marquee { overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); cursor: grab; }
 .review-marquee::-webkit-scrollbar { display: none; }
+.review-marquee.is-dragging { cursor: grabbing; user-select: none; }
 .review-list { display: flex; gap: 20px; width: max-content; padding: 4px 0; }
 .review-list:empty { display: none; }
-.review-marquee.is-moving { overflow: hidden; }
-.review-marquee.is-moving .review-list { animation: review-slide var(--slide-time, 60s) linear infinite; }
-.review-marquee.is-moving:hover .review-list, .review-marquee.is-moving:focus-within .review-list, .review-marquee.is-paused .review-list { animation-play-state: paused; }
-@keyframes review-slide { to { transform: translateX(calc(-50% - 10px)); } }
+.review-nav { position: absolute; top: 50%; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; margin-top: -22px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--ink); font-size: 22px; line-height: 1; cursor: pointer; transition: background .2s, color .2s; }
+.review-nav:hover, .review-nav:focus-visible { background: var(--ink); color: var(--surface); }
+.review-nav.prev { left: -8px; }
+.review-nav.next { right: -8px; }
+@media (max-width: 640px) { .review-nav { width: 38px; height: 38px; margin-top: -19px; font-size: 19px; } .review-nav.prev { left: -4px; } .review-nav.next { right: -4px; } }
 .review { flex: 0 0 auto; width: min(340px, 78vw); scroll-snap-align: start; display: flex; flex-direction: column; gap: 12px; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
 .review p { margin: 0; color: var(--muted); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 9; -webkit-box-orient: vertical; overflow: hidden; }
 .review-author { display: flex; align-items: center; gap: 10px; margin-top: auto; font-weight: 600; text-decoration: none; }
@@ -590,6 +593,9 @@ addEventListener('load', function () { var s = document.createElement('script');
         <span><span class="stars" id="rating-stars" aria-hidden="true">★★★★★</span><small id="rating-count">11 Google reviews</small></span>
       </div>
     </div>
+    <div class="review-slider">
+    <button class="review-nav prev" type="button" id="review-prev" aria-label="Previous review">‹</button>
+    <button class="review-nav next" type="button" id="review-next" aria-label="Next review">›</button>
     <div class="review-marquee" id="review-marquee">
     <div class="review-list" id="review-list">
       <article class="review">
@@ -627,6 +633,7 @@ addEventListener('load', function () { var s = document.createElement('script');
         <p>Legend</p>
         <div class="review-author"><span>Senith M.<small>Google review, October 2026</small></span></div>
       </article>
+    </div>
     </div>
     </div>
     <p class="review-empty" id="review-empty" hidden>Had Rosco at your event? We'd love to hear how it went. Your review helps other people find us.</p>
@@ -1011,21 +1018,80 @@ addEventListener('load', function () { var s = document.createElement('script');
 })();
 </script>
 <script>
-/* Reviews slideshow: loops the review cards sideways; pauses on hover, focus or tap. */
+/* Reviews slideshow: slides on its own in a loop; visitors can swipe, drag or use the arrows. It pauses while they do and carries on a few seconds later. */
 (function () {
   var box = document.getElementById('review-marquee');
   var list = document.getElementById('review-list');
   if (!box || !list || list.children.length < 2) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var cards = Array.prototype.slice.call(list.children);
   cards.forEach(function (c) {
     var copy = c.cloneNode(true);
     copy.setAttribute('aria-hidden', 'true');
     list.appendChild(copy);
   });
-  box.style.setProperty('--slide-time', (cards.length * 4.5) + 's');
-  box.classList.add('is-moving');
-  box.addEventListener('click', function () { box.classList.toggle('is-paused'); });
+  var SPEED = 80; // pixels per second
+  var half = 0, pos = 0, last = 0, holdUntil = 0, hovering = false, dragging = false, glide = null;
+  function measure() { half = list.children[cards.length].offsetLeft - list.children[0].offsetLeft; }
+  function wrapEdges() {
+    if (!half) return;
+    if (box.scrollLeft <= 0) box.scrollLeft += half;
+    else if (box.scrollLeft >= box.scrollWidth - box.clientWidth - 1) box.scrollLeft -= half;
+  }
+  function hold(ms) { holdUntil = Date.now() + (ms || 3000); }
+  function step() { var c = list.children[0]; return c.offsetWidth + 20; }
+  function nudge(dir) {
+    hold(4000);
+    var w = step();
+    var base = glide !== null ? glide : box.scrollLeft;
+    if (glide === null) pos = box.scrollLeft;
+    if (dir < 0 && base < w + 2) { base += half; pos += half; }
+    if (dir > 0 && base >= half) { base -= half; pos -= half; }
+    box.scrollLeft = pos;
+    glide = Math.round(base / w) * w + dir * w;
+  }
+  document.getElementById('review-prev').addEventListener('click', function () { nudge(-1); });
+  document.getElementById('review-next').addEventListener('click', function () { nudge(1); });
+  box.addEventListener('scroll', function () { if (glide === null && (Date.now() < holdUntil || hovering || dragging)) { wrapEdges(); pos = box.scrollLeft; } }, { passive: true });
+  ['touchstart', 'touchmove', 'wheel', 'keydown'].forEach(function (e) { box.addEventListener(e, function () { glide = null; hold(3000); }, { passive: true }); });
+  box.addEventListener('mouseenter', function () { hovering = true; });
+  box.addEventListener('mouseleave', function () { hovering = false; hold(1200); });
+  // Mouse drag to scroll on PC
+  var startX = 0, startLeft = 0, moved = false;
+  box.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    dragging = true; glide = null; moved = false; startX = e.clientX; startLeft = box.scrollLeft;
+    box.classList.add('is-dragging');
+  });
+  window.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    var dx = e.clientX - startX;
+    if (Math.abs(dx) > 3) moved = true;
+    box.scrollLeft = startLeft - dx;
+    if (box.scrollLeft <= 0 || box.scrollLeft >= box.scrollWidth - box.clientWidth - 1) { wrapEdges(); startLeft = box.scrollLeft + dx; }
+  });
+  window.addEventListener('pointerup', function () { if (!dragging) return; dragging = false; box.classList.remove('is-dragging'); hold(2500); });
+  box.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+  box.addEventListener('dragstart', function (e) { e.preventDefault(); });
+  function start() { measure(); box.scrollLeft = half; pos = half; }
+  window.addEventListener('resize', function () { var r = half ? (pos % half) / half : 0; measure(); pos = half + r * half; box.scrollLeft = pos; });
+  start();
+  function tick(t) {
+    var dt = last ? Math.min((t - last) / 1000, 0.1) : 0;
+    last = t;
+    if (glide !== null) {
+      var d = glide - pos;
+      if (still || Math.abs(d) < 1) { pos = glide; glide = null; }
+      else pos += d * Math.min(1, dt * 9);
+      box.scrollLeft = pos;
+    } else if (!still && !hovering && !dragging && Date.now() >= holdUntil && half) {
+      pos += SPEED * dt;
+      if (pos >= box.scrollWidth - box.clientWidth - 2) pos -= half;
+      box.scrollLeft = pos;
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 })();
 </script>
 </body>
