@@ -847,15 +847,20 @@ addEventListener('load', function () { var s = document.createElement('script');
   document.querySelectorAll('[data-package]').forEach(function (b) {
     b.addEventListener('click', function () { pkg.value = b.dataset.package; showTotal(); });
   });
+  var agree = form.querySelector('input[name="Agreed to terms and privacy"]');
+  agree.addEventListener('invalid', function () { agree.setCustomValidity(agree.checked ? '' : 'Please tick this box to agree to our Terms and conditions and Privacy policy. We need this before we can take your enquiry.'); });
+  agree.addEventListener('change', function () { agree.setCustomValidity(''); });
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    // Terms + privacy tick is compulsory: stop here if it isn't ticked (the Google script also refuses it)
+    if (!agree.checked) { agree.reportValidity(); agree.focus(); return; }
     var name = document.getElementById('f-name').value.trim().split(' ')[0];
     status.textContent = '';
     var b = document.createElement('b');
     var data = {};
     var dates = [], dateKey;
     form.querySelectorAll('input, select, textarea').forEach(function (el) {
-      if (el.name === '_honey') return;
+      if (el.name === '_honey' || el === agree) return;
       var label = form.querySelector('label[for="' + el.id + '"]');
       if (el.name === 'date') {
         if (!dateKey) { dateKey = label.firstChild.textContent.trim(); data[dateKey] = ''; }
@@ -881,6 +886,9 @@ addEventListener('load', function () { var s = document.createElement('script');
     data._name = form.querySelector('input[name="name"]').value.trim();
     data._service = document.body.dataset.service || '';
     data._page = location.pathname;
+    data['Agreed to terms and privacy'] = 'Yes';
+    data._agreed = agree.checked ? 'yes' : 'no';
+    data._agreedAt = new Date().toISOString();
     var submit = form.querySelector('button[type="submit"]');
     submit.disabled = true;
     b.textContent = 'Sending your enquiry…';
